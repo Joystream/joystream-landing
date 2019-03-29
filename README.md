@@ -96,7 +96,7 @@ This is the set of key repos that
 
 <!-- <p align="center"><img width=200px src="testnet-logo.png"></p> -->
 
-<img src="new-testnet-releases-cover.png">
+<img src="illustration-test.svg">
 
 Until the Joystream mainnet goes live, a sequence of test networks will be rolled out and deployed, and this section covers this activity.
 
