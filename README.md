@@ -32,6 +32,12 @@
   </h3>
 </div>
 
+= Substrate
+:Author: Substrate developers
+:Revision: 0.2.0
+:toc:
+:sectnums:
+
 # Table of contents
 
 :toc:
