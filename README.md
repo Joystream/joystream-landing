@@ -1,5 +1,4 @@
-<p align="center"><img width=200px src="landing-icon.png"></p>
-<p align="center"><img src="landing-repo-headline.png"></p>
+<img src="new-cover.png">
 
 <div align="center">
   <h4>Eventually, this all goes on-chain, read our :scroll: <a href="https://github.com/Joystream/whitepaper/blob/master/paper.pdf">whitepaper</a> :scroll:, we are on-chain governance maximalists!<h4>
