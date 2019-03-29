@@ -92,9 +92,11 @@ This is the set of key repos that
 | [whitepaper](https://github.com/Joystream/whitepaper)                                     | The Joystream whitepaper.                             | @bedeho         |
 | [communications](https://github.com/Joystream/communications)                             | The Joystream communications workspace and archive.   | @@bwhm          |
 
-# Testnet Releases
+#
 
-<p align="center"><img width=200px src="testnet-logo.png"></p>
+<!-- <p align="center"><img width=200px src="testnet-logo.png"></p> -->
+
+<img src="new-testnet-releases-cover.png">
 
 Until the Joystream mainnet goes live, a sequence of test networks will be rolled out and deployed, and this section covers this activity.
 
