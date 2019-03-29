@@ -34,6 +34,9 @@
 
 # Table of contents
 
+:toc:
+:sectnums:
+
 - [Overview](#overview)
 - [Contribute](#contribute)
 - [Repository Index](#repository-index)
