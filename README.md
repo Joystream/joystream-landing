@@ -32,16 +32,7 @@
   </h3>
 </div>
 
-= Substrate
-:Author: Substrate developers
-:Revision: 0.2.0
-:toc:
-:sectnums:
-
 # Table of contents
-
-:toc:
-:sectnums:
 
 - [Overview](#overview)
 - [Contribute](#contribute)
@@ -92,7 +83,7 @@ This is the set of key repos that
 | [whitepaper](https://github.com/Joystream/whitepaper)                                     | The Joystream whitepaper.                             | @bedeho         |
 | [communications](https://github.com/Joystream/communications)                             | The Joystream communications workspace and archive.   | @@bwhm          |
 
-#
+<br/>
 
 <!-- <p align="center"><img width=200px src="testnet-logo.png"></p> -->
 
