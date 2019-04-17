@@ -66,6 +66,11 @@ The following list of peer modules, are relied upon to be in the same runtime.
 - xxx-
 - xxx
 
+## State Invariants
+
+1. `xxxx`
+2. `xxxx`
+
 ## Events
 
 - `added_member(String s, PublicKey s)`
@@ -74,14 +79,14 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ## Transactions
 
-### `add_member(String s, PublicKey s)`
+### `add_member`
 
-xxxxx
-
-### `add_member(String s, PublicKey s)`
-
-xxxxx
-
-### `add_member(String s, PublicKey s)`
-
-xxxxx
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `PublicKey s`: xxx
+  2. `String s`: xxxx
+- **Pre-condition:** `xxx`  
+- **Post-condition:** `xxxx`
+- **Events:**
+  - xx
+  - xx

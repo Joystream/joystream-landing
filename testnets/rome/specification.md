@@ -40,6 +40,13 @@ Take Substrate for granted, and SRML momdules, dont explicitly described.
 -  explain how to intereprt speciciation, so we understand `map`, build et.
 - xxxx
 
+what bout built in stuff, like types `origin`, and functions, like `ensure_signed`.
+
+what about block level callback?
+
+- **pre-condition:** first order predicate in the runtime state and the transaction paramters which must hold _exactly_ for transaction to be accepted. e.g. that proper person has isgned?
+- **post-condition**: first order predicate in the runtime state and the transaction parameters which must hold _exactly_ when the transaction is accepted. The value of state variable `X` _after_ a transaction is handled, is denoted by `X'`. Hence, as an example, the condition that an integer variable `foo` has been incremented after a transaction is captured by the following predicate: `foo' == foo + 1`.
+
 #### Protocols
 
 
@@ -90,7 +97,7 @@ These are all public types that are part of the runtime. They are public in the 
 
 #### Modules
 
-- [Rome](rome-module.md)
+- [Rome](membership-module.md)
 
 #### Migrations
 
