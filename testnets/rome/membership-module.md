@@ -42,7 +42,7 @@ Manages the set of current members, their profile, status.
 
 | Name                                | Type                                                    | Genesis                    | Default                             |
 | :---------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
-| `first_member_id`                   | `T::MemberId`                                           | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
+| `first_member_id`                   | [MemberId](README.md#type-MemberId)                                           | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
 | `next_member_id`                    | `T::MemberId`                                           | `No`                       | `DEFAULT_FIRST_MEMBER_ID`  |
 | `account_id_by_member_id`           | `T::MemberId => T::AccountId`                           | `No`                       | - |
 | `member_id_by_account_id`           | `map T::AccountId => Option<T::MemberId>`               | `No`                       | - |

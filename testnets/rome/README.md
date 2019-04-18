@@ -124,7 +124,7 @@ struct CheckedUserInfo {
 }
 ```
 
-##### `enum EntryMethod`
+##### enum EntryMethod
 
 ```Rust
 pub enum EntryMethod<T: Trait> {
@@ -133,11 +133,11 @@ pub enum EntryMethod<T: Trait> {
 }
 ```
 
-##### `struct Profile`
+##### struct Profile
 
 | Name                                  | Type                              |
 | :------------------------------------ |:----------------------------------|
-| `id`                                  | [`T::MemberId`](#type-MemberId)   |
+| `id`                                  | [`MemberId`](#type-MemberId)   |
 | `handle`                              | `Vec<u8>`                         |
 | `avatar_uri`                          | `Vec<u8>`                         |
 | `about`                               | `Vec<u8>`                         |
@@ -147,7 +147,7 @@ pub enum EntryMethod<T: Trait> {
 | `suspended`                           | `bool`                            |
 | `subscription`                        | `Option<T::SubscriptionId>`       |
 
-##### `struct UserInfo`
+##### struct UserInfo
 
 | Name                                  | Type                          |
 | :------------------------------------ |:------------------------------|
