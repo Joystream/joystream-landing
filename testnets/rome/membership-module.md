@@ -6,9 +6,9 @@
 - [Overview](#overview)
 - [Constants](#constants)
 - [State Variables](#state-variables)
-- [Peer Module Dependencies](#peer-module-dependencies)
 - [State Invariants](#state-invariants)
 - [Events](#events)
+- [Peer Module Dependencies](#peer-module-dependencies)
 - [Transactions](#transactions)
   - [buy_membership](#buy_membership)
   - [change_member_about_text](#change_member_about_text)
@@ -36,7 +36,9 @@ Manages the set of current members, their profile, status.
 | `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
 | `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
 
-## State Variables
+## State
+
+### Variables
 
 | Name                                | Type                                                    | Genesis                    | Default                             |
 | :---------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
@@ -57,6 +59,11 @@ Manages the set of current members, their profile, status.
 | `max_avatar_uri_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_AVATAR_URI_LENGTH` |
 | `max_about_text_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_ABOUT_TEXT_LENGTH` |
 
+### Invariants
+
+1. `xxxx`
+2. `xxxx`
+
 ## Peer Module Dependencies
 
 WIP:
@@ -66,11 +73,6 @@ The following list of peer modules, are relied upon to be in the same runtime.
 - **xxx:**. A
 - xxx-
 - xxx
-
-## State Invariants
-
-1. `xxxx`
-2. `xxxx`
 
 ## Events
 

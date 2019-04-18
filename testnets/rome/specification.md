@@ -31,11 +31,10 @@ Given the descrbied purpose of this document, the style of specification admits 
 
 Take Substrate for granted, and SRML momdules, dont explicitly described.
 
-### Conventions
 
 <explain how you wille xplain different parts, what each part of the explanation does>
 
-#### Substrate
+### Substrate
 
 -  explain how to intereprt speciciation, so we understand `map`, build et.
 - xxxx
@@ -49,12 +48,12 @@ what about block level callback?
 
 Notice that no _iomplementaiton_ is ever provided, only how transaction generate new state constraints. This allows us to avoid any implementation specific types, and also allows all modules to be defiend in terms of what actual types are instantioned in the parametric `T::` trait, rather than introduce lots of trait abstractions.
 
-#### Protocols
+### Protocols
 
 
 
 
-### Glossary
+## Glossary
 
 - **Substrate:** A blockchain SDK
 - **Runtime:** Application specific consensus code written for the Substrate SDK. Includes state and transaction rules specific to the application, but excludes consensus algorithm and p2p networking.
@@ -62,7 +61,7 @@ Notice that no _iomplementaiton_ is ever provided, only how transaction generate
 - **SRML:** Substrate standard runtime library (srml), is a set of highly reusable Substrate modules which come with the
 - **GRANDPA:** Consensus algorthm used.
 
-### Notation
+## Notation
 
 - Code is written in Rust.
 - When describing state variables, the standard storage encoding,decoding offered by Substrate `decl_storage` is used, in particular
@@ -81,11 +80,6 @@ something high level?
 
 xxxx
 
-
-#### x
-##### xx
-###### xxx
-
 ### Substrate Runtime
 
 #### Substrate Version
@@ -95,11 +89,37 @@ xxxx
 #### Types
 
 These are all public types that are part of the runtime. They are public in the sense that they are parameters in transactions or events, or that they are part of some module state(s). Any other types that may appear in a particular implementation, for example generic types and traits/interfaces related to software engineering abstractions, are not included.
-.....
+
+
+only public parts of struct.. and of course only public types
+
+##### `struct EntryMethod`
+
+##### `struct Profile`
+
+| Name                                  | Type                          |
+| :------------------------------------ |:------------------------------|
+| `id`                                  | `T::MemberId`                 |
+| `handle`                              | `Vec<u8>`                     |
+| `avatar_uri`                          | `Vec<u8>`                     |
+| `about`                               | `Vec<u8>`                     |
+| `registered_at_block`                 | `T::BlockNumber`              |
+| `registered_at_time`                  | `T::Moment`                   |
+| `entry`                               | `EntryMethod`                 |
+| `suspended`                           | `bool`                        |
+| `subscription`                        | `Option<T::SubscriptionId>`   |
+
+##### `struct UserInfo`
+
+| Name                                  | Type                          |
+| :------------------------------------ |:------------------------------|
+| `handle`                              | `Option<Vec<u8>>`             |
+| `avatar_uri`                          | `Option<Vec<u8>>`             |
+| `about`                               | `Option<Vec<u8>>`             |
 
 #### Modules
 
-- [Rome](membership-module.md)
+- [Membership](membership-module.md)
 
 #### Migrations
 
