@@ -71,50 +71,44 @@ The following list of peer modules, are relied upon to be in the same runtime.
   - xx
 - **Errors:** xxx
 
-### `change_member_about_text(origin, text: Vec<u8>)`
+### `change_member_about_text`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
+  2. `text: Vec<u8>`
 
-### `change_member_avatar(origin, uri: Vec<u8>)`
-
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
-  1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
-
-### `change_member_handle(origin, handle: Vec<u8>)`
+### `change_member_avatar`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
+  2. `uri: Vec<u8>`
 
-### `update_profile(origin, user_info: UserInfo)`
-
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
-  1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
-
-### `add_screened_member(origin, new_member: T::AccountId, user_info: UserInfo)`
+### `change_member_handle`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
+  2. `handle: Vec<u8>`
 
-### `set_screening_authority(authority: T::AccountId)`
+### `update_profile`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
-  2. `paid_terms_id: T::PaidTermId`
+  2. `user_info: UserInfo`
+
+### `add_screened_member`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `new_member: T::AccountId`
   3. `user_info: UserInfo`
+
+### `set_screening_authority`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `authority: T::AccountId`
