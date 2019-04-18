@@ -93,6 +93,10 @@ These are all public types that are part of the runtime. They are public in the 
 
 only public parts of struct.. and of course only public types
 
+##### `type MemberId`
+
+xxxx
+
 ##### `type PaidTermId`
 
 `u64`
@@ -133,7 +137,7 @@ pub enum EntryMethod<T: Trait> {
 
 | Name                                  | Type                          |
 | :------------------------------------ |:------------------------------|
-| `id`                                  | `T::MemberId`                 |
+| `id`                                  | [`T::MemberId`](#`type MemberId`)                 |
 | `handle`                              | `Vec<u8>`                     |
 | `avatar_uri`                          | `Vec<u8>`                     |
 | `about`                               | `Vec<u8>`                     |
