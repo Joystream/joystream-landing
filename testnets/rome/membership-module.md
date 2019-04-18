@@ -1,23 +1,32 @@
 
 # Members Module
 
+## Table Of Content
+
+- [Overview](#overview)
+
 # Overview
 
 Manages the set of current members, their profile, status.
 
-## Constants
-
+# Constants
 
 | Name                                  | Type                 | Value                             |
-| ------------------------------------- |:--------------------:| :--------------------------------:|
+| :------------------------------------ |:--------------------:| :--------------------------------:|
+| `DEFAULT_FIRST_MEMBER_ID`             | `u64`                | `1`                               |
+| `FIRST_PAID_TERMS_ID`                 | `u64`                | `1`                               |
 | `DEFAULT_PAID_TERM_ID`                | `u64`                | `0`                               |
 | `DEFAULT_PAID_TERM_FEE`               | `u64`                | `100`                             |
 | `DEFAULT_PAID_TERM_TEXT`              | `String`             | `Default Paid Term TOS...`        |
+| `DEFAULT_MIN_HANDLE_LENGTH`           | `u32`                | `5`                               |
+| `DEFAULT_MAX_HANDLE_LENGTH`           | `u32`                | `40`                              |
+| `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
+| `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
 
-## State Variables
+# State Variables
 
 | Name                                | Type                                                    | Genesis                    | Default                             |
-| ----------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
+| :---------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
 | `first_member_id`                   | `T::MemberId`                                           | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
 | `next_member_id`                    | `T::MemberId`                                           | `No`                       | `DEFAULT_FIRST_MEMBER_ID`  |
 | `account_id_by_member_id`           | `T::MemberId => T::AccountId`                           | `No`                       | - |
@@ -35,7 +44,7 @@ Manages the set of current members, their profile, status.
 | `max_avatar_uri_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_AVATAR_URI_LENGTH` |
 | `max_about_text_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_ABOUT_TEXT_LENGTH` |
 
-## WIP: Peer Module Dependencies
+# WIP: Peer Module Dependencies
 
 The following list of peer modules, are relied upon to be in the same runtime.
 
@@ -43,21 +52,21 @@ The following list of peer modules, are relied upon to be in the same runtime.
 - xxx-
 - xxx
 
-## State Invariants
+# State Invariants
 
 1. `xxxx`
 2. `xxxx`
 
-## Events
+# Events
 
 - `MemberRegistered(MemberId, AccountId)``
 - `MemberUpdatedAboutText(MemberId)`
 - `MemberUpdatedAvatar(MemberId)`
 - `MemberUpdatedHandle(MemberId)`
 
-## Transactions
+# Transactions
 
-### `buy_membership`
+## `buy_membership`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
@@ -71,35 +80,35 @@ The following list of peer modules, are relied upon to be in the same runtime.
   - xx
 - **Errors:** xxx
 
-### `change_member_about_text`
+## `change_member_about_text`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
   2. `text: Vec<u8>`
 
-### `change_member_avatar`
+## `change_member_avatar`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
   2. `uri: Vec<u8>`
 
-### `change_member_handle`
+## `change_member_handle`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
   2. `handle: Vec<u8>`
 
-### `update_profile`
+## `update_profile`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
   1. `origin: Origin ?`
   2. `user_info: UserInfo`
 
-### `add_screened_member`
+## `add_screened_member`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
@@ -107,7 +116,7 @@ The following list of peer modules, are relied upon to be in the same runtime.
   2. `new_member: T::AccountId`
   3. `user_info: UserInfo`
 
-### `set_screening_authority`
+## `set_screening_authority`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
