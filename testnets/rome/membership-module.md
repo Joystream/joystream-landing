@@ -66,11 +66,10 @@ The following list of peer modules, are relied upon to be in the same runtime.
   3. `user_info: UserInfo`
 - **Pre-condition:** `xxx`  
 - **Post-condition:** `xxxx`
-- **Events:**
+- **Events:** xxx
   - xx
   - xx
-- **Errors:**
-  -
+- **Errors:** xxx
 
 ### `change_member_about_text(origin, text: Vec<u8>)`
 
