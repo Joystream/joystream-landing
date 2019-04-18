@@ -1,5 +1,4 @@
-<p align="center"><img width=200px src="landing-icon.png"></p>
-<p align="center"><img src="landing-repo-headline.png"></p>
+<p align="center"><img src="landing-cover.svg"></p>
 
 <div align="center">
   <h4>Eventually, this all goes on-chain, read our :scroll: <a href="https://github.com/Joystream/whitepaper/blob/master/paper.pdf">whitepaper</a> :scroll:, we are on-chain governance maximalists!<h4>
@@ -47,7 +46,7 @@
     - [Next Testnet](#next-testnet)
     - [Past Testnets](#past-testnets)
 - [Project Management](#project-management)
-    - [Why is this on Github?](#why-is-this-on-github?)
+    - [Why is this on Github?](#why-is-this-on-github)
     - [Meetings](#meetings)
       - [Daily standup](#daily-standup)
       - [Monday all-hands](#monday-all-hands)
@@ -57,7 +56,7 @@
       - [OKR types](#okr-types)
       - [Hierarchy](#hierarchy)
       - [Tracking](#tracking)
-      - [Schema](#schema)
+      - [Template](#template)
     - [Testnet Planning](#testnet-planning)
       - [Branding](#branding)
       - [Testnet Directory](#testnet-directory)
@@ -86,32 +85,32 @@ This is the set of key repos that
 | [apps](https://github.com/Joystream/apps)                                                 | The Pioneer application.                              | @siman          |
 | [storage-node-joystream](https://github.com/Joystream/storage-node-joystream)             | The storage node application.                         | @jfinkhaeuser   |
 | [whitepaper](https://github.com/Joystream/whitepaper)                                     | The Joystream whitepaper.                             | @bedeho         |
-| [communications](https://github.com/Joystream/communications)                             | The Joystream communications workspace and archive.   | @@bwhm          |
+| [communications](https://github.com/Joystream/communications)                             | The Joystream communications workspace and archive.   | @bwhm           |
+| [helpdesk](https://github.com/Joystream/helpdesk)                             | Information and guides for users and contributors    | @bwhm           |
 
-# Testnet Releases
+<br />
+<img src="release-section.svg" id="testnet-releases"/>
 
-<p align="center"><img width=200px src="testnet-logo.png"></p>
 
 Until the Joystream mainnet goes live, a sequence of test networks will be rolled out and deployed, and this section covers this activity.
 
 ## Live Testnet
 
-Sparta
+[Athens](/testnets/athens/README.md)
 
 ## Next Testnet
 
-[Athens](/testnets/athens/README.md)
+Rome
 
 ## Past Testnets
 
 | Network         | Started           | Ended         | Release Plan    |
 | -------------   | -------------     | -----         | -----           |
-| Sparta          | x                 |   NA          |       NA        |
-| Mesopotamia     | x                 |   x           |       NA        |
+| Sparta          | 28.02.19          |   29.03.19    |       NA        |
+| Mesopotamia     | 21.12.18          |   28.02.19    |       NA        |
 
-# Project Management
-
-<p align="center"><img width="400px" src="project-management-headline.jpg"></p>
+<br />
+<img src="pm-section.svg" id="project-management"/>
 
 ## Why is this on Github?
 
@@ -120,6 +119,7 @@ The reason this is placed in public view on Github is two fold
 - **Open Invitation:** Serve as an open invitation for anyone who wants to learn, comment and possibly contribute, to the current or future development of the Joystream project.
 
 - **Best Practices**: Establish best practices which can be replicated by the platform, when it is fully live, in how to collaboratively build and manage the platform using open tools. In particular, the current plan is that the platform has a built in Github equivalent, which thus would allow the use of these conventions.
+
 
 ## Meetings
 
@@ -157,9 +157,8 @@ Meeting itineraries are prepared on a case by case basis, depending on the conte
 - **Participant:** Core release team _must_ be present, any one else is welcome (join Rocket.Chat for invite).
 - **Record&Publish:** YES, if no participant objects.
 
-## OKR system
-
-<p align="center"><img width=300px src="okr-logo.png"></p>
+<br />
+<img src="okr-section.svg" id="okr-system"/>
 
 Project management is primarily centred around planning and tracking OKRs. OKRs is a planning and project management system, which can be reviewed in further detail [here](https://en.wikipedia.org/wiki/OKR).
 
@@ -205,29 +204,44 @@ In order to keep track of whether a key result, and thus the corresponding objec
 
 Briefly, do a topological sort of the key result graph, where having an objective in the result assignment set counts towards the indegree. Then just do ascending weighted averaging of scores, where key results are simply averaged into objective scores. Importantly, in order to do this, one has to get personal scores on key results, and there are two modes of doing this
 
-- **Naive**: Simply evaluate the key result statement directly based on available data at the time. For example, if the result is `Get $100 in revenue`, and one has $20 so far, then the score would be 0.2. This method is often suitable, but no if partial work is unlikely to have had any real world effects while tracking.
+- **Naive (n)**: Simply evaluate the key result statement directly based on available data at the time. For example, if the result is `Get $100 in revenue`, and one has $20 so far, then the score would be 0.2. This method is often suitable, but no if partial work is unlikely to have had any real world effects while tracking.
 
-- **Planned Work Done**: Fraction of estimated total hours required that have been completed. This means that, if the estimate of total time required changes, then the score can change, even there is not change in actual hours completed.
+- **Estimate of Work Done (ewd)**: Fraction of estimated total hours required that have been completed. This means that, if the estimate of total time required changes, then the score can change, even there is not change in actual hours completed.
 
 The mode used depend on the nature of the key result.
 
-### Schema
+### Template
 
-The schema used for recording and tracking OKRs has the following form:
+The template used for recording and tracking OKRs has the following form:
 
- - **Objective:** `<Name of objective>`
+## Objective:  `<Name of objective>`
+ - **Active from:** `<When the OKR is set/live>`
  - **KR Measurement Deadline**: `<When the final grading is conducted>`
  - **Tracked**: `<Time interval at which OKR is tracked>`
  - **Tracking Manager**: `<Name of person responsible for doing tracking, at given interval, and final grading>`
  - **Key Results**: `<If all key results have same assignment set, write here>`
-   1. `<Statement of Key result>`
+   1. `<Statement of Key result>` `<n/ewd>`
      - `<Name of assignee>`: `<assignment weight>`
      - ...
+  <br />
+  - **Final Score:**
+
+  | Date     | KR #1 | ... |  Total |
+  |:--------:|:-----:|:-----:|:--------------:|
+  | `<final date>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Final Objective Score** |
+
+ - **Notes**
+    * `<Notes on setup/tracking/final score if necessary>`
+    * ...
+  <br />
+
  - **Tracking:**
 
-| Date     | KR #1 | ... |  Total |
+| Date     | KR #1 | ... |  Comments |
 |:--------:|:-----:|:-----:|:--------------:|
-| `<date&time>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Tracked objective score** |
+| `<date1>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Tracking comments** |
+| `<date2>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Tracking comments** |
+
 
 ## Testnet Planning
 
