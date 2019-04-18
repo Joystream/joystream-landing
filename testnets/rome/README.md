@@ -84,7 +84,7 @@ xxxx
 
 #### Substrate Version
 
-`0.x.x.x.x`
+`1.0.0`
 
 #### Types
 
@@ -92,6 +92,10 @@ These are all public types that are part of the runtime. They are public in the 
 
 
 only public parts of struct.. and of course only public types
+
+##### `type PaidTermId`
+
+`u64`
 
 ##### `struct PaidMembershipTerms`
 
