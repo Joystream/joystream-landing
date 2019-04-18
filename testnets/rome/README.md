@@ -93,7 +93,7 @@ These are all public types that are part of the runtime. They are public in the 
 
 only public parts of struct.. and of course only public types
 
-##### `type MemberId`
+##### type MemberId
 
 xxxx
 
@@ -135,17 +135,17 @@ pub enum EntryMethod<T: Trait> {
 
 ##### `struct Profile`
 
-| Name                                  | Type                          |
-| :------------------------------------ |:------------------------------|
-| `id`                                  | [`T::MemberId`](#`type MemberId`)                 |
-| `handle`                              | `Vec<u8>`                     |
-| `avatar_uri`                          | `Vec<u8>`                     |
-| `about`                               | `Vec<u8>`                     |
-| `registered_at_block`                 | `T::BlockNumber`              |
-| `registered_at_time`                  | `T::Moment`                   |
-| `entry`                               | `EntryMethod`                 |
-| `suspended`                           | `bool`                        |
-| `subscription`                        | `Option<T::SubscriptionId>`   |
+| Name                                  | Type                              |
+| :------------------------------------ |:----------------------------------|
+| `id`                                  | [`T::MemberId`](#type-MemberId)   |
+| `handle`                              | `Vec<u8>`                         |
+| `avatar_uri`                          | `Vec<u8>`                         |
+| `about`                               | `Vec<u8>`                         |
+| `registered_at_block`                 | `T::BlockNumber`                  |
+| `registered_at_time`                  | `T::Moment`                       |
+| `entry`                               | `EntryMethod`                     |
+| `suspended`                           | `bool`                            |
+| `subscription`                        | `Option<T::SubscriptionId>`       |
 
 ##### `struct UserInfo`
 
