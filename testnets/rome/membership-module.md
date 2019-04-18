@@ -3,61 +3,38 @@
 
 # Overview
 
-`Describe purpose of module`
+Manages the set of current members, their profile, status.
 
 ## Constants
 
 
-| Name                        | Type          | Value                |
-| --------------------------- |:-------------:| --------------------:|
-| `DEFAULT_PAID_TERM_ID`      | `u64`         | 0                    |
-| `DEFAULT_PAID_TERM_FEE`     | `u64`        | 100                    |
-| `DEFAULT_PAID_TERM_TEXT`    | `String`        | Default Paid Term TOS...   |
+| Name                                  | Type                 | Value                             |
+| ------------------------------------- |:--------------------:| :--------------------------------:|
+| `DEFAULT_PAID_TERM_ID`                | `u64`                | `0`                               |
+| `DEFAULT_PAID_TERM_FEE`               | `u64`                | `100`                             |
+| `DEFAULT_PAID_TERM_TEXT`              | `String`             | `Default Paid Term TOS...`        |
 
 ## State Variables
 
+| Name                                | Type                                                    | Genesis                    | Default                             |
+| ----------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
+| `first_member_id`                   | `T::MemberId`                                           | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
+| `next_member_id`                    | `T::MemberId`                                           | `No`                       | `DEFAULT_FIRST_MEMBER_ID`  |
+| `account_id_by_member_id`           | `T::MemberId => T::AccountId`                           | `No`                       | - |
+| `member_id_by_account_id`           | `map T::AccountId => Option<T::MemberId>`               | `No`                       | - |
+| `member_profile`                    | `map T::MemberId => Option<Profile<T>>`                 | `No`                       | - |
+| `handles`                           | `map Vec<u8> => Option<T::MemberId>`                    | `No`                       | - |
+| `next_paid_membership_terms_id`     | `T::PaidTermId`                                         | `No`                       | `FIRST_PAID_TERMS_ID`|
+| `paid_membership_terms_by_id`       | `map T::PaidTermId => Option<PaidMembershipTerms<T>>`   | `No`                       | `FIRST_PAID_TERMS_ID`|
+| `next_paid_membership_terms_id`     | `Vec<T::PaidTermId>`                                    | `No`                       | `vec![DEFAULT_PAID_TERM_ID]`|
+| `active_paid_membership_terms`      | `Vec<T::PaidTermId>`                                    | `No`                       | `vec![DEFAULT_PAID_TERM_ID]`|
+| `new_memberships_allowed`           | `bool`                                                  | `No`                       | `true` |
+| `screening_authority`               | `Option<T::AccountId>`                                  | `No`                       | - |
+| `min_handle_length`                 | `u32`                                                   | `No`                       | `DEFAULT_MIN_HANDLE_LENGTH` |
+| `max_handle_length`                 | `u32`                                                   | `No`                       | `DEFAULT_MAX_HANDLE_LENGTH` |
+| `max_avatar_uri_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_AVATAR_URI_LENGTH` |
+| `max_about_text_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_ABOUT_TEXT_LENGTH` |
 
-
-| Name                       | Type                   | Genesis                          | Default               |
-| --------------------------- |:---------------------:|:--------------------------------:|:--------------------:|
-| `first_member_id`           | `T::MemberId`         | TYes`                                | `DEFAULT_FIRST_MEMBER_IDE` |
-| `next_member_id`     | `T::MemberId`                 | 100                              |  `DEFAULT_FIRST_MEMBER_IDE`  |
-| `DEFAULT_PAID_TERM_TEXT`    | `String`              | Default Paid Term TOS...         | |
-
-```Rust
-
-get(first_member_id) config(first_member_id): T::MemberId = T::MemberId::sa()
-
-) build(|config: &GenesisConfig<T>| config.first_member_id): T::MemberId = T::MemberId::sa(DEFAULT_FIRST_MEMBER_ID)
-
-account_id_by_member_id) : map T::MemberId => T::AccountId
-
-member_id_by_account_id) : map T::AccountId => Option<T::MemberId>
-
-member_profile) : map T::MemberId => Option<Profile<T>>
-
-handles) : map Vec<u8> => Option<T::MemberId>
-
-next_paid_membership_terms_id) : T::PaidTermId = T::PaidTermId::sa(FIRST_PAID_TERMS_ID)
-
-paid_membership_terms_by_id) build(|config: &GenesisConfig<T>| {
-            // This method only gets called when initializing storage, and is
-            // compiled as native code. (Will be called when building `raw` chainspec)
-            // So it can't be relied upon to initialize storage for runtimes updates.
-            // Initialization for updated runtime is done in run_migration()
-            let mut terms: PaidMembershipTerms<T> = Default::default();
-            terms.fee = config.default_paid_membership_fee;
-            vec![(terms.id, terms)]
-        }) : map T::PaidTermId => Option<PaidMembershipTerms<T>>
-
-active_paid_membership_terms) : Vec<T::PaidTermId> = vec![T::PaidTermId::sa(DEFAULT_PAID_TERM_ID)]
-new_memberships_allowed) : bool = true
-screening_authority) : Option<T::AccountId>
-min_handle_length) : u32 = DEFAULT_MIN_HANDLE_LENGTH
-max_handle_length) : u32 = DEFAULT_MAX_HANDLE_LENGTH
-max_avatar_uri_length) : u32 = DEFAULT_MAX_AVATAR_URI_LENGTH
-max_about_text_length) : u32 = DEFAULT_MAX_ABOUT_TEXT_LENGTH
-```
 ## WIP: Peer Module Dependencies
 
 The following list of peer modules, are relied upon to be in the same runtime.
@@ -73,20 +50,72 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ## Events
 
-- `added_member(String s, PublicKey s)`
-- `added_member(String s, PublicKey s)`
-- `added_member(String s, PublicKey s)`
+- `MemberRegistered(MemberId, AccountId)``
+- `MemberUpdatedAboutText(MemberId)`
+- `MemberUpdatedAvatar(MemberId)`
+- `MemberUpdatedHandle(MemberId)`
 
 ## Transactions
 
-### `add_member`
+### `buy_membership`
 
 - **Description:** hjaklfdjklfjklødsjlfø
 - **Parameters:**
-  1. `PublicKey s`: xxx
-  2. `String s`: xxxx
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
 - **Pre-condition:** `xxx`  
 - **Post-condition:** `xxxx`
 - **Events:**
   - xx
   - xx
+- **Errors:**
+  -
+
+### `change_member_about_text(origin, text: Vec<u8>)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
+
+### `change_member_avatar(origin, uri: Vec<u8>)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
+
+### `change_member_handle(origin, handle: Vec<u8>)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
+
+### `update_profile(origin, user_info: UserInfo)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
+
+### `add_screened_member(origin, new_member: T::AccountId, user_info: UserInfo)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
+
+### `set_screening_authority(authority: T::AccountId)`
+
+- **Description:** hjaklfdjklfjklødsjlfø
+- **Parameters:**
+  1. `origin: Origin ?`
+  2. `paid_terms_id: T::PaidTermId`
+  3. `user_info: UserInfo`
