@@ -14,45 +14,42 @@ only public parts of struct.. and of course only public types
 
 `u64`
 
+## AccountId
+
+`xxx`
+
 ## PaidMembershipTerms
 
 **struct**
 
-```Rust
-pub struct PaidMembershipTerms<T: Trait> {
-    /// Unique identifier - the term id
-    pub id: T::PaidTermId,
-    /// Quantity of native tokens which must be provably burned
-    pub fee: BalanceOf<T>,
-    /// String of capped length describing human readable conditions which are being agreed upon
-    pub text: Vec<u8>,
-}
-```
+| Field                                 | Type                              |
+| :------------------------------------ |:----------------------------------|
+| `id`                                  | `T::PaidTermId`                   |
+| `fee`                                 | `BalanceOf<T>`                    |
+| `text`                                | `Vec<u8>`                         |
 
 ## CheckedUserInfo
 
 **struct**
 
-```Rust
-struct CheckedUserInfo {
-    handle: Vec<u8>,
-    avatar_uri: Vec<u8>,
-    about: Vec<u8>,
-}
-```
+| Field                                 | Type                              |
+| :------------------------------------ |:----------------------------------|
+| `handle`                              | `Vec<u8>`                         |
+| `avatar_uri`                          | `Vec<u8>`                         |
+| `about`                               | `Vec<u8>`                         |
 
 ## EntryMethod
 
 **enum**
 
-- Paid(PaidTermId),
-- Screening(AccountId)
+- `Paid`([`PaidTermId`](#PaidTermId))
+- `Screening(AccountId)`
 
 ## Profile
 
 **struct**
 
-| Field                                  | Type                              |
+| Field                                 | Type                              |
 | :------------------------------------ |:----------------------------------|
 | `id`                                  | [`MemberId`](#MemberId)   |
 | `handle`                              | `Vec<u8>`                         |

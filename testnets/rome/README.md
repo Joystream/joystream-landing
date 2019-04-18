@@ -76,10 +76,6 @@ Notice that no _iomplementaiton_ is ever provided, only how transaction generate
 
 something high level?
 
-### Roles
-
-xxxx
-
 ### Substrate Runtime
 
 #### Substrate Version
@@ -93,6 +89,8 @@ See [here](#types).
 #### Modules
 
 - [Membership](membership-module.md)
+- [Council](council-module.md)
+- [Content Directory](content-directory-module.md)
 
 #### Migrations
 
@@ -103,6 +101,12 @@ list of what other runtimes one will introduce a migration from....
 ### Protocols
 
 xxxx
+
+#### Roles
+
+- role 1
+- role 2
+
 
 ## References
 
