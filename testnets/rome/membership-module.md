@@ -8,7 +8,7 @@
 - [State Variables](#state-variables)
 - [State Invariants](#state-invariants)
 - [Events](#events)
-- [Peer Module Dependencies](#peer-module-dependencies)
+- [Module Dependencies](#module-dependencies)
 - [Transactions](#transactions)
   - [buy_membership](#buy_membership)
   - [change_member_about_text](#change_member_about_text)
@@ -64,7 +64,7 @@ Manages the set of current members, their profile, status.
 1. `xxxx`
 2. `xxxx`
 
-## Peer Module Dependencies
+## Module Dependencies
 
 WIP:
 

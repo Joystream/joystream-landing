@@ -93,7 +93,37 @@ These are all public types that are part of the runtime. They are public in the 
 
 only public parts of struct.. and of course only public types
 
-##### `struct EntryMethod`
+##### `struct PaidMembershipTerms`
+
+```Rust
+pub struct PaidMembershipTerms<T: Trait> {
+    /// Unique identifier - the term id
+    pub id: T::PaidTermId,
+    /// Quantity of native tokens which must be provably burned
+    pub fee: BalanceOf<T>,
+    /// String of capped length describing human readable conditions which are being agreed upon
+    pub text: Vec<u8>,
+}
+```
+
+##### `struct CheckedUserInfo`
+
+```Rust
+struct CheckedUserInfo {
+    handle: Vec<u8>,
+    avatar_uri: Vec<u8>,
+    about: Vec<u8>,
+}
+```
+
+##### `enum EntryMethod`
+
+```Rust
+pub enum EntryMethod<T: Trait> {
+    Paid(T::PaidTermId),
+    Screening(T::AccountId),
+}
+```
 
 ##### `struct Profile`
 
@@ -130,3 +160,7 @@ list of what other runtimes one will introduce a migration from....
 ### Protocols
 
 xxxx
+
+## References
+
+1. xxxx
