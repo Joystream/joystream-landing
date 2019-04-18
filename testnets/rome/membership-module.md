@@ -4,6 +4,19 @@
 ## Table Of Content
 
 - [Overview](#overview)
+- [Constants](#constants)
+- [State Variables](#state-variables)
+- [Peer Module Dependencies](#peer-module-dependencies)
+- [State Invariants](#state-invariants)
+- [Events](#events)
+- [Transactions](#transactions)
+  - [buy_membership](#buy_membership)
+  - [change_member_about_text](#change_member_about_text)
+  - [change_member_avatar](#change_member_avatar)
+  - [change_member_handle](#change_member_handle)
+  - [update_profile](#update_profile)
+  - [add_screened_member](#add_screened_member)
+  - [set_screening_authority](#set_screening_authority)
 
 # Overview
 
@@ -69,8 +82,7 @@ The following list of peer modules, are relied upon to be in the same runtime.
 ## `buy_membership`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
-  1. `origin: Origin ?`
+- **Payload:**
   2. `paid_terms_id: T::PaidTermId`
   3. `user_info: UserInfo`
 - **Pre-condition:** `xxx`  
@@ -83,35 +95,34 @@ The following list of peer modules, are relied upon to be in the same runtime.
 ## `change_member_about_text`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
-  1. `origin: Origin ?`
-  2. `text: Vec<u8>`
+- **Payload:**
+  1. `text: Vec<u8>`
 
 ## `change_member_avatar`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
+- **Payload:**
   1. `origin: Origin ?`
   2. `uri: Vec<u8>`
 
 ## `change_member_handle`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
+- **Payload:**
   1. `origin: Origin ?`
   2. `handle: Vec<u8>`
 
 ## `update_profile`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
+- **Payload:**
   1. `origin: Origin ?`
   2. `user_info: UserInfo`
 
 ## `add_screened_member`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
+- **Payload:**
   1. `origin: Origin ?`
   2. `new_member: T::AccountId`
   3. `user_info: UserInfo`
@@ -119,5 +130,5 @@ The following list of peer modules, are relied upon to be in the same runtime.
 ## `set_screening_authority`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Parameters:**
+- **Payload:**
   1. `authority: T::AccountId`
