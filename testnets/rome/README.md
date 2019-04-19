@@ -82,15 +82,21 @@ something high level?
 
 `1.0.0`
 
-#### Types
-
-See [here](#types).
+#### [Types](#types)
 
 #### Modules
 
-- [Membership](membership-module.md)
-- [Council](council-module.md)
-- [Content Directory](content-directory-module.md)
+- [**Proposals**](proposal-module.md)
+- [**CouncilElection**](council-election-module.md)
+- [**Council**](council-module.md)
+- [**Memo**](memo-module.md)
+- [**Members**](members-module.md)
+- [**Migration**](migration-module.md)
+- [**Actors**](actors-module.md)
+- [**DataObjectTypeRegistry**](data-object-type-registry-module.md)
+- [**DataDirectory**](data-directory-module.md)
+- [**DataObjectStorageRegistry**](data-object-storage-registry-module.md)
+- [**DownloadSessions**](download-sessions-module.md)
 
 #### Migrations
 

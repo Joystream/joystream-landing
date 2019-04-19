@@ -18,13 +18,25 @@ only public parts of struct.. and of course only public types
 
 `xxx`
 
+## BlockNumber
+
+`xxx`
+
+## Moment
+
+`xxx`
+
+## SubscriptionId
+
+`xxx`
+
 ## PaidMembershipTerms
 
 **struct**
 
 | Field                                 | Type                              |
 | :------------------------------------ |:----------------------------------|
-| `id`                                  | `T::PaidTermId`                   |
+| `id`                                  | [`PaidTermId`](#PaidTermId)       |
 | `fee`                                 | `BalanceOf<T>`                    |
 | `text`                                | `Vec<u8>`                         |
 
@@ -43,7 +55,7 @@ only public parts of struct.. and of course only public types
 **enum**
 
 - `Paid`([`PaidTermId`](#PaidTermId))
-- `Screening(AccountId)`
+- `Screening`([`AccountId`](#AccountId))
 
 ## Profile
 
@@ -51,7 +63,7 @@ only public parts of struct.. and of course only public types
 
 | Field                                 | Type                              |
 | :------------------------------------ |:----------------------------------|
-| `id`                                  | [`MemberId`](#MemberId)   |
+| `id`                                  | [`MemberId`](#MemberId)           |
 | `handle`                              | `Vec<u8>`                         |
 | `avatar_uri`                          | `Vec<u8>`                         |
 | `about`                               | `Vec<u8>`                         |
