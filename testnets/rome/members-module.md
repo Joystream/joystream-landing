@@ -36,6 +36,14 @@ Manages the set of current members, their profile, status.
 | `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
 | `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
 
+## Parametric Types
+
+These are types which are instantiated by the runtime in which this module is being instantiated.
+
+- `MemberId`
+- `AccountId`
+- `PaidTermId`
+
 ## State
 
 ### Variables
@@ -76,7 +84,7 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ## Events
 
-- `MemberRegistered(MemberId, AccountId)``
+- `MemberRegistered(MemberId, AccountId)`
 - `MemberUpdatedAboutText(MemberId)`
 - `MemberUpdatedAvatar(MemberId)`
 - `MemberUpdatedHandle(MemberId)`

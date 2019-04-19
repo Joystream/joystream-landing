@@ -1,7 +1,7 @@
 # Rome Testnet Specification
 
 ## Table Of Content
-
+WIP
 - [Purpose](#purpose)
 - [Decisions](#decisions)
 - [Work In Progress](#work-in-progress)
@@ -86,6 +86,8 @@ something high level?
 
 #### Modules
 
+These are the Joystream specific modules, and thus the only ones that actually need to have implementation done or altered.
+
 - [**Proposals**](proposal-module.md)
 - [**CouncilElection**](council-election-module.md)
 - [**Council**](council-module.md)
@@ -97,6 +99,21 @@ something high level?
 - [**DataDirectory**](data-directory-module.md)
 - [**DataObjectStorageRegistry**](data-object-storage-registry-module.md)
 - [**DownloadSessions**](download-sessions-module.md)
+
+##### SRML
+
+These modules are part of the runtime, but are already implemented part of the SRML.
+
+- [**System**](system-module.md)
+- [**Timestamp**](timestamp-module.md)
+- [**Consensus**](consensus-module.md)
+- [**Aura**](aura-module.md)
+- [**Indices**](indices-module.md)
+- [**Balances**](balance-module.md)
+- [**Session**](session-module.md)
+- [**Staking**](proposal-module.md)
+- [**Sudo**](proposal-module.md)
+- [**Grandpa**](proposal-module.md)
 
 #### Migrations
 
@@ -112,6 +129,26 @@ xxxx
 
 - role 1
 - role 2
+
+#### RPC
+
+xxxx
+
+#### Peer To Peer
+
+##### Messages
+
+###### Join
+
+xxxxx
+
+###### Leave
+
+xxx
+
+###### Advertise
+
+xxxxx
 
 
 ## References
