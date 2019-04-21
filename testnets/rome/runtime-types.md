@@ -11,27 +11,27 @@ something about type unoacking...?
 
 ## MemberId
 
-`u64`
+u64
 
 ## PaidTermId
 
-`u64`
+u64
 
 ## AccountId
 
-`cant find!`
+**cant find!**
 
 ## BlockNumber
 
-`u64`
+u64
 
 ## Moment
 
-`u64`
+u64
 
 ## SubscriptionId
 
-`u64`
+u64
 
 ## PaidMembershipTerms
 

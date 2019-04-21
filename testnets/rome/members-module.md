@@ -93,54 +93,43 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ### `buy_membership`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  2. `paid_terms_id: T::PaidTermId`
-  3. `user_info: UserInfo`
-- **Pre-condition:** `xxx`  
-- **Post-condition:** `xxxx`
-- **Events:** xxx
-  - xx
-  - xx
-- **Errors:** xxx
+- **Description:** Establish new membership through payment.
+- **Payload:** [PaidTermId](runtime-types.md#PaidTermId) p, [UserInfo](runtime-types.md#UserInfo) u
+- **Code paths**:
+
+| i     | Precondition                          | Postcondition                              | Result                     | Event(s)                  |
+| :---: | :------------------------------------ |:-------------------------------------------|----------------------------|---------------------------|
+| 0     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
+| 1     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
+| 2     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
+
 
 ### `change_member_about_text`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `text: Vec<u8>`
+- **Payload:** `text: Vec<u8>`
 
 ### `change_member_avatar`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `origin: Origin ?`
-  2. `uri: Vec<u8>`
+- **Payload:** `uri: Vec<u8>`
 
 ### `change_member_handle`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `origin: Origin ?`
-  2. `handle: Vec<u8>`
+- **Payload:** `handle: Vec<u8>`
 
 ### `update_profile`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `origin: Origin ?`
-  2. `user_info: UserInfo`
+- **Payload:** `user_info: UserInfo`
 
 ### `add_screened_member`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `origin: Origin ?`
-  2. `new_member: T::AccountId`
-  3. `user_info: UserInfo`
+- **Payload:** `new_member: T::AccountId`, `user_info: UserInfo`
 
 ### `set_screening_authority`
 
 - **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:**
-  1. `authority: T::AccountId`
+- **Payload:** `authority: T::AccountId`
