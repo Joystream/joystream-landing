@@ -94,14 +94,14 @@ The following list of peer modules, are relied upon to be in the same runtime.
 ### `buy_membership`
 
 - **Description:** Establish new membership through payment.
-- **Payload:** [PaidTermId](runtime-types.md#PaidTermId) p, [UserInfo](runtime-types.md#UserInfo) u
-- **Code paths**:
+- **Payload:** [`PaidTermId`](runtime-types.md#PaidTermId) p, [`UserInfo`](runtime-types.md#UserInfo) u
+- **Mutually Exclusive Constraints**:
 
 | i     | Precondition                          | Postcondition                              | Result                     | Event(s)                  |
 | :---: | :------------------------------------ |:-------------------------------------------|----------------------------|---------------------------|
 | 0     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
-| 1     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
-| 2     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
+| 1     | `!new_memberships_allowed`            | -                                    | `Err("new members not allowed")`                     | -                     |
+| 2     | `.....`                               | `member_id_by_account_id.exists(x)`                                    | `Err("account already associated with a membership")`                     | `...`                     |
 
 
 ### `change_member_about_text`
