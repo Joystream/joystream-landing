@@ -75,37 +75,37 @@ These are types which are instantiated by the runtime in which this module is be
 
 ### `member_profile`
 
-- **Type:** `map T::MemberId => Option<Profile<T>>`
+- **Type:** *map* [MemberId](README.md#type-MemberId) => Option<Profile<T>>
 - **Genesis:** `No`
 - **Default:** -
 
 ### `handles`
 
-- **Type:** `map Vec<u8> => Option<T::MemberId>`
+- **Type:** map Vec<u8> => Option< [MemberId](README.md#type-MemberId) >
 - **Genesis:** `No`
 - **Default:** -
 
 ### `next_paid_membership_terms_id`
 
-- **Type:** `T::PaidTermId`
+- **Type:** `PaidTermId`
 - **Genesis:** `No`
 - **Default:** `FIRST_PAID_TERMS_ID`
 
 ### `paid_membership_terms_by_id`
 
-- **Type:** `map T::PaidTermId => Option<PaidMembershipTerms<T>>`
+- **Type:** map [PaidTermId](README.md#PaidTermId) => Option<PaidMembershipTerms<T>>
 - **Genesis:** `No`
 - **Default:** `FIRST_PAID_TERMS_ID`
 
 ### `next_paid_membership_terms_id`
 
-- **Type:** `Vec<T::PaidTermId>`
+- **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
 - **Default:** `vec![DEFAULT_PAID_TERM_ID]`
 
 ### `active_paid_membership_terms`
 
-- **Type:** `Vec<T::PaidTermId>`
+- **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
 - **Default:** `vec![DEFAULT_PAID_TERM_ID]`
 
@@ -144,29 +144,6 @@ These are types which are instantiated by the runtime in which this module is be
 - **Type:** u32
 - **Genesis:** `No`
 - **Default:** `DEFAULT_MAX_ABOUT_TEXT_LENGTH`
-
-
-| Name                                | Type                                                    | Genesis                    | Default                             |
-| :---------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
-| `first_member_id`                   | [MemberId](README.md#type-MemberId)                     | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
-| `next_member_id`                    | `T::MemberId`                                           | `No`                       | `DEFAULT_FIRST_MEMBER_ID`  |
-| `account_id_by_member_id`           | `T::MemberId => T::AccountId`                           | `No`                       | - |
-
-| `member_id_by_account_id`           | `map T::AccountId => Option<T::MemberId>`               | `No`                       | - |
-
-| `member_profile`                    | `map T::MemberId => Option<Profile<T>>`                 | `No`                       | - |
-
-| `handles`                           | `map Vec<u8> => Option<T::MemberId>`                    | `No`                       | - |
-| `next_paid_membership_terms_id`     | `T::PaidTermId`                                         | `No`                       | `FIRST_PAID_TERMS_ID`|
-| `paid_membership_terms_by_id`       | `map T::PaidTermId => Option<PaidMembershipTerms<T>>`   | `No`                       | `FIRST_PAID_TERMS_ID`|
-| `next_paid_membership_terms_id`     | `Vec<T::PaidTermId>`                                    | `No`                       | `vec![DEFAULT_PAID_TERM_ID]`|
-| `active_paid_membership_terms`      | `Vec<T::PaidTermId>`                                    | `No`                       | `vec![DEFAULT_PAID_TERM_ID]`|
-| `new_memberships_allowed`           | `bool`                                                  | `No`                       | `true` |
-| `screening_authority`               | `Option<T::AccountId>`                                  | `No`                       | - |
-| `min_handle_length`                 | `u32`                                                   | `No`                       | `DEFAULT_MIN_HANDLE_LENGTH` |
-| `max_handle_length`                 | `u32`                                                   | `No`                       | `DEFAULT_MAX_HANDLE_LENGTH` |
-| `max_avatar_uri_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_AVATAR_URI_LENGTH` |
-| `max_about_text_length`             | `u32`                                                   | `No`                       | `DEFAULT_MAX_ABOUT_TEXT_LENGTH` |
 
 ### Invariants
 
