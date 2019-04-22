@@ -1,7 +1,7 @@
-# Rome Testnet Specification
+# WIP: Rome Testnet Specification
 
 ## Table Of Content
-WIP
+
 - [Purpose](#purpose)
 - [Decisions](#decisions)
 - [Work In Progress](#work-in-progress)
@@ -48,6 +48,13 @@ what about block level callback?
 
 Notice that no _iomplementaiton_ is ever provided, only how transaction generate new state constraints. This allows us to avoid any implementation specific types, and also allows all modules to be defiend in terms of what actual types are instantioned in the parametric `T::` trait, rather than introduce lots of trait abstractions.
 
+
+cponditionals are basically valid Rust code.
+
+side ffects are pure, no
+
+functions used can only be pure, i.e. only depend on explicit parameters, and also have 0 side effcts.
+
 ### Protocols
 
 
@@ -83,6 +90,12 @@ something high level?
 `1.0.0`
 
 #### [Types](#types)
+
+#### functions
+
+like snure signed_
+
+https://crates.parity.io/srml_system/fn.ensure_signed.html
 
 #### Modules
 

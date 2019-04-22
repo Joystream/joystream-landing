@@ -48,13 +48,114 @@ These are types which are instantiated by the runtime in which this module is be
 
 ### Variables
 
+### `first_member_id`
+
+- **Type:** [MemberId](README.md#type-MemberId)
+- **Genesis:** `Yes`
+- **Default:** `DEFAULT_FIRST_MEMBER_ID`
+
+### `next_member_id`
+
+- **Type:** [MemberId](README.md#type-MemberId)
+- **Genesis:** `No`
+- **Default:** `DEFAULT_FIRST_MEMBER_ID`
+
+### `account_id_by_member_id`
+
+- **Type:** *map* [MemberId](README.md#type-MemberId) => [AccountId](README.md#AccountId)
+- **Genesis:** `No`
+- **Default:** -
+
+
+### `member_id_by_account_id`
+
+- **Type:** *map* [AccountId](README.md#AccountId) => Option< [MemberId](README.md#type-MemberId) >
+- **Genesis:** `No`
+- **Default:** -
+
+### `member_profile`
+
+- **Type:** `map T::MemberId => Option<Profile<T>>`
+- **Genesis:** `No`
+- **Default:** -
+
+### `handles`
+
+- **Type:** `map Vec<u8> => Option<T::MemberId>`
+- **Genesis:** `No`
+- **Default:** -
+
+### `next_paid_membership_terms_id`
+
+- **Type:** `T::PaidTermId`
+- **Genesis:** `No`
+- **Default:** `FIRST_PAID_TERMS_ID`
+
+### `paid_membership_terms_by_id`
+
+- **Type:** `map T::PaidTermId => Option<PaidMembershipTerms<T>>`
+- **Genesis:** `No`
+- **Default:** `FIRST_PAID_TERMS_ID`
+
+### `next_paid_membership_terms_id`
+
+- **Type:** `Vec<T::PaidTermId>`
+- **Genesis:** `No`
+- **Default:** `vec![DEFAULT_PAID_TERM_ID]`
+
+### `active_paid_membership_terms`
+
+- **Type:** `Vec<T::PaidTermId>`
+- **Genesis:** `No`
+- **Default:** `vec![DEFAULT_PAID_TERM_ID]`
+
+### `new_memberships_allowed`
+
+- **Type:** bool
+- **Genesis:** `No`
+- **Default:** `true`
+
+### `screening_authority`
+
+- **Type:** `Option<T::AccountId>`
+- **Genesis:** `No`
+- **Default:** -
+
+### `min_handle_length`
+
+- **Type:** u32
+- **Genesis:** `No`
+- **Default:** `DEFAULT_MIN_HANDLE_LENGTH`
+
+### `max_handle_length`
+
+- **Type:** u32
+- **Genesis:** `No`
+- **Default:** `DEFAULT_MAX_HANDLE_LENGTH`
+
+### `max_avatar_uri_length`
+
+- **Type:** u32
+- **Genesis:** `No`
+- **Default:** `DEFAULT_MAX_AVATAR_URI_LENGTH`
+
+### `max_about_text_length`
+
+- **Type:** u32
+- **Genesis:** `No`
+- **Default:** `DEFAULT_MAX_ABOUT_TEXT_LENGTH`
+
+
 | Name                                | Type                                                    | Genesis                    | Default                             |
 | :---------------------------------- |:------------------------------------------------------- |:--------------------------:|:-----------------------------------:|
-| `first_member_id`                   | [MemberId](README.md#type-MemberId)                                           | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
+| `first_member_id`                   | [MemberId](README.md#type-MemberId)                     | `Yes`                      | `DEFAULT_FIRST_MEMBER_ID` |
 | `next_member_id`                    | `T::MemberId`                                           | `No`                       | `DEFAULT_FIRST_MEMBER_ID`  |
 | `account_id_by_member_id`           | `T::MemberId => T::AccountId`                           | `No`                       | - |
+
 | `member_id_by_account_id`           | `map T::AccountId => Option<T::MemberId>`               | `No`                       | - |
+
 | `member_profile`                    | `map T::MemberId => Option<Profile<T>>`                 | `No`                       | - |
+
 | `handles`                           | `map Vec<u8> => Option<T::MemberId>`                    | `No`                       | - |
 | `next_paid_membership_terms_id`     | `T::PaidTermId`                                         | `No`                       | `FIRST_PAID_TERMS_ID`|
 | `paid_membership_terms_by_id`       | `map T::PaidTermId => Option<PaidMembershipTerms<T>>`   | `No`                       | `FIRST_PAID_TERMS_ID`|
@@ -90,60 +191,97 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ### `MemberUpdatedAboutText`
 
-- **Payload:** MemberId
-- **Description:**
+#### Payload
+
+1. [MemberId](runtime-types.md#MemberId) `id`
+2. [MemberId](runtime-types.md#MemberId) `id_2`
+
+#### Description
+
+The about text on member `id` was alted to `x`
 
 ### `MemberUpdatedAvatar`
 
-- **Payload:** MemberId
-- **Description:**
+_fill in_
 
 ### `MemberUpdatedHandle`
 
-- **Payload:** MemberId
-- **Description:**
+_fill in_
 
 ## Transactions
 
 ### `buy_membership`
 
-- **Payload:** [`PaidTermId`](runtime-types.md#PaidTermId) p, [`UserInfo`](runtime-types.md#UserInfo) u
-- **Description:** Establish new membership through payment.
-- **Mutually Exclusive Constraints**:
+#### Payload
 
-| i     | Precondition                          | Postcondition                              | Result                     | Event(s)                  |
-| :---: | :------------------------------------ |:-------------------------------------------|----------------------------|---------------------------|
-| 0     | `.....`                               | `.....`                                    | `....`                     | `...`                     |
-| 1     | `!new_memberships_allowed`            | -                                    | `Err("new members not allowed")`                     | -                     |
-| 2     | `.....`                               | `member_id_by_account_id.exists(x)`                                    | `Err("account already associated with a membership")`                     | `...`                     |
+1. [PaidTermId](runtime-types.md#PaidTermId) `p`
+2. [UserInfo](runtime-types.md#UserInfo) `u`
 
+#### Description
+
+Establish new membership through payment.
+
+#### Termination
+
+##### Bad signature
+
+ - **Precondition:** [ensure_signed]() (`origin`)
+ - **Side effect(s):** _none_
+ - **Result:** `Err(<what here?>)`
+ - **Event(s):** _none_
+
+##### Closed for new memberships
+
+  - **Precondition:** `precondition(1) && !new_memberships_allowed`
+  - **Side effect(s):** _none_
+  - **Result:** `Err("new members not allowed")`
+  - **Event(s):** _none_
+
+##### Account has existing membership
+
+  - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
+  - **Side effect(s):** _none_
+  - **Result:** `Err("account already associated with a membership")`
+  - **Event(s):** _none_
+
+##### 4
+
+
+- ensure!(!T::Roles::is_role_account(&who), "role key cannot be used for membership");
+- let terms = Self::ensure_active_terms_id(paid_terms_id)?;
+-  ensure!(T::Currency::can_slash(&who, terms.fee), "not enough balance to buy membership");
+- let user_info = Self::check_user_registration_info(user_info)?;
+- Self::ensure_unique_handle(&user_info.handle)?;
+
+##### Membership established
+
+- **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
+- **Side effect(s):**
+  - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
+  - `let _ = T::Currency::slash(&who, terms.fee);`
+- **Result:** `Ok(member_id)`
+- **Event(s):** `MemberRegistered(member_id, who.clone())`
 
 ### `change_member_about_text`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `text: Vec<u8>`
+_fill in_
 
 ### `change_member_avatar`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `uri: Vec<u8>`
+_fill in_
 
 ### `change_member_handle`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `handle: Vec<u8>`
+_fill in_
 
 ### `update_profile`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `user_info: UserInfo`
+_fill in_
 
 ### `add_screened_member`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `new_member: T::AccountId`, `user_info: UserInfo`
+_fill in_
 
 ### `set_screening_authority`
 
-- **Description:** hjaklfdjklfjklødsjlfø
-- **Payload:** `authority: T::AccountId`
+_fill in_
