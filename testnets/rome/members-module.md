@@ -84,17 +84,31 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 ## Events
 
-- `MemberRegistered(MemberId, AccountId)`
-- `MemberUpdatedAboutText(MemberId)`
-- `MemberUpdatedAvatar(MemberId)`
-- `MemberUpdatedHandle(MemberId)`
+### `MemberRegistered`
+- **Payload:** (MemberId, AccountId)
+- **Description:** (MemberId, AccountId)
+
+### `MemberUpdatedAboutText`
+
+- **Payload:** MemberId
+- **Description:**
+
+### `MemberUpdatedAvatar`
+
+- **Payload:** MemberId
+- **Description:**
+
+### `MemberUpdatedHandle`
+
+- **Payload:** MemberId
+- **Description:**
 
 ## Transactions
 
 ### `buy_membership`
 
-- **Description:** Establish new membership through payment.
 - **Payload:** [`PaidTermId`](runtime-types.md#PaidTermId) p, [`UserInfo`](runtime-types.md#UserInfo) u
+- **Description:** Establish new membership through payment.
 - **Mutually Exclusive Constraints**:
 
 | i     | Precondition                          | Postcondition                              | Result                     | Event(s)                  |

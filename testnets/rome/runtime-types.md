@@ -1,4 +1,3 @@
-
 # Types
 
 These are all public non-native Rust types that are part of the runtime. They are public in the sense that they are parameters exposed in the runtime metadata, due to being part of transactions, events or storage. Any other types that may appear in a particular implementation, for example generic types and traits/interfaces related to software engineering abstractions, are not included.
