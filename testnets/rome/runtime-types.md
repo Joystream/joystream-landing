@@ -6,7 +6,11 @@ something about type unoacking...?
 
 ## Vec
 
-`parity_codec::alloc::vec<T>`
+[parity_codec::alloc::vec<T>]()
+
+## ensure_signed
+
+[srml_system::ensure_signed](https://crates.parity.io/srml_system/fn.ensure_signed.html)
 
 ## MemberId
 
@@ -76,6 +80,8 @@ u64
 | `subscription`                        | [`Option`](#option)&lt;[`SubscriptionId`](#SubscriptionId)&gt; |
 
 ## UserInfo
+
+**struct**
 
 | Field                                  | Type                          |
 | :------------------------------------ |:------------------------------|

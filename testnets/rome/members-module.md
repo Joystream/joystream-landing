@@ -36,13 +36,14 @@ Manages the set of current members, their profile, status.
 | `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
 | `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
 
-## Parametric Types
+<!-- ## Parametric Types
 
 These are types which are instantiated by the runtime in which this module is being instantiated.
 
 - `MemberId`
 - `AccountId`
 - `PaidTermId`
+-->
 
 ## State
 
@@ -152,13 +153,9 @@ These are types which are instantiated by the runtime in which this module is be
 
 ## Module Dependencies
 
-WIP:
-
 The following list of peer modules, are relied upon to be in the same runtime.
 
-- **xxx:**. A
-- [**AccountIdByMemberId**](#AccountIdByMemberId)
-- xxx
+- [**Actors**](#actors-module.md)
 
 ## Events
 
@@ -185,7 +182,7 @@ _fill in_
 
 _fill in_
 
-## Transactions
+## Extrinsics
 
 ### `buy_membership`
 
@@ -198,46 +195,75 @@ _fill in_
 
 Establish new membership through payment.
 
-#### Termination
+#### Termination(s)
 
-##### Bad signature
-
- - **Precondition:** [ensure_signed]() (`origin`)
- - **Side effect(s):** _none_
- - **Result:** `Err(<what here?>)`
- - **Event(s):** _none_
-
-##### Closed for new memberships
-
-  - **Precondition:** `precondition(1) && !new_memberships_allowed`
-  - **Side effect(s):** _none_
-  - **Result:** `Err("new members not allowed")`
-  - **Event(s):** _none_
-
-##### Account has existing membership
-
-  - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
-  - **Side effect(s):** _none_
-  - **Result:** `Err("account already associated with a membership")`
-  - **Event(s):** _none_
-
-##### 4
+1. **Bad signature**
+   - **Precondition:** \![ensure_signed](runtime-types.md#ensure_signed) (`origin`)
+   - **Side effect(s):** _none_
+   - **Result:** `Err(<what here?>)`
+   - **Event(s):** _none_   
+2. **Closed for new memberships**
+    - **Precondition:** `precondition(1) && !new_memberships_allowed`
+    - **Side effect(s):** _none_
+    - **Result:** `Err("new members not allowed")`
+    - **Event(s):** _none_
+3. **Account has existing membership**
+    - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
+    - **Side effect(s):** _none_
+    - **Result:** `Err("account already associated with a membership")`
+    - **Event(s):** _none_
+4. **Key already used for role**
+    - **Precondition:** `precondition(3) && Actors.actor_by_account_id.exists(ensure_signed(origin))`
+    - **Side effect(s):** _none_
+    - **Result:** `Err(“role key cannot be used for membership”)`
+    - **Event(s):** _none_
 
 
-- ensure!(!T::Roles::is_role_account(&who), "role key cannot be used for membership");
-- let terms = Self::ensure_active_terms_id(paid_terms_id)?;
--  ensure!(T::Currency::can_slash(&who, terms.fee), "not enough balance to buy membership");
-- let user_info = Self::check_user_registration_info(user_info)?;
-- Self::ensure_unique_handle(&user_info.handle)?;
+let terms = Self::ensure_active_terms_id(paid_terms_id)?;
 
-##### Membership established
+```
+let active_terms = Self::active_paid_membership_terms();
+ensure!(
+    active_terms.iter().any(|&id| id == terms_id),
+    "paid terms id not active"
+);
+let terms = Self::paid_membership_terms_by_id(terms_id)
+    .ok_or("paid membership term id does not exist")?;
+Ok(terms)
+```
 
-- **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
-- **Side effect(s):**
-  - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
-  - `let _ = T::Currency::slash(&who, terms.fee);`
-- **Result:** `Ok(member_id)`
-- **Event(s):** `MemberRegistered(member_id, who.clone())`
+
+5. **Insufficient funds for membership**
+    - **Precondition:** `precondition(2) && ...`
+    - **Side effect(s):** _none_
+    - **Result:** `Err("....")`
+    - **Event(s):** _none_
+
+ensure!(T::Currency::can_slash(&who, terms.fee), "not enough balance to buy membership");
+
+6. **Invalid user information**
+    - **Precondition:** `precondition(2) && ...`
+    - **Side effect(s):** _none_
+    - **Result:** `Err("....")`
+    - **Event(s):** _none_
+
+let user_info = Self::check_user_registration_info(user_info)?;
+
+7. **Handle occupied**
+    - **Precondition:** `precondition(2) && ...`
+    - **Side effect(s):** _none_
+    - **Result:** `Err("....")`
+    - **Event(s):** _none_
+
+Self::ensure_unique_handle(&user_info.handle)?;
+
+8. **Membership established**
+    - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
+    - **Side effect(s):**
+      - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
+      - `let _ = T::Currency::slash(&who, terms.fee);`
+    - **Result:** `Ok(member_id)`
+    - **Event(s):** `MemberRegistered(member_id, who.clone())`
 
 ### `change_member_about_text`
 
