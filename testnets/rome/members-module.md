@@ -203,35 +203,51 @@ Establish new membership through payment.
    - **Result:** `Err(<what here?>)`
    - **Event(s):** _none_   
 2. **Closed for new memberships**
-    - **Precondition:** `precondition(1) && !new_memberships_allowed`
+    - **Precondition:** `!precondition(1) && !new_memberships_allowed`
     - **Side effect(s):** _none_
     - **Result:** `Err("new members not allowed")`
     - **Event(s):** _none_
 3. **Account has existing membership**
-    - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
+    - **Precondition:** `!precondition(2) && member_id_by_account_id.exists(x)`
     - **Side effect(s):** _none_
     - **Result:** `Err("account already associated with a membership")`
     - **Event(s):** _none_
 4. **Key already used for role**
-    - **Precondition:** `precondition(3) && Actors.actor_by_account_id.exists(ensure_signed(origin))`
+    - **Precondition:** `!precondition(3) && Actors.actor_by_account_id.exists(ensure_signed(origin))`
     - **Side effect(s):** _none_
     - **Result:** `Err(“role key cannot be used for membership”)`
     - **Event(s):** _none_
+5. **Terms are not active**
+    - **Precondition:** `!precondition(4) && !active_paid_membership_terms.iter().any(|x| x == p.id)`
+    - **Side effect(s):** _none_
+    - **Result:** `Err(“paid terms id not active”)`
+    - **Event(s):** _none_
+
+
+```
+fn ensure_active_terms_id(
+    terms_id: T::PaidTermId,
+) -> Result<PaidMembershipTerms<T>, &'static str> {
+
+    let active_terms = Self::active_paid_membership_terms();
+
+    ensure!(
+        active_terms.iter().any(|&id| id == terms_id),
+        "paid terms id not active"
+    );
+
+    let terms = Self::paid_membership_terms_by_id(terms_id)
+        .ok_or("paid membership term id does not exist")?;
+
+    Ok(terms)
+
+}
+```
+
+
 
 
 let terms = Self::ensure_active_terms_id(paid_terms_id)?;
-
-```
-let active_terms = Self::active_paid_membership_terms();
-ensure!(
-    active_terms.iter().any(|&id| id == terms_id),
-    "paid terms id not active"
-);
-let terms = Self::paid_membership_terms_by_id(terms_id)
-    .ok_or("paid membership term id does not exist")?;
-Ok(terms)
-```
-
 
 5. **Insufficient funds for membership**
     - **Precondition:** `precondition(2) && ...`

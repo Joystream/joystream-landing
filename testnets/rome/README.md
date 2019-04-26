@@ -45,6 +45,9 @@ what about block level callback?
 
 #### Extrinsics
 
+##### Terminiantion
+Important to notice that its very deeply specified, where even the order of error triggering in scenarios with mulitple simultanous errors, is commited to up front, compared to a loser standard of saying that, if you have one of these problems, you will get at least one fo these errors,w hich would drop order.
+
 - **pre-condition:** first order predicate in the runtime state and the transaction paramters which must hold _exactly_ for transaction to be accepted. e.g. that proper person has isgned?
 - **post-condition**: first order predicate in the runtime state and the transaction parameters which must hold _exactly_ when the transaction is accepted. The value of state variable `X` _after_ a transaction is handled, is denoted by `X'`. Hence, as an example, the condition that an integer variable `foo` has been incremented after a transaction is captured by the following predicate: `foo' == foo + 1`. Notice that blockchain state, like event logs ands o on, are not part of this, hence they are not in post-condition. (perhaps change?). It is OK to use separately defined functions to define this predicate, but these cannot have side effects.
 
