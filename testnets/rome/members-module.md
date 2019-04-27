@@ -4,7 +4,6 @@
 ## Table Of Content
 
 - [Overview](#overview)
-- [Constants](#constants)
 - [State Variables](#state-variables)
 - [State Invariants](#state-invariants)
 - [Events](#events)
@@ -21,7 +20,7 @@
 ## Overview
 
 Manages the set of current members, their profile, status.
-
+<!--
 ## Constants
 
 | Name                                  | Type                 | Value                             |
@@ -36,7 +35,7 @@ Manages the set of current members, their profile, status.
 | `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
 | `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
 
-<!-- ## Parametric Types
+ ## Parametric Types
 
 These are types which are instantiated by the runtime in which this module is being instantiated.
 
@@ -53,13 +52,13 @@ These are types which are instantiated by the runtime in which this module is be
 
 - **Type:** [MemberId](README.md#type-MemberId)
 - **Genesis:** `Yes`
-- **Default:** `DEFAULT_FIRST_MEMBER_ID`
+- **Default:** `1`
 
 ### `next_member_id`
 
 - **Type:** [MemberId](README.md#type-MemberId)
 - **Genesis:** `No`
-- **Default:** `DEFAULT_FIRST_MEMBER_ID`
+- **Default:** `1`
 
 ### `account_id_by_member_id`
 
@@ -90,25 +89,25 @@ These are types which are instantiated by the runtime in which this module is be
 
 - **Type:** `PaidTermId`
 - **Genesis:** `No`
-- **Default:** `FIRST_PAID_TERMS_ID`
+- **Default:** `1`
 
 ### `paid_membership_terms_by_id`
 
 - **Type:** map [PaidTermId](README.md#PaidTermId) => Option<PaidMembershipTerms<T>>
 - **Genesis:** `No`
-- **Default:** `FIRST_PAID_TERMS_ID`
+- **Default:** `1`
 
 ### `next_paid_membership_terms_id`
 
 - **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
-- **Default:** `vec![DEFAULT_PAID_TERM_ID]`
+- **Default:** `vec![0]`
 
 ### `active_paid_membership_terms`
 
 - **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
-- **Default:** `vec![DEFAULT_PAID_TERM_ID]`
+- **Default:** `vec![0]`
 
 ### `new_memberships_allowed`
 
@@ -126,25 +125,25 @@ These are types which are instantiated by the runtime in which this module is be
 
 - **Type:** u32
 - **Genesis:** `No`
-- **Default:** `DEFAULT_MIN_HANDLE_LENGTH`
+- **Default:** `5`
 
 ### `max_handle_length`
 
 - **Type:** u32
 - **Genesis:** `No`
-- **Default:** `DEFAULT_MAX_HANDLE_LENGTH`
+- **Default:** `40`
 
 ### `max_avatar_uri_length`
 
 - **Type:** u32
 - **Genesis:** `No`
-- **Default:** `DEFAULT_MAX_AVATAR_URI_LENGTH`
+- **Default:** `1024`
 
 ### `max_about_text_length`
 
 - **Type:** u32
 - **Genesis:** `No`
-- **Default:** `DEFAULT_MAX_ABOUT_TEXT_LENGTH`
+- **Default:** `2048`
 
 ### Invariants
 
@@ -173,7 +172,7 @@ The following list of peer modules, are relied upon to be in the same runtime.
 
 #### Description
 
-The about text on member `id` was alted to `x`
+The about text on member `id` was altered to `x`
 
 ### `MemberUpdatedAvatar`
 
@@ -189,13 +188,60 @@ _fill in_
 
 #### Payload
 
-1. [PaidTermId](runtime-types.md#PaidTermId) `p`
-2. [UserInfo](runtime-types.md#UserInfo) `u`
+```Rust
+p: PaidTermId, u: UserInfo
+```
+
 
 #### Description
 
 Establish new membership through payment.
 
+#### Errors
+
+| # | Message | Precondition |
+|:-: |:---------|:----------|
+| 0 | ? | `[ensure_signed](runtime-types.md#ensure_signed)(**origin**) |
+| 1 | new members not allowed | \![new_memberships_allowed](#new_memberships_allowed) |
+
+
+#### Side effects
+
+##### Membership established
+
+Let
+
+  - **terms** = `[paid_membership_terms_by_id](#).get(**p**)`
+  - **profile** =
+```Rust
+Profile {
+            id: new_member_id,
+            handle: user_info.handle.clone(),
+            avatar_uri: user_info.avatar_uri.clone(),
+            about: user_info.about.clone(),
+            registered_at_block: <system::Module<T>>::block_number(),
+            registered_at_time: <timestamp::Module<T>>::now(),
+            entry: entry_method,
+            suspended: false,
+            subscription: None,
+};
+```
+
+then
+
+  - **Precondition:** `NO_ERROR`
+  - **Side effect(s):**
+    - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
+    - `[Currency](#)::balance(**who**) == [Currency](#)::balance<sup>pre</sup>(**who**) - **terms**.fee`
+    - `<MemberIdByAccountId<T>>::insert(who.clone(), new_member_id);`
+    - `<AccountIdByMemberId<T>>::insert(new_member_id, who.clone());`
+    - `<MemberProfile<T>>::insert(new_member_id, profile);`
+    - `<Handles<T>>::insert(user_info.handle.clone(), new_member_id)`
+    - `<NextMemberId<T>>::mutate(|n| { *n += T::MemberId::sa(1); });`
+  - **Result:** Ok([next_member_id](#next_member_id)<sup>pre</sup>)
+  - **Event(s):** MemberRegistered(member_id, who.clone())
+
+<!--
 #### Termination(s)
 
 1. **Bad signature**
@@ -228,39 +274,24 @@ Establish new membership through payment.
     - **Side effect(s):** _none_
     - **Result:** `Err(“paid terms id not active”)`
     - **Event(s):** _none_
-let terms = Self::ensure_active_terms_id(paid_terms_id)?;
-
-5. **Insufficient funds for membership**
-    - **Precondition:** `precondition(2) && ...`
+7. **Insufficient funds for membership**
+    - **Precondition:** `precondition(6) && !Currency.can_slash(ensure_signed(origin), p.fee)`
     - **Side effect(s):** _none_
-    - **Result:** `Err("....")`
+    - **Result:** `Err("not enough balance to buy membership")`
     - **Event(s):** _none_
-
-ensure!(T::Currency::can_slash(&who, terms.fee), "not enough balance to buy membership");
-
-6. **Invalid user information**
-    - **Precondition:** `precondition(2) && ...`
-    - **Side effect(s):** _none_
-    - **Result:** `Err("....")`
-    - **Event(s):** _none_
-
-let user_info = Self::check_user_registration_info(user_info)?;
-
-7. **Handle occupied**
-    - **Precondition:** `precondition(2) && ...`
-    - **Side effect(s):** _none_
-    - **Result:** `Err("....")`
-    - **Event(s):** _none_
-
-Self::ensure_unique_handle(&user_info.handle)?;
-
-8. **Membership established**
+8. **Invalid user information: missing handle**
+9. **Invalid user information: handle too short**
+10. **Invalid user information: handle too long**
+11. **Invalid user information: avatar uri too long**
+12. **Handle occupied**
+13. **Membership established**
     - **Precondition:** `precondition(2) && member_id_by_account_id.exists(x)`
     - **Side effect(s):**
       - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
       - `let _ = T::Currency::slash(&who, terms.fee);`
     - **Result:** `Ok(member_id)`
     - **Event(s):** `MemberRegistered(member_id, who.clone())`
+-->
 
 ### `change_member_about_text`
 

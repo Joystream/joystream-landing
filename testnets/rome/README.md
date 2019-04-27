@@ -23,7 +23,7 @@ The life time and purpose of this docuemnt is separated into two distinct phases
 - scope
 - frist ry, tierative arrive at standard, extract generalised template for joystrema and other Susbtrate teams.
 
-## Specification Style
+## How to read this specification
 
 Given the descrbied purpose of this document, the style of specification admits to the following constraints
 
@@ -36,6 +36,8 @@ Take Substrate for granted, and SRML momdules, dont explicitly described.
 
 ### Substrate
 
+We are speicfying what:
+
 -  explain how to intereprt speciciation, so we understand `map`, build et.
 - xxxx
 
@@ -43,7 +45,22 @@ what bout built in stuff, like types `origin`, and functions, like `ensure_signe
 
 what about block level callback?
 
+variables
+ - **origin** : instance variable for signed
+ - **who**: instance variable when is signed
+
+
 #### Extrinsics
+
+
+
+##### Errors
+
+All errors have their own precondition. The errors are listed in the order which corresponds to what order they would be invoked if _multiple_ error conditions were satisified simultanously. If this cannot be expressed as a single linear list, the section must reflect this informaiton in some other way in a fully unambigous manner.
+
+##### Side effects
+
+Assume that all error preconditions are simultnaously false, denoted by predicate `NO_ERROR`.
 
 ##### Terminiantion
 Important to notice that its very deeply specified, where even the order of error triggering in scenarios with mulitple simultanous errors, is commited to up front, compared to a loser standard of saying that, if you have one of these problems, you will get at least one fo these errors,w hich would drop order.
@@ -62,7 +79,7 @@ functions used can only be pure, i.e. only depend on explicit parameters, and al
 
 ### Protocols
 
-
+<here we write stuff about how to read and understand our protocols>
 
 
 ## Glossary
@@ -89,6 +106,10 @@ functions used can only be pure, i.e. only depend on explicit parameters, and al
 something high level?
 
 ### Substrate Runtime
+
+#### WIP: API
+
+put lots of stuff here about what is in impl_runtime_apis! {}?
 
 #### Substrate Version
 
@@ -132,6 +153,8 @@ These modules are part of the runtime, but are already implemented part of the S
 - [**Staking**](proposal-module.md)
 - [**Sudo**](proposal-module.md)
 - [**Grandpa**](proposal-module.md)
+
+#### MISSING STUFF
 
 #### Migrations
 
