@@ -156,6 +156,7 @@ These are types which are instantiated by the runtime in which this module is be
 The following list of peer modules, are relied upon to be in the same runtime.
 
 - [**Actors**](#actors-module.md)
+- [**Currency**](#)
 
 ## Events
 
@@ -222,31 +223,11 @@ Establish new membership through payment.
     - **Side effect(s):** _none_
     - **Result:** `Err(“paid terms id not active”)`
     - **Event(s):** _none_
-
-
-```
-fn ensure_active_terms_id(
-    terms_id: T::PaidTermId,
-) -> Result<PaidMembershipTerms<T>, &'static str> {
-
-    let active_terms = Self::active_paid_membership_terms();
-
-    ensure!(
-        active_terms.iter().any(|&id| id == terms_id),
-        "paid terms id not active"
-    );
-
-    let terms = Self::paid_membership_terms_by_id(terms_id)
-        .ok_or("paid membership term id does not exist")?;
-
-    Ok(terms)
-
-}
-```
-
-
-
-
+6. **Terms don't exist** <= _This is a bug_
+    - **Precondition:** `!precondition(5) && !paid_membership_terms_by_id.exists(p.id)`
+    - **Side effect(s):** _none_
+    - **Result:** `Err(“paid terms id not active”)`
+    - **Event(s):** _none_
 let terms = Self::ensure_active_terms_id(paid_terms_id)?;
 
 5. **Insufficient funds for membership**
