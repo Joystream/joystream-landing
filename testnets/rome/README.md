@@ -132,6 +132,7 @@ These are the Joystream specific modules, and thus the only ones that actually n
 - [**Council**](council-module.md)
 - [**Memo**](memo-module.md)
 - [**Members**](members-module.md)
+  -  MemberId : String
 - [**Migration**](migration-module.md)
 - [**Actors**](actors-module.md)
 - [**DataObjectTypeRegistry**](data-object-type-registry-module.md)

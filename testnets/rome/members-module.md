@@ -3,19 +3,7 @@
 
 ## Table Of Content
 
-- [Overview](#overview)
-- [State Variables](#state-variables)
-- [State Invariants](#state-invariants)
-- [Events](#events)
-- [Module Dependencies](#module-dependencies)
-- [Transactions](#transactions)
-  - [buy_membership](#buy_membership)
-  - [change_member_about_text](#change_member_about_text)
-  - [change_member_avatar](#change_member_avatar)
-  - [change_member_handle](#change_member_handle)
-  - [update_profile](#update_profile)
-  - [add_screened_member](#add_screened_member)
-  - [set_screening_authority](#set_screening_authority)
+- WIP
 
 ## Overview
 
@@ -44,120 +32,200 @@ These are types which are instantiated by the runtime in which this module is be
 - `PaidTermId`
 -->
 
-## State
+## Module Configuration
 
-### Variables
+### External traits
 
-### `first_member_id`
+These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
 
-- **Type:** [MemberId](README.md#type-MemberId)
+- [**system::Trait**](#actors-module.md)
+- [**GovernanceCurrency**](#)
+- [**timestamp::Trait**](#)
+
+### Internal types
+
+#### `Event`
+
+Event type. ???
+
+#### `MemberId`
+
+Member identifier type.
+
+####  `PaidTermId`
+
+Paid term identifier type.
+
+#### `SubscriptionId`
+
+Subscription identifier type.
+
+## Module Storage
+
+### `decl_storage`
+
+The following set of storage values are provided to `decl_storage`.
+
+```Rust
+
+/// MemberId's start at this value
+pub FirstMemberId get(first_member_id) config(first_member_id): T::MemberId = T::MemberId::sa(DEFAULT_FIRST_MEMBER_ID);
+
+/// MemberId to assign to next member that is added to the registry
+pub NextMemberId get(next_member_id) build(|config: &GenesisConfig<T>| config.first_member_id): T::MemberId = T::MemberId::sa(DEFAULT_FIRST_MEMBER_ID);
+
+/// Mapping of member ids to their corresponding primary accountid
+pub AccountIdByMemberId get(account_id_by_member_id) : map T::MemberId => T::AccountId;
+
+/// Mapping of members' account ids to their member id.
+pub MemberIdByAccountId get(member_id_by_account_id) : map T::AccountId => Option<T::MemberId>;
+
+/// Mapping of member's id to their membership profile
+// Value is Option<Profile> because it is not meaningful to have a Default value for Profile
+pub MemberProfile get(member_profile) : map T::MemberId => Option<Profile<T>>;
+
+/// Registered unique handles and their mapping to their owner
+pub Handles get(handles) : map Vec<u8> => Option<T::MemberId>;
+
+/// Next paid membership terms id
+pub NextPaidMembershipTermsId get(next_paid_membership_terms_id) : T::PaidTermId = T::PaidTermId::sa(FIRST_PAID_TERMS_ID);
+
+/// Paid membership terms record
+// Remember to add _genesis_phantom_data: std::marker::PhantomData{} to membership
+// genesis config if not providing config() or extra_genesis
+pub PaidMembershipTermsById get(paid_membership_terms_by_id) build(|config: &GenesisConfig<T>| {
+    // This method only gets called when initializing storage, and is
+    // compiled as native code. (Will be called when building `raw` chainspec)
+    // So it can't be relied upon to initialize storage for runtimes updates.
+    // Initialization for updated runtime is done in run_migration()
+    let mut terms: PaidMembershipTerms<T> = Default::default();
+    terms.fee = config.default_paid_membership_fee;
+    vec![(terms.id, terms)]
+}) : map T::PaidTermId => Option<PaidMembershipTerms<T>>;
+
+/// Active Paid membership terms
+pub ActivePaidMembershipTerms get(active_paid_membership_terms) : Vec<T::PaidTermId> = vec![T::PaidTermId::sa(DEFAULT_PAID_TERM_ID)];
+
+/// Is the platform is accepting new members or not
+pub NewMembershipsAllowed get(new_memberships_allowed) : bool = true;
+
+pub ScreeningAuthority get(screening_authority) : Option<T::AccountId>;
+
+// User Input Validation parameters - do these really need to be state variables
+// I don't see a need to adjust these in future?
+pub MinHandleLength get(min_handle_length) : u32 = DEFAULT_MIN_HANDLE_LENGTH;
+pub MaxHandleLength get(max_handle_length) : u32 = DEFAULT_MAX_HANDLE_LENGTH;
+pub MaxAvatarUriLength get(max_avatar_uri_length) : u32 = DEFAULT_MAX_AVATAR_URI_LENGTH;
+pub MaxAboutTextLength get(max_about_text_length) : u32 = DEFAULT_MAX_ABOUT_TEXT_LENGTH;
+```
+
+<!--
+
+#### `first_member_id`
+
+- **Type:** [MemberId](#MemberId)
 - **Genesis:** `Yes`
 - **Default:** `1`
 
-### `next_member_id`
+#### `next_member_id`
 
 - **Type:** [MemberId](README.md#type-MemberId)
 - **Genesis:** `No`
 - **Default:** `1`
 
-### `account_id_by_member_id`
+#### `account_id_by_member_id`
 
 - **Type:** *map* [MemberId](README.md#type-MemberId) => [AccountId](README.md#AccountId)
 - **Genesis:** `No`
 - **Default:** -
 
 
-### `member_id_by_account_id`
+#### `member_id_by_account_id`
 
 - **Type:** *map* [AccountId](README.md#AccountId) => Option< [MemberId](README.md#type-MemberId) >
 - **Genesis:** `No`
 - **Default:** -
 
-### `member_profile`
+#### `member_profile`
 
 - **Type:** *map* [MemberId](README.md#type-MemberId) => Option<Profile<T>>
 - **Genesis:** `No`
 - **Default:** -
 
-### `handles`
+#### `handles`
 
 - **Type:** map Vec<u8> => Option< [MemberId](README.md#type-MemberId) >
 - **Genesis:** `No`
 - **Default:** -
 
-### `next_paid_membership_terms_id`
+#### `next_paid_membership_terms_id`
 
 - **Type:** `PaidTermId`
 - **Genesis:** `No`
 - **Default:** `1`
 
-### `paid_membership_terms_by_id`
+#### `paid_membership_terms_by_id`
 
 - **Type:** map [PaidTermId](README.md#PaidTermId) => Option<PaidMembershipTerms<T>>
 - **Genesis:** `No`
 - **Default:** `1`
 
-### `next_paid_membership_terms_id`
+#### `next_paid_membership_terms_id`
 
 - **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
 - **Default:** `vec![0]`
 
-### `active_paid_membership_terms`
+#### `active_paid_membership_terms`
 
 - **Type:** Vec< PaidTermId >
 - **Genesis:** `No`
 - **Default:** `vec![0]`
 
-### `new_memberships_allowed`
+#### `new_memberships_allowed`
 
 - **Type:** bool
 - **Genesis:** `No`
 - **Default:** `true`
 
-### `screening_authority`
+#### `screening_authority`
 
 - **Type:** `Option<T::AccountId>`
 - **Genesis:** `No`
 - **Default:** -
 
-### `min_handle_length`
+#### `min_handle_length`
 
 - **Type:** u32
 - **Genesis:** `No`
 - **Default:** `5`
 
-### `max_handle_length`
+#### `max_handle_length`
 
 - **Type:** u32
 - **Genesis:** `No`
 - **Default:** `40`
 
-### `max_avatar_uri_length`
+#### `max_avatar_uri_length`
 
 - **Type:** u32
 - **Genesis:** `No`
 - **Default:** `1024`
 
-### `max_about_text_length`
+#### `max_about_text_length`
 
 - **Type:** u32
 - **Genesis:** `No`
 - **Default:** `2048`
+
+-->
 
 ### Invariants
 
 1. `xxxx`
 2. `xxxx`
 
-## Module Dependencies
-
-The following list of peer modules, are relied upon to be in the same runtime.
-
-- [**Actors**](#actors-module.md)
-- [**Currency**](#)
-
-## Events
+## `decl_events`
 
 ### `MemberRegistered`
 - **Payload:** (MemberId, AccountId)
@@ -182,7 +250,7 @@ _fill in_
 
 _fill in_
 
-## Extrinsics
+## Dispatchable Methods
 
 ### `buy_membership`
 
@@ -316,3 +384,9 @@ _fill in_
 ### `set_screening_authority`
 
 _fill in_
+
+## Non-dispatchable Methods
+
+### `my_little_internal_thing`
+
+blabkabka
