@@ -3,7 +3,33 @@
 
 ## Table Of Content
 
-- WIP
+- [Overview](#overview)
+- [Constants](#constants)
+- [Public Types](#public-types)
+  - [EntryMethod](#EntryMethod)
+  - [Profile](#Profile)
+  - [PaidMembershipTerms](#PaidMembershipTerms)
+- [Runtime Constraints](#module-configuration)
+  - [Traits](#Traits)
+  - [Event](#Event)
+  - [MemberId](#MemberId)
+  - [PaidTermId](#PaidTermId)
+  - [SubscriptionId](#SubscriptionId)
+- [Storage](#storage)
+- [Invariants](#invariants)
+- [Events](#events)
+- [Dispatchable Methods](#dispatchable-methods)
+  - [buy_membership](#`buy_membership`)
+  - [change_member_about_text](#`change_member_about_text`)
+  - [change_member_avatar](#`change_member_avatar`)
+  - [change_member_handle](#`change_member_handle`)
+  - [update_profile](#`update_profile`)
+  - [add_screened_member](#`add_screened_member`)
+  - [set_screening_authority](#`set_screening_authority`)
+- [Dispatchable Methods](#dispatchable-methods)
+- [Non-dispatchable Methods](#non-dispatchable-methods)
+  - [my_little_internal_thing](#`my_little_internal_thing`)
+
 
 ## Overview
 
@@ -68,11 +94,11 @@ pub struct PaidMembershipTerms<T: Trait> {
 }
 ```
 
-## Module configuration
+## Runtime Constraints
 
 These are the associated types typically found on the trait called `Trait`, which imposes the requirements on what types must be implemented on the final runtime.
 
-### External traits
+### Traits
 
 These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
 
