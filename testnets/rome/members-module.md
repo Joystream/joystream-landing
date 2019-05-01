@@ -9,12 +9,14 @@
   - [EntryMethod](#EntryMethod)
   - [Profile](#Profile)
   - [PaidMembershipTerms](#PaidMembershipTerms)
+  - [UserInfo](#UserInfo)
 - [Runtime Constraints](#module-configuration)
   - [Traits](#Traits)
   - [Event](#Event)
   - [MemberId](#MemberId)
   - [PaidTermId](#PaidTermId)
   - [SubscriptionId](#SubscriptionId)
+  - [Roles](#Roles)
 - [Storage](#storage)
 - [Invariants](#invariants)
 - [Events](#events)
@@ -26,7 +28,6 @@
   - [update_profile](#`update_profile`)
   - [add_screened_member](#`add_screened_member`)
   - [set_screening_authority](#`set_screening_authority`)
-- [Dispatchable Methods](#dispatchable-methods)
 - [Non-dispatchable Methods](#non-dispatchable-methods)
   - [my_little_internal_thing](#`my_little_internal_thing`)
 
@@ -94,17 +95,34 @@ pub struct PaidMembershipTerms<T: Trait> {
 }
 ```
 
+### UserInfo
+
+```Rust
+pub struct UserInfo {
+    pub handle: Option<Vec<u8>>,
+    pub avatar_uri: Option<Vec<u8>>,
+    pub about: Option<Vec<u8>>,
+}
+```
+
 ## Runtime Constraints
 
 These are the associated types typically found on the trait called `Trait`, which imposes the requirements on what types must be implemented on the final runtime.
 
 ### Traits
 
+#### Consumed
+
 These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
 
-- [**system::Trait**](#actors-module.md)
-- [**GovernanceCurrency**](#)
-- [**timestamp::Trait**](#)
+- **system::Trait**
+- **timestamp::Trait**
+- [**GovernanceCurrency**](shared-types.md#GovernanceCurrency)
+
+
+#### Provided
+
+`None`
 
 ### Event
 
@@ -121,6 +139,10 @@ Paid term identifier type.
 ### SubscriptionId
 
 Subscription identifier type.
+
+### Roles
+
+Roles module type. <what do we link to here!?>
 
 ## Storage
 
@@ -204,7 +226,7 @@ pub enum Event<T> where
 #### Payload
 
 ```Rust
-p: PaidTermId, u: UserInfo
+origin: Oirgin, p: PaidTermId, u: UserInfo
 ```
 
 
@@ -216,7 +238,7 @@ Establish new membership through payment.
 
 Error scenarios, which thus have no side effects, and no events. The section title is used as error message. The full precondition for each case is not only the listed condition in the same row, but also the combined failure of all listed preconditions of prior rows.
 
-##### 1. <what here?>
+##### 1. <what here is returned here?>
 
 ```Rust
 !ensure_signed(origin)
@@ -225,39 +247,39 @@ Error scenarios, which thus have no side effects, and no events. The section tit
 ##### 2. new members not allowed
 
 ```Rust
-!new_memberships_allowed
+!<NewMembershipsAllowed<T>>::get()
 ```
 
 ##### 3. account already associated with a membership
 
 ```Rust
-member_id_by_account_id.exists(x)
+<MemberIdByAccountId<T>>::exists(origin)
 ```
 
 ##### 4. role key cannot be used for membership
 
 ```Rust
-Actors.actor_by_account_id.exists(who)
+T::Roles::is_role_account(origin)
 ```
 
 ##### 5. paid terms id not active
 
 ```Rust
-!active_paid_membership_terms.iter().any(|x| x == p.id)
+!<ActivePaidMembershipTerms<T>>::iter().any(|x| x == p.id)
 ```
 
 ##### 6. paid terms id not active
 
-_This is a bug_
+_Note: This is a bug, should not be checked_
 
 ```Rust
-!paid_membership_terms_by_id.exists(p.id)
+!<PaidMembershipTermsById<T>>::exists(p.id)
 ```
 
 ##### 7. not enough balance to buy membership
 
 ```Rust
-!Currency.can_slash(who, p.fee
+!T::Currency::can_slash(who, p.fee)
 ```
 
 ##### 8. missing handle
@@ -386,6 +408,12 @@ _fill in_
 
 ## Non-dispatchable Methods
 
-### `my_little_internal_thing`
+### `is_active_member`
 
 blabkabka
+
+### `lookup_member_id`
+
+...
+
+### `lookup_account_by_member_id`

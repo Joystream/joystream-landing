@@ -77,6 +77,9 @@ side ffects are pure, no
 
 functions used can only be pure, i.e. only depend on explicit parameters, and also have 0 side effcts.
 
+
+Always read stroage variables of any module through type, not varible name.
+
 ### Protocols
 
 <here we write stuff about how to read and understand our protocols>
