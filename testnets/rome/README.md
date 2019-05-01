@@ -58,6 +58,8 @@ variables
 
 All errors have their own precondition. The errors are listed in the order which corresponds to what order they would be invoked if _multiple_ error conditions were satisified simultanously. If this cannot be expressed as a single linear list, the section must reflect this informaiton in some other way in a fully unambigous manner.
 
+Error scenarios, which thus have no side effects, and no events. The section title is used as error message. The full precondition for each case is not only the listed condition in the same row, but also the combined failure of all listed preconditions of prior rows.
+
 ##### Side effects
 
 Assume that all error preconditions are simultnaously false, denoted by predicate `NO_ERROR`.
@@ -79,6 +81,14 @@ functions used can only be pure, i.e. only depend on explicit parameters, and al
 
 
 Always read stroage variables of any module through type, not varible name.
+
+##### REsult
+
+Here, all values are either before or after execution, using same tag symbol.
+
+##### Events
+
+Same as result
 
 ### Protocols
 

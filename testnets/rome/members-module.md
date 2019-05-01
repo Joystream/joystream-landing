@@ -52,7 +52,6 @@ const DEFAULT_MAX_AVATAR_URI_LENGTH: u32 = 1024;
 const DEFAULT_MAX_ABOUT_TEXT_LENGTH: u32 = 2048;
 ```
 
-
 ## Public Types
 
 These are the public type of the module, that is they are used in the storage system and in signature of public methods. All other types are omitted.
@@ -109,9 +108,7 @@ pub struct UserInfo {
 
 These are the associated types typically found on the trait called `Trait`, which imposes the requirements on what types must be implemented on the final runtime.
 
-### Traits
-
-#### Consumed
+### Base Traits
 
 These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
 
@@ -119,28 +116,25 @@ These are the traits which provide the interfaces to services external to this m
 - **timestamp::Trait**
 - [**GovernanceCurrency**](shared-types.md#GovernanceCurrency)
 
+### Associated Types
 
-#### Provided
-
-`None`
-
-### Event
+#### Event
 
 Event type. ???
 
-### MemberId
+#### MemberId
 
 Member identifier type.
 
-###  PaidTermId
+####  PaidTermId
 
 Paid term identifier type.
 
-### SubscriptionId
+#### SubscriptionId
 
 Subscription identifier type.
 
-### Roles
+#### Roles
 
 Roles module type. <what do we link to here!?>
 
@@ -226,9 +220,8 @@ pub enum Event<T> where
 #### Payload
 
 ```Rust
-origin: Oirgin, p: PaidTermId, u: UserInfo
+origin: Origin, paid_terms_id: PaidTermId, user_info: UserInfo
 ```
-
 
 #### Description
 
@@ -236,9 +229,7 @@ Establish new membership through payment.
 
 #### Errors
 
-Error scenarios, which thus have no side effects, and no events. The section title is used as error message. The full precondition for each case is not only the listed condition in the same row, but also the combined failure of all listed preconditions of prior rows.
-
-##### 1. <what here is returned here?>
+##### 1. <what is returned?>
 
 ```Rust
 !ensure_signed(origin)
@@ -265,7 +256,7 @@ T::Roles::is_role_account(origin)
 ##### 5. paid terms id not active
 
 ```Rust
-!<ActivePaidMembershipTerms<T>>::iter().any(|x| x == p.id)
+!<ActivePaidMembershipTerms<T>>::iter().any(|x| x == paid_terms_id)
 ```
 
 ##### 6. paid terms id not active
@@ -273,13 +264,19 @@ T::Roles::is_role_account(origin)
 _Note: This is a bug, should not be checked_
 
 ```Rust
-!<PaidMembershipTermsById<T>>::exists(p.id)
+!<PaidMembershipTermsById<T>>::exists(paid_terms_id)
 ```
 
 ##### 7. not enough balance to buy membership
 
 ```Rust
-!T::Currency::can_slash(who, p.fee)
+!T::Currency::can_slash(who, terms.fee)
+```
+
+where
+
+```Rust
+let terms = <PaidMembershipTermsById<T>>::get(paid_terms_id);
 ```
 
 ##### 8. missing handle
@@ -322,69 +319,77 @@ _Note: This is a bug, should not be checked_
 
 ###### Side effect(s)
 
-Given the following variables
+The following conditions must all hold
 
 ```Rust
+[T::Currency::balance]'(who) == T::Currency::balance(who) - <PaidMembershipTermsById<T>>::get(paid_terms_id).fee &&
 
-- **terms** = `[paid_membership_terms_by_id](#).get(**p**)`
+[<MemberIdByAccountId<T>>]' == <MemberIdByAccountId<T>> [+] (who, <NextMemberId<T>>::get()) &&
+[<AccountIdByMemberId<T>>]' == <AccountIdByMemberId<T>> [+] (<NextMemberId<T>>::get(), who)) == who &&
+[<MemberProfile<T>>]' == <MemberProfile<T>> [+] (<NextMemberId<T>>::get(), profile) &&
+[<Handles<T>>]' == <Handles<T>> [+] (user_info.handle.clone(), <NextMemberId<T>>::get()) &&
+[<NextMemberId<T>>]' == <NextMemberId<T>> + 1
+```
+
+where
+
+```Rust
 let profile = Profile {
-          id: new_member_id,
-          handle: user_info.handle.clone(),
-          avatar_uri: user_info.avatar_uri.clone(),
-          about: user_info.about.clone(),
-          registered_at_block: <system::Module<T>>::block_number(),
-          registered_at_time: <timestamp::Module<T>>::now(),
-          entry: entry_method,
-          suspended: false,
-          subscription: None,
-};
-```
-
-The following must hold
-
-```Rust
-let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))
-```
-
-```Rust
-[Currency](#)::balance(**who**) == [Currency](#)::balance<sup>pre</sup>(**who**) - **terms**.fee
-```
-
-```Rust
-<MemberIdByAccountId<T>>::insert(who.clone(), new_member_id);
-```
-
-```Rust
-<AccountIdByMemberId<T>>::insert(new_member_id, who.clone());
-```
-
-```Rust
-<MemberProfile<T>>::insert(new_member_id, profile);
-```
-
-```Rust
-<Handles<T>>::insert(user_info.handle.clone(), new_member_id)
-```
-
-```Rust
-<NextMemberId<T>>::mutate(|n| { *n += T::MemberId::sa(1); });
+  id: <NextMemberId<T>>::get(),
+  handle: user_info.handle,
+  avatar_uri: user_info.avatar_uri,
+  about: user_info.about,
+  registered_at_block: <system::Module<T>>::block_number(),
+  registered_at_time: <timestamp::Module<T>>::now(),
+  entry: EntryMethod::Paid(paid_terms_id)),
+  suspended: false,
+  subscription: None,
+}
 ```
 
 ###### Result
 
 ```Rust
-Ok([next_member_id](#next_member_id)<sup>pre</sup>)
+Ok(<NextMemberId<T>>::get())
 ```
 
 ###### Event(s)
 
 ```Rust
- MemberRegistered(member_id, who.clone())
+MemberRegistered(<NextMemberId<T>>::get(), who.clone())
 ```
 
 ### `change_member_about_text`
 
-_fill in_
+#### Payload
+
+```Rust
+origin: Origin, text: Vec<u8>
+```
+
+#### Description
+
+Change about text on membership.
+
+#### Errors
+
+##### 1. <what is returned?>
+
+```Rust
+!ensure_signed(origin)
+```
+
+let member_id =
+Self::member_id_by_account_id(who).ok_or("no member id found for accountid")?;
+
+let member_id = Self::ensure_is_member(&who)?;
+        ensure!(
+            Self::account_id_by_member_id(member_id) == who,
+            "not primary account"
+);
+
+
+<!--- not done below -->
 
 ### `change_member_avatar`
 
