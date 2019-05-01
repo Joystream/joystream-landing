@@ -8,29 +8,23 @@
 ## Overview
 
 Manages the set of current members, their profile, status.
-<!--
+
 ## Constants
 
-| Name                                  | Type                 | Value                             |
-| :------------------------------------ |:--------------------:| :--------------------------------:|
-| `DEFAULT_FIRST_MEMBER_ID`             | `u64`                | `1`                               |
-| `FIRST_PAID_TERMS_ID`                 | `u64`                | `1`                               |
-| `DEFAULT_PAID_TERM_ID`                | `u64`                | `0`                               |
-| `DEFAULT_PAID_TERM_FEE`               | `u64`                | `100`                             |
-| `DEFAULT_PAID_TERM_TEXT`              | `String`             | `Default Paid Term TOS...`        |
-| `DEFAULT_MIN_HANDLE_LENGTH`           | `u32`                | `5`                               |
-| `DEFAULT_MAX_HANDLE_LENGTH`           | `u32`                | `40`                              |
-| `DEFAULT_MAX_AVATAR_URI_LENGTH`       | `u32`                | `1024`                            |
-| `DEFAULT_MAX_ABOUT_TEXT_LENGTH`       | `u32`                | `2048`                            |
+These are constants that are only part of making this document legible, they are not part of the public interface of the module.
 
- ## Parametric Types
+```Rust
+const DEFAULT_FIRST_MEMBER_ID: u64 = 1;
+const FIRST_PAID_TERMS_ID: u64 = 1;
+const DEFAULT_PAID_TERM_ID: u64 = 0;
+const DEFAULT_PAID_TERM_FEE: u64 = 100;
+const DEFAULT_PAID_TERM_TEXT: &str = "Default Paid Term TOS...";
+const DEFAULT_MIN_HANDLE_LENGTH: u32 = 5;
+const DEFAULT_MAX_HANDLE_LENGTH: u32 = 40;
+const DEFAULT_MAX_AVATAR_URI_LENGTH: u32 = 1024;
+const DEFAULT_MAX_ABOUT_TEXT_LENGTH: u32 = 2048;
+```
 
-These are types which are instantiated by the runtime in which this module is being instantiated.
-
-- `MemberId`
-- `AccountId`
-- `PaidTermId`
--->
 
 ## Public Types
 
@@ -109,20 +103,6 @@ Subscription identifier type.
 The following set of storage values are provided to `decl_storage`.
 
 ```Rust
-const DEFAULT_FIRST_MEMBER_ID: u64 = 1;
-const FIRST_PAID_TERMS_ID: u64 = 1;
-
-// Default paid membership terms
-const DEFAULT_PAID_TERM_ID: u64 = 0;
-const DEFAULT_PAID_TERM_FEE: u64 = 100; // Can be overidden in genesis config
-const DEFAULT_PAID_TERM_TEXT: &str = "Default Paid Term TOS...";
-
-// Default user info constraints
-const DEFAULT_MIN_HANDLE_LENGTH: u32 = 5;
-const DEFAULT_MAX_HANDLE_LENGTH: u32 = 40;
-const DEFAULT_MAX_AVATAR_URI_LENGTH: u32 = 1024;
-const DEFAULT_MAX_ABOUT_TEXT_LENGTH: u32 = 2048;
-
 /// MemberId's start at this value
 pub FirstMemberId get(first_member_id) config(first_member_id): T::MemberId = T::MemberId::sa(DEFAULT_FIRST_MEMBER_ID);
 
@@ -313,11 +293,17 @@ Establish new membership through payment.
 
 Error scenarios, which thus have no side effects. The full precondition for each case is not only the listed condition in the same row, but also the combined failure of all listed preconditions of prior rows.
 
-| # | Message | Precondition |
-|:-: |:---------|:----------|
-| 0 | ? | `[ensure_signed](runtime-types.md#ensure_signed)(**origin**) |
-| 1 | new members not allowed | \![new_memberships_allowed](#new_memberships_allowed) |
+#### 1.
 
+```Rust
+!ensure_signed(origin)
+```
+
+#### 2. new members not allowed
+
+```Rust
+!new_memberships_allowed
+```
 
 #### Side effects
 
