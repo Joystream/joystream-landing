@@ -32,7 +32,51 @@ These are types which are instantiated by the runtime in which this module is be
 - `PaidTermId`
 -->
 
-## Module Configuration
+## Public Types
+
+These are the public type of the module, that is they are used in the storage system and in signature of public methods. All other types are omitted.
+
+### EntryMethod
+
+```Rust
+pub enum EntryMethod<T: Trait> {
+    Paid(T::PaidTermId),
+    Screening(T::AccountId),
+}
+```
+
+### Profile
+
+```Rust
+pub struct Profile<T: Trait> {
+    pub id: T::MemberId,
+    pub handle: Vec<u8>,
+    pub avatar_uri: Vec<u8>,
+    pub about: Vec<u8>,
+    pub registered_at_block: T::BlockNumber,
+    pub registered_at_time: T::Moment,
+    pub entry: EntryMethod<T>,
+    pub suspended: bool,
+    pub subscription: Option<T::SubscriptionId>,
+}
+```
+
+### PaidMembershipTerms
+
+```Rust
+pub struct PaidMembershipTerms<T: Trait> {
+    /// Unique identifier - the term id
+    pub id: T::PaidTermId,
+    /// Quantity of native tokens which must be provably burned
+    pub fee: BalanceOf<T>,
+    /// String of capped length describing human readable conditions which are being agreed upon
+    pub text: Vec<u8>,
+}
+```
+
+## Module configuration
+
+These are the associated types typically found on the trait called `Trait`, which imposes the requirements on what types must be implemented on the final runtime.
 
 ### External traits
 
@@ -42,21 +86,19 @@ These are the traits which provide the interfaces to services external to this m
 - [**GovernanceCurrency**](#)
 - [**timestamp::Trait**](#)
 
-### Internal types
-
-#### `Event`
+### Event
 
 Event type. ???
 
-#### `MemberId`
+### MemberId
 
 Member identifier type.
 
-####  `PaidTermId`
+###  PaidTermId
 
 Paid term identifier type.
 
-#### `SubscriptionId`
+### SubscriptionId
 
 Subscription identifier type.
 
@@ -67,6 +109,19 @@ Subscription identifier type.
 The following set of storage values are provided to `decl_storage`.
 
 ```Rust
+const DEFAULT_FIRST_MEMBER_ID: u64 = 1;
+const FIRST_PAID_TERMS_ID: u64 = 1;
+
+// Default paid membership terms
+const DEFAULT_PAID_TERM_ID: u64 = 0;
+const DEFAULT_PAID_TERM_FEE: u64 = 100; // Can be overidden in genesis config
+const DEFAULT_PAID_TERM_TEXT: &str = "Default Paid Term TOS...";
+
+// Default user info constraints
+const DEFAULT_MIN_HANDLE_LENGTH: u32 = 5;
+const DEFAULT_MAX_HANDLE_LENGTH: u32 = 40;
+const DEFAULT_MAX_AVATAR_URI_LENGTH: u32 = 1024;
+const DEFAULT_MAX_ABOUT_TEXT_LENGTH: u32 = 2048;
 
 /// MemberId's start at this value
 pub FirstMemberId get(first_member_id) config(first_member_id): T::MemberId = T::MemberId::sa(DEFAULT_FIRST_MEMBER_ID);
@@ -222,33 +277,22 @@ pub MaxAboutTextLength get(max_about_text_length) : u32 = DEFAULT_MAX_ABOUT_TEXT
 
 ### Invariants
 
-1. `xxxx`
-2. `xxxx`
+....
 
-## `decl_events`
+## Events
 
-### `MemberRegistered`
-- **Payload:** (MemberId, AccountId)
-- **Description:** (MemberId, AccountId)
+### `decl_events`
 
-### `MemberUpdatedAboutText`
-
-#### Payload
-
-1. [MemberId](runtime-types.md#MemberId) `id`
-2. [MemberId](runtime-types.md#MemberId) `id_2`
-
-#### Description
-
-The about text on member `id` was altered to `x`
-
-### `MemberUpdatedAvatar`
-
-_fill in_
-
-### `MemberUpdatedHandle`
-
-_fill in_
+```Rust
+pub enum Event<T> where
+      <T as system::Trait>::AccountId,
+      <T as Trait>::MemberId {
+        MemberRegistered(MemberId, AccountId),
+        MemberUpdatedAboutText(MemberId),
+        MemberUpdatedAvatar(MemberId),
+        MemberUpdatedHandle(MemberId),
+}
+```
 
 ## Dispatchable Methods
 
@@ -267,6 +311,8 @@ Establish new membership through payment.
 
 #### Errors
 
+Error scenarios, which thus have no side effects. The full precondition for each case is not only the listed condition in the same row, but also the combined failure of all listed preconditions of prior rows.
+
 | # | Message | Precondition |
 |:-: |:---------|:----------|
 | 0 | ? | `[ensure_signed](runtime-types.md#ensure_signed)(**origin**) |
@@ -277,37 +323,71 @@ Establish new membership through payment.
 
 ##### Membership established
 
-Let
+###### Precondition
 
-  - **terms** = `[paid_membership_terms_by_id](#).get(**p**)`
-  - **profile** =
+`NO_ERROR`
+
+###### Side effect(s)
+
+Given the following variables
+
 ```Rust
-Profile {
-            id: new_member_id,
-            handle: user_info.handle.clone(),
-            avatar_uri: user_info.avatar_uri.clone(),
-            about: user_info.about.clone(),
-            registered_at_block: <system::Module<T>>::block_number(),
-            registered_at_time: <timestamp::Module<T>>::now(),
-            entry: entry_method,
-            suspended: false,
-            subscription: None,
+
+- **terms** = `[paid_membership_terms_by_id](#).get(**p**)`
+let profile = Profile {
+          id: new_member_id,
+          handle: user_info.handle.clone(),
+          avatar_uri: user_info.avatar_uri.clone(),
+          about: user_info.about.clone(),
+          registered_at_block: <system::Module<T>>::block_number(),
+          registered_at_time: <timestamp::Module<T>>::now(),
+          entry: entry_method,
+          suspended: false,
+          subscription: None,
 };
 ```
 
-then
+The following must hold
 
-  - **Precondition:** `NO_ERROR`
-  - **Side effect(s):**
-    - `let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))`
-    - `[Currency](#)::balance(**who**) == [Currency](#)::balance<sup>pre</sup>(**who**) - **terms**.fee`
-    - `<MemberIdByAccountId<T>>::insert(who.clone(), new_member_id);`
-    - `<AccountIdByMemberId<T>>::insert(new_member_id, who.clone());`
-    - `<MemberProfile<T>>::insert(new_member_id, profile);`
-    - `<Handles<T>>::insert(user_info.handle.clone(), new_member_id)`
-    - `<NextMemberId<T>>::mutate(|n| { *n += T::MemberId::sa(1); });`
-  - **Result:** Ok([next_member_id](#next_member_id)<sup>pre</sup>)
-  - **Event(s):** MemberRegistered(member_id, who.clone())
+```Rust
+let member_id = Self::insert_member(&who, &user_info, EntryMethod::Paid(paid_terms_id))
+```
+
+```Rust
+[Currency](#)::balance(**who**) == [Currency](#)::balance<sup>pre</sup>(**who**) - **terms**.fee
+```
+
+```Rust
+<MemberIdByAccountId<T>>::insert(who.clone(), new_member_id);
+```
+
+```Rust
+<AccountIdByMemberId<T>>::insert(new_member_id, who.clone());
+```
+
+```Rust
+<MemberProfile<T>>::insert(new_member_id, profile);
+```
+
+```Rust
+<Handles<T>>::insert(user_info.handle.clone(), new_member_id)
+```
+
+```
+Rust<NextMemberId<T>>::mutate(|n| { *n += T::MemberId::sa(1); });
+```
+
+###### Result
+
+```Rust
+Ok([next_member_id](#next_member_id)<sup>pre</sup>)
+```
+
+###### Event(s)
+
+```Rust
+ MemberRegistered(member_id, who.clone())
+```
 
 <!--
 #### Termination(s)
