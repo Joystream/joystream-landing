@@ -397,20 +397,43 @@ Change about text on membership.
 ##### 3. not primary account
 
 ```Rust
-!<AccountIdByMemberId<T>>::exists(<MemberIdByAccountId<T>>::get(who))
+!<AccountIdByMemberId<T>>::exists(member_id)
 ```
 
+where
 
-#####
+```Rust
+let member_id = <MemberIdByAccountId<T>>::get(who)
+```
 
-let member_id =
-Self::member_id_by_account_id(who).ok_or("no member id found for accountid")?;
+##### 4. member profile not found
 
-let member_id = Self::ensure_is_member(&who)?;
-        ensure!(
-            Self::account_id_by_member_id(member_id) == who,
-            "not primary account"
-);
+```Rust
+!<MemberProfile<T>>::exists(member_id)
+```
+
+#### Side effects
+
+##### About text updated
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+The following conditions must all hold
+
+```Rust
+<MemberProfile<T>>::get(member_id).text ===  text.truncate(Self::max_about_text_length() as usize);
+```
+
+###### Result
+...
+
+###### Event(s)
+
+`RawEvent::MemberUpdatedAboutText(id)`
 
 
 ### `change_member_avatar`
