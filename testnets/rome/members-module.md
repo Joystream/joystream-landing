@@ -5,18 +5,20 @@
 
 - [Overview](#overview)
 - [Constants](#constants)
+- [Trait Configuration](#trait-configuration)
+  - [Trait Name](#trait-name)
+  - [Base Traits](#base-traits)
+  - [Associated Types](#associated-types)
+    - [Event](#Event)
+    - [MemberId](#MemberId)
+    - [PaidTermId](#PaidTermId)
+    - [SubscriptionId](#SubscriptionId)
+    - [Roles](#Roles)
 - [Public Types](#public-types)
   - [EntryMethod](#EntryMethod)
   - [Profile](#Profile)
   - [PaidMembershipTerms](#PaidMembershipTerms)
   - [UserInfo](#UserInfo)
-- [Runtime Constraints](#module-configuration)
-  - [Traits](#Traits)
-  - [Event](#Event)
-  - [MemberId](#MemberId)
-  - [PaidTermId](#PaidTermId)
-  - [SubscriptionId](#SubscriptionId)
-  - [Roles](#Roles)
 - [Storage](#storage)
 - [Invariants](#invariants)
 - [Events](#events)
@@ -29,12 +31,17 @@
   - [add_screened_member](#`add_screened_member`)
   - [set_screening_authority](#`set_screening_authority`)
 - [Non-dispatchable Methods](#non-dispatchable-methods)
-  - [my_little_internal_thing](#`my_little_internal_thing`)
-
+  - [is_active_member](#`is_active_member`)
+  - [lookup_member_id](#`lookup_member_id`)
+  - [lookup_account_by_member_id](#`lookup_account_by_member_id`)
 
 ## Overview
 
 Manages the set of current members, their profile, status.
+
+## Module Name
+
+`Membership`
 
 ## Constants
 
@@ -51,6 +58,42 @@ const DEFAULT_MAX_HANDLE_LENGTH: u32 = 40;
 const DEFAULT_MAX_AVATAR_URI_LENGTH: u32 = 1024;
 const DEFAULT_MAX_ABOUT_TEXT_LENGTH: u32 = 2048;
 ```
+
+## Trait Configuration
+
+### Trait Name
+
+`Trait`
+
+### Base Traits
+
+These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
+
+- **system::Trait**
+- **timestamp::Trait**
+- [**GovernanceCurrency**](shared-types.md#GovernanceCurrency)
+
+### Associated Types
+
+#### Event
+
+Event type. ???
+
+#### MemberId
+
+Member identifier type.
+
+####  PaidTermId
+
+Paid term identifier type.
+
+#### SubscriptionId
+
+Subscription identifier type.
+
+#### Roles
+
+Roles module type. <what do we link to here!?>
 
 ## Public Types
 
@@ -103,40 +146,6 @@ pub struct UserInfo {
     pub about: Option<Vec<u8>>,
 }
 ```
-
-## Runtime Constraints
-
-These are the associated types typically found on the trait called `Trait`, which imposes the requirements on what types must be implemented on the final runtime.
-
-### Base Traits
-
-These are the traits which provide the interfaces to services external to this module, such as peer modules which must run in the same runtime for example.
-
-- **system::Trait**
-- **timestamp::Trait**
-- [**GovernanceCurrency**](shared-types.md#GovernanceCurrency)
-
-### Associated Types
-
-#### Event
-
-Event type. ???
-
-#### MemberId
-
-Member identifier type.
-
-####  PaidTermId
-
-Paid term identifier type.
-
-#### SubscriptionId
-
-Subscription identifier type.
-
-#### Roles
-
-Roles module type. <what do we link to here!?>
 
 ## Storage
 
@@ -389,8 +398,6 @@ let member_id = Self::ensure_is_member(&who)?;
 );
 
 
-<!--- not done below -->
-
 ### `change_member_avatar`
 
 _fill in_
@@ -415,7 +422,7 @@ _fill in_
 
 ### `is_active_member`
 
-blabkabka
+...
 
 ### `lookup_member_id`
 
