@@ -429,7 +429,10 @@ The following conditions must all hold
 ```
 
 ###### Result
-...
+
+```Rust
+Ok()
+```
 
 ###### Event(s)
 
