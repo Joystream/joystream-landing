@@ -388,6 +388,21 @@ Change about text on membership.
 !ensure_signed(origin)
 ```
 
+##### 2. no member id found for accountid
+
+```Rust
+!<MemberIdByAccountId<T>>::exists(who)
+```
+
+##### 3. not primary account
+
+```Rust
+!<AccountIdByMemberId<T>>::exists(<MemberIdByAccountId<T>>::get(who))
+```
+
+
+#####
+
 let member_id =
 Self::member_id_by_account_id(who).ok_or("no member id found for accountid")?;
 
