@@ -3,6 +3,7 @@
 
 ## Table Of Content
 
+- [Design](#design)
 - [Dependencies](#dependencies)
 - [Name](#name)
 - [Concepts](#concepts)
@@ -21,9 +22,29 @@
   - [lookup_member_id](#`lookup_member_id`)
   - [lookup_account_by_member_id](#`lookup_account_by_member_id`)
 
-## Purpose
+## Design
 
-Manages the set of current members, their profile, status.
+### Motivation
+
+The membership module is supposed to represent the current set of members on the platform, and manage corresponding rich profiles, as well as the entry of new members.
+
+### Membership
+
+Each membership corresponds to an account, but not all accounts will have a membership. An account may only be associated with a single membership. A membership has a corresponding rich profile, including practical user facing information, such as a unique immutable handle, an avatar URI and a short descriptive text.
+
+A membership can also be active or inactive.
+
+### Terms
+
+A membership is established in the context of membership terms, which describe the price of admission and human readable conditions being agreed to. At any given time there may be a range of different terms available, and the set may change over time.
+
+### Adding members
+
+A member can be introduced in two ways. Either way depends on the module either being open or closed for accepting new members.
+
+The first way is for a member to simply pay for getting entry, with a reference to a given set of terms. In this case, the membership will have a reference to the terms under which it was established.
+
+The second is for a screening authority, which is a designated account, to simply add the new member. In this case, the membership will have a reference to the screening authority.
 
 ## Name
 
@@ -91,7 +112,6 @@ Establish new membership through payment.
 - New members not allowed.
 - Account already associated with a membership.
 - Role key cannot be used for membership.
-- Paid terms id not active.
 - Paid terms id not active.
 - Not enough balance to buy membership.
 - Missing handle.
