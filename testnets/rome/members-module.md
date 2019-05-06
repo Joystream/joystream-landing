@@ -117,10 +117,6 @@ Establish new membership through payment.
 - `Handles` extended with handle.
 - `NextMemberId` incremented.
 
-###### Result
-
-New member id.
-
 ###### Event(s)
 
 - `MemberRegistered` for new member
@@ -154,9 +150,6 @@ Change about text on membership.
 
 - The text of profile of member corresponding to origin account is set to truncated `text`
 
-###### Result
-
-``
 
 ###### Event(s)
 
