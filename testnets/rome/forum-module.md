@@ -10,23 +10,17 @@
 - [State](#state)
 - [Events](#events)
 - [Dispatchable Methods](#dispatchable-methods)
-
 - [Non-dispatchable Methods](#non-dispatchable-methods)
-
 
 ## Design
 
 ### Motivation
 
-....
+This module holds the basic content and structure of a hierarchical topic based forum with trivial sudo based moderation. It allows a blockchain to have _direct_ assertible custody of the forum governance and function. Systems which depend critical on reliable and fair asynchronous public discourse will benefit from this functionality.
 
 ### Structure
 
-The structure of the forum is hierarchical, where each level of the forum is referred to as a topic category.
-
-The root category simply includes other child categories, nothing else. It exists from the genesis of the forum, and can never be removed.
-
-All other categories have an explicit name and explicit subject matter topic. Within such a category there may be other subcategories, and also threads, which are sequences of posts under some headline title and initial post made by the author of the thread. Such categories can be added and removed.
+The structure of the forum is hierarchical, where each level of the forum is referred to as a topic category. The root category simply includes other child categories, nothing else. It exists from the genesis of the forum, and can never be removed. All other categories have an explicit name and explicit subject matter topic. Within such a category there may be other subcategories, and also threads, which are sequences of posts under some headline title and initial post made by the author of the thread. Such categories can be added and removed.
 
 ### Posts and threads
 
@@ -34,9 +28,9 @@ A thread is a sequence of posts, in a given topic category, which has some initi
 
 ### Users
 
-Forum users can create threads in categories, and post to existing threads. A post s
+Forum users can create threads in categories, and post to existing threads. This module does not maintain its own set of forum users, but rather depends on some external module for this. The rationale for this is to allow reuse of the module with a diversity of user management systems, without requiring that runtime developer must keep user set state in synch, or waste state space.
 
-### Forum SUDO
+### Forum sudo
 
 There will be a single account, called the _forum sudo_ account. This account is set by the Sudo of the runtime, and can
 
