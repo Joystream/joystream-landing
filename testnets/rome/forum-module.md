@@ -50,14 +50,13 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - **Delete a thread**: Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
 
-
 ## Name
 
 `Forum`
 
 ## Dependencies
 
-- `ForumUserRegistry`: An external module which holds actual user state, allowing it to be queried based on some user identifier, and recovering some representation of a user.
+- `ForumUserRegistry`: An external module which holds actual user state, allowing it to be queried based on a corresponding account, and recovering some representation of a user.
 
 ## Concepts
 
@@ -115,7 +114,7 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 #### Description
 
-Add a new .
+Add a new category.
 
 #### Errors
 
@@ -126,14 +125,6 @@ Add a new .
 - `description` invalid
 
 #### Side effects
-
-##### Category created
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
 
 - `categoryById` extended with new `Category` under new unique identifier.
 - `nextCategoryId` updated
@@ -150,7 +141,7 @@ Add a new .
 
 #### Description
 
-Delete a .
+Delete a category.
 
 #### Errors
 
@@ -160,17 +151,9 @@ Delete a .
 
 #### Side effects
 
-##### Category deleted
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - `categoryById` no longer has the value corresponding to key `categoryId`
 
-###### Event(s)
+#### Event(s)
 
 - `CategoryDeleted`
 
@@ -178,31 +161,27 @@ Delete a .
 
 #### Payload
 
-- `categoryId`: where thread should be created
+- `categoryId`: `Category` identifier of category where thread should be created
 - `title`: thread title text
+- `text`: text of initial post
 
 #### Description
 
-Create new thread in .
+Create new thread in category.
 
 #### Errors
 
-- ...
-- ... cant be in root
+- Bad signature
+- Signer is not forum user
+- `categoryId` not a valid category
+- `title` not valid
+- `text` not valid
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - `ThreadCreated`
 
@@ -223,17 +202,9 @@ Create new thread in .
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - `ThreadDeleted`
 
@@ -254,17 +225,9 @@ Create new thread in .
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - ...
 
@@ -285,17 +248,9 @@ Create new thread in .
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - ...
 
@@ -316,17 +271,9 @@ Create new thread in .
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - ...
 
@@ -347,16 +294,8 @@ Create new thread in .
 
 #### Side effects
 
-##### [...]
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
 - ...
 
-###### Event(s)
+#### Event(s)
 
 - ...
