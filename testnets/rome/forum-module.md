@@ -80,6 +80,8 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `topicCategoryById`: Map `TopicCategory` identifier to corresponding instance.
 
+- `nextTopicCategoryId`: Identifier to be used for the next `TopicCategory` in `topicCategoryById`
+
 - `threadById`: Map `Thread` identifier to corresponding instance.
 
 - `nextThreadId`: Identifier to be used for next `Thread` in `threadById`
@@ -92,7 +94,13 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 ## Events
 
-- `TopicCategoryCreated`: A topic category was introduced with a given new identifier
+- `TopicCategoryCreated`: A topic category was introduced with a given identifier.
+- `TopicCategoryDeleted`: A topic category, with a given identifier, was removed.
+- `ThreadCreated`: A thread was created with a given identifier.
+- `ThreadDeleted`: A thread was removed, with a given identifier, was removed.
+- `PostAdded`: ...
+- `EditPostText`: ...
+- `PostDeleted`: ...
 
 ## Dispatchable Methods
 
@@ -127,6 +135,7 @@ Adds a new `TopicCategory`.
 ###### Side effect(s)
 
 - `TopicCategoryById` extended with new `TopicCategory` under new unique identifier.
+- `nextTopicCategoryId` updated
 
 ###### Event(s)
 
@@ -162,7 +171,7 @@ Deletes a `TopicCategory`.
 
 ###### Event(s)
 
-- ...
+- `TopicCategoryDeleted`
 
 ### `create_thread`
 
@@ -193,7 +202,7 @@ Deletes a `TopicCategory`.
 
 ###### Event(s)
 
-- ...
+- `ThreadCreated`
 
 ### `delete_thread`
 
@@ -224,9 +233,40 @@ Deletes a `TopicCategory`.
 
 ###### Event(s)
 
-- ...
+- `ThreadDeleted`
 
 ### `add_post`
+
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
+
+### `edit_post_text`
 
 #### Payload
 
@@ -318,110 +358,3 @@ Deletes a `TopicCategory`.
 ###### Event(s)
 
 - ...
-
-
-<!--
-
-#### Payload
-
-- `paid_terms_id`: Id of terms
-- `user_info`: UserInfo
-
-#### Description
-
-Establish new membership through payment.
-
-#### Errors
-
-- Bad signature.
-- New members not allowed.
-- Account already associated with a membership.
-- Role key cannot be used for membership.
-- Paid terms id not active.
-- Not enough balance to buy membership.
-- Missing handle.
-- Handle too short.
-- Handle too long.
-- Avatar URI too long.
-- Handle occupied.
-
-#### Side effects
-
-##### Membership established
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
-- `Currency` has decreased primary account balance and total issuance by terms fee.
-- `MemberIdByAccountId` extended.
-- `AccountIdByMemberId` extended.
-- `MemberProfile` extended with new profile created with payload values.
-- `Handles` extended with handle.
-- `NextMemberId` incremented.
-
-###### Event(s)
-
-- `MemberRegistered` for new member
-
-### `change_member_about_text`
-
-#### Payload
-
-- `text`: New about text
-
-#### Description
-
-Change about text on membership.
-
-#### Errors
-
-- Bad signature.
-- No member id found for accountid.
-- Not primary account.
-- Member profile not found.
-
-#### Side effects
-
-##### About text updated
-
-###### Precondition
-
-`NO_ERROR`
-
-###### Side effect(s)
-
-- The text of profile of member corresponding to origin account is set to truncated `text`
-
-
-###### Event(s)
-
-- `MemberUpdatedAboutText`
-
-### `change_member_avatar`
-
-_fill in_
-
-### `change_member_handle`
-
-_fill in_
-
-### `update_profile`
-
-_fill in_
-
-### `add_screened_member`
-
-_fill in_
-
-### `set_screening_authority`
-
-_fill in_
-
-## Non-dispatchable Methods
-
-None.
-
--->
