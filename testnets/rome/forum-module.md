@@ -64,29 +64,35 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `ForumUser`: Represents an actual forum user, which is provided by `ForumUserRegistry` dependency.
 
-- `ForumSudoId`: Identifies a forum sudo authority, is integer.
+- `ForumSudoId`: Identifies a forum sudo authority.
 
-- `TopicCategory`: Represents a subcategory, and includes a title, creation date, `ForumSudoId` of creator, parent  category (if not root), and short topic description text. Is identified with an integer which is unique across all objects in all subtopics.
+- `TopicCategory`: Represents a subcategory, and includes a title, creation date, `ForumSudoId` of creator, parent category is set to identifier of `TopicCategory` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
-- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all objects in all subtopics.
+- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all instances in all subtopics.
 
-- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all objects in all subtopics and threads.
+- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator.
 
-- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, a hash of the moderated body text, post identifier, a text rationale and the `ForumSudoId` of moderator.
+- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, `ForumUserId` of original creator, a hash of the moderated body text, a text rationale and the `ForumSudoId` of moderator.
 
-- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes a reference to a `Post` or a `ModeratedPost` (but not both), a thread identifier and a thread position identifier representing position in thread. Is identified with an integer.
+- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, a thread identifier and a thread position identifier representing position in thread. Is identified with an integer which is unique across all instances in all subtopics and threads.
 
 ## State
 
-- `TopicCategoriesById`: Map category identifier to corresponding `TopicCategory`.
+- `topicCategoryById`: Map `TopicCategory` identifier to corresponding instance.
 
-- `ThreadById`: Map combined topic category identifier to corresponding `Thread`.
+- `threadById`: Map `Thread` identifier to corresponding instance.
 
-- `PostById`: Map post identifier to corresponding
+- `nextThreadId`: Identifier to be used for next `Thread` in `threadById`
+
+- `threadEntryById`: Map `ThreadEntry` identifier to corresponding instance.
+
+- `nextThreadEntry`: Identifier to be used for next in `ThreadEntry` in `threadEntryById`.
+
+- `forumSudo`: `ForumSudoId` of forum sudo.
 
 ## Events
 
-WIP
+- `TopicCategoryCreated`: A topic category was introduced with a given new identifier
 
 ## Dispatchable Methods
 
@@ -94,20 +100,25 @@ WIP
 
 #### Payload
 
-- ...
+- `parentCategory`: blank if root, otherwise identifier of `TopicCategory`
+- `title`: text title
+- `description`: description text
 
 #### Description
 
-...
+Adds a new `TopicCategory`.
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- Signature not matching `forumSudo`
+- `parentCategory` does not exist
+- `title` invalid
+- `description` invalid
 
 #### Side effects
 
-##### [...]
+##### Category created
 
 ###### Precondition
 
@@ -115,30 +126,31 @@ WIP
 
 ###### Side effect(s)
 
-- ...
+- `TopicCategoryById` extended with new `TopicCategory` under new unique identifier.
 
 ###### Event(s)
 
-- ...
+- `TopicCategoryCreated`
 
 ### `delete_category`
 
 #### Payload
 
-- ...
+-  `topicCategoryId`: id of `TopicCategory` to remove.
 
 #### Description
 
-...
+Deletes a `TopicCategory`.
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- Signature not matching `forumSudo`
+- Subcategory not empty
 
 #### Side effects
 
-##### [...]
+##### Category deleted
 
 ###### Precondition
 
@@ -146,7 +158,7 @@ WIP
 
 ###### Side effect(s)
 
-- ...
+- `TopicCategoryById` no longer has the value corresponding to key `topicCategoryId`
 
 ###### Event(s)
 
