@@ -138,7 +138,7 @@ Add a new category.
 - `categoryById` extended with new `Category` under new unique identifier.
 - `nextCategoryId` updated
 
-###### Event(s)
+#### Event(s)
 
 - `CategoryCreated`
 
@@ -146,7 +146,7 @@ Add a new category.
 
 #### Payload
 
--  `categoryId`: id of `Category` to remove.
+- `categoryId`: id of `Category` to remove.
 
 #### Description
 
@@ -156,7 +156,7 @@ Delete a category.
 
 - Bad signature
 - Signature not matching `forumSudo`
--  not empty
+- Category not empty, has threads
 
 #### Side effects
 
