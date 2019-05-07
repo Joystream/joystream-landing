@@ -10,6 +10,13 @@
 - [State](#state)
 - [Events](#events)
 - [Dispatchable Methods](#dispatchable-methods)
+  - [create_category](#create_category)
+  - [delete_category](#delete_category)
+  - [create_thread](#create_thread)
+  - [delete_thread](#delete_thread)
+  - [add_post](#add_post)
+  - [delete_post](#delete_post)
+  - [set_forum_sudo](#set_forum_sudo)
 - [Non-dispatchable Methods](#non-dispatchable-methods)
 
 ## Design
@@ -85,17 +92,220 @@ WIP
 
 ### `create_category`
 
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
+
 ### `delete_category`
+
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
 
 ### `create_thread`
 
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
+
 ### `delete_thread`
+
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
 
 ### `add_post`
 
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
+
 ### `delete_post`
 
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
+
 ### `set_forum_sudo`
+
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effects
+
+##### [...]
+
+###### Precondition
+
+`NO_ERROR`
+
+###### Side effect(s)
+
+- ...
+
+###### Event(s)
+
+- ...
 
 
 <!--
