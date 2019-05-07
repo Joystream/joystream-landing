@@ -20,7 +20,7 @@ This module holds the basic content and structure of a hierarchical topic based 
 
 ### Structure
 
-The structure of the forum is hierarchical, where each level of the forum is referred to as a topic category. The root category simply includes other child categories, nothing else. It exists from the genesis of the forum, and can never be removed. All other categories have an explicit name and explicit subject matter topic. Within such a category there may be other subcategories, and also threads, which are sequences of posts under some headline title and initial post made by the author of the thread. Such categories can be added and removed.
+The structure of the forum is hierarchical, where each level of the forum is referred to as a topic category. The root category simply includes other child categories, nothing else. It exists from the genesis of the forum, and can never be removed. All other categories, called _subcategories_, have an explicit name and explicit subject matter topic. Within such a category there may be other subcategories, and also threads, which are sequences of posts under some headline title and initial post made by the author of the thread. Such categories can be added and removed.
 
 ### Posts and threads
 
@@ -35,8 +35,11 @@ Forum users can create threads in categories, and post to existing threads. This
 There will be a single account, called the _forum sudo_ account. This account is set by the Sudo of the runtime, and can
 
 - **Create a subcategory**: Requires specifying the parent category.
-- **Delete a subcategory**: Requires leaving some sort of rationale in place of the category, which should be removed from state fully, including all corresponding threads and posts.
+
+- **Delete a subcategory**: Only possible if empty, that is there are no subcategories or threads. Requires leaving some sort of rationale in place of the category, which should be removed from state fully, including all corresponding threads and posts.
+
 - **Delete a post in a thread**: Requires leaving some sort of rationale in place of the post, which should be gone from the state.
+
 - **Delete a thread**: Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
 
 
@@ -44,54 +47,38 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 `Forum`
 
-<!--
-
 ## Dependencies
 
-- `Currency`: An external currency module which supports altering balances and total issuance.
+- `ForumUserRegistry`: An external module which holds actual user state, allowing it to be queried based on some user identifier, and recovering some representation of a user.
 
 ## Concepts
 
-- `Profile`: Describes core properties and status of a membership, like a unique handle and avatar URI. Is identified with unique integer identifier, called _member id_.
+- `ForumUserId`: Identifier used for forum user, which is used by `ForumUserRegistry` dependency.
 
-- `PaidMembershipTerms`: Terms for becoming a member, like price and terms. Is identified with a unique integer identifier called a _paid terms id_.
+- `ForumUser`: Represents an actual forum user, which is provided by `ForumUserRegistry` dependency.
 
-- `UserInfo`: Information required to establish a new profile.
+- `ForumSudoId`: Identifies a forum sudo authority, is integer.
 
-## State
+- `TopicCategory`: Represents a subcategory, and includes a title, creation date, `ForumSudoId` of creator, parent  category (if not root), and short topic description text. Is identified with an integer.
 
-- `NextMemberId`: Unique identifier for next member, should equal total number of members ever created.
+- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer.
 
-- `AccountIdByMemberId`: Maps member id to an account id.
+- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator. Is identified with an integer.
 
-- `MemberIdByAccountId`: Maps account id to optional member id.
+- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, a text rationale and the `ForumSudoId` of moderator.
 
-- `MemberProfile`: Maps member id to `Profile` of member.
+- `ThreadEntry`: ..
 
-- `Handles`: Maps handle to corresponding memberid.
-
-- `NextPaidMembershipTermsId`: Next paid membership terms id.
-
-- `PaidMembershipTermsById`: Maps paid terms id to actual terms.
-
-- `ActivePaidMembershipTerms`: Set of active paid term ids.
-
-- `NewMembershipsAllowed`: Whether new memberships can currently be established.
-
-- `ScreeningAuthority`: Optional account of screener.
-
-- `MinHandleLength`, `MaxHandleLength`, `MaxAvatarUriLength`, `MaxAboutTextLength`: Mutable constraint variables
 
 ## Events
 
-- `MemberRegistered`: A member was registered with a given id and account.
-- `MemberUpdatedAboutText`: A member, with given id, had text updated.
-- `MemberUpdatedAvatar`: A member, with given id, had avatar URI updated.
-- `MemberUpdatedHandle`: A member, with given id, had handle updated.
+WIP
 
 ## Dispatchable Methods
 
 ### `buy_membership`
+
+<!--
 
 #### Payload
 
