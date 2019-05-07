@@ -59,16 +59,23 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `ForumSudoId`: Identifies a forum sudo authority, is integer.
 
-- `TopicCategory`: Represents a subcategory, and includes a title, creation date, `ForumSudoId` of creator, parent  category (if not root), and short topic description text. Is identified with an integer.
+- `TopicCategory`: Represents a subcategory, and includes a title, creation date, `ForumSudoId` of creator, parent  category (if not root), and short topic description text. Is identified with an integer which is unique across all objects in all subtopics.
 
-- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer.
+- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all objects in all subtopics.
 
-- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator. Is identified with an integer.
+- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all objects in all subtopics and threads.
 
-- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, a text rationale and the `ForumSudoId` of moderator.
+- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, a hash of the moderated body text, post identifier, a text rationale and the `ForumSudoId` of moderator.
 
-- `ThreadEntry`: ..
+- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes a reference to a `Post` or a `ModeratedPost` (but not both), a thread identifier and a thread position identifier representing position in thread. Is identified with an integer.
 
+## State
+
+- `TopicCategoriesById`: Map category identifier to corresponding `TopicCategory`.
+
+- `ThreadById`: Map combined topic category identifier to corresponding `Thread`.
+
+- `PostById`: Map post identifier to corresponding
 
 ## Events
 
@@ -76,7 +83,20 @@ WIP
 
 ## Dispatchable Methods
 
-### `buy_membership`
+### `create_category`
+
+### `delete_category`
+
+### `create_thread`
+
+### `delete_thread`
+
+### `add_post`
+
+### `delete_post`
+
+### `set_forum_sudo`
+
 
 <!--
 
@@ -180,16 +200,6 @@ _fill in_
 
 ## Non-dispatchable Methods
 
-### `is_active_member`
-
-_fill in_
-
-### `lookup_member_id`
-
-_fill in_
-
-### `lookup_account_by_member_id`
-
-_fill in_
+None.
 
 -->
