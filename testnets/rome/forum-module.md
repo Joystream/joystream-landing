@@ -15,8 +15,8 @@
   - [create_thread](#create_thread)
   - [delete_thread](#delete_thread)
   - [add_post](#add_post)
-  - [edit_post_text](#edit_post_text)
   - [delete_post](#delete_post)
+  - [edit_post_text](#edit_post_text)
   - [set_forum_sudo](#set_forum_sudo)
 - [Non-dispatchable Methods](#non-dispatchable-methods)
 
@@ -60,19 +60,17 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 ## Concepts
 
-- `ForumUserId`: Identifier used for forum user, which is used by `ForumUserRegistry` dependency.
-
 - `ForumUser`: Represents an actual forum user, which is provided by `ForumUserRegistry` dependency.
 
 - `ForumSudoId`: Identifies a forum sudo authority.
 
 - `Category`: Represents a forum category, and includes a title, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
-- `Thread`: Represents a thread, and includes a title, creation date and `ForumUserId` of creator. Is identified with an integer which is unique across all instances in all categories.
+- `Thread`: Represents a thread, and includes a title, creation date and identifier of `ForumUser` creator. Is identified with an integer which is unique across all instances in all categories.
 
-- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and `ForumUserId` of creator.
+- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and identifier of `ForumUser` creator.
 
-- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, `ForumUserId` of original creator, a hash of the moderated body text, a text rationale and the `ForumSudoId` of moderator.
+- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, identifier of original `ForumUser` creator, a hash of the moderated body text, a text rationale and the `ForumSudoId` of moderator.
 
 - `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, a thread identifier and a thread position identifier representing position in thread. Is identified with an integer which is unique across all instances in all categories and threads.
 
@@ -98,7 +96,7 @@ There will be a single account, called the _forum sudo_ account. This account is
 - `CategoryDeleted`: A category, with a given identifier, was removed.
 - `ThreadCreated`: A thread was created with a given identifier.
 - `ThreadDeleted`: A thread was removed, with a given identifier, was removed.
-- `PostAdded`: ...
+- `PostAdded`: A post was added,
 - `EditPostText`: ...
 - `PostDeleted`: ...
 
@@ -231,7 +229,7 @@ Create new thread in category.
 
 - ...
 
-### `edit_post_text`
+### `delete_post`
 
 #### Payload
 
@@ -254,7 +252,7 @@ Create new thread in category.
 
 - ...
 
-### `delete_post`
+### `edit_post_text`
 
 #### Payload
 
