@@ -66,19 +66,22 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `Category`: Represents a forum category, and includes a title, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
-- `Thread`: Represents a thread, and includes a title, creation date and identifier of `ForumUser` creator. Is identified with an integer which is unique across all instances in all categories.
+- `Post`: Represents a thread post, and includes initial text, the number of subsequent edits to the text, creation date and identifier of `ForumUser` creator.
 
-- `Post`: Represents a thread post, and includes a linked list of body texts, one entry per edit (chronologically ordered) - corresponding to edit history, initial body text (not in list to disqualify otherwise invalid empty list state), creation date and identifier of `ForumUser` creator.
+- `PostTextEdit`: Represents a revision of the text of a `Post`, and includes corresponding `Post` identifier, new text, revision date and edit number of revision. Is identified with an integer which is unique across all instances.
 
 - `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, identifier of original `ForumUser` creator, a hash of the moderated body text, a text rationale and the `ForumSudoId` of moderator.
 
-- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, a thread identifier and a thread position identifier representing position in thread. Is identified with an integer which is unique across all instances in all categories and threads.
+- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, and an entry position. Is identified with an integer which is unique across all instances in all categories and threads.
+
+- `Thread`: Represents a thread, and includes a title, number of `ThreadEntries` in thread, creation date and identifier of `ForumUser` creator.
+
 
 ## State
 
 - `categoryById`: Map `Category` identifier to corresponding instance.
 
-- `nextCategoryId`: Identifier to be used for the next `Category` in `categoryById`
+- `nextCategoryId`: Identifier to be used for the next `Category` created.
 
 - `threadById`: Map `Thread` identifier to corresponding instance.
 
@@ -86,7 +89,15 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `threadEntryById`: Map `ThreadEntry` identifier to corresponding instance.
 
-- `nextThreadEntry`: Identifier to be used for next in `ThreadEntry` in `threadEntryById`.
+- `nextThreadEntry`: Identifier to be used for next in `ThreadEntry` created.
+
+- `threadEntryIdsByThreadId`: Map `Thread` identifier to vector if `ThreadEntry` identifiers, ordered by entry position.
+
+- `postTextEditById`: Map `PostTextEdit` identifier to `PostTextEdit`
+
+- `nextPostTextEditId`: Identifier to be used for next `PostTextEdit` created.
+
+- `postTextEditIdsByPostId`: Maps `Post` identifier to vector of `PostTextEdit` identifiers, order by edit number.
 
 - `forumSudo`: `ForumSudoId` of forum sudo.
 
@@ -96,9 +107,9 @@ There will be a single account, called the _forum sudo_ account. This account is
 - `CategoryDeleted`: A category, with a given identifier, was removed.
 - `ThreadCreated`: A thread was created with a given identifier.
 - `ThreadDeleted`: A thread was removed, with a given identifier, was removed.
-- `PostAdded`: A post was added,
-- `EditPostText`: ...
-- `PostDeleted`: ...
+- `PostAdded`: A post was introduced with a given identifier.
+- `EditPostText`: A post, with a given identifier, had the post text edited.
+- `PostDeleted`: A post, with a given identifier, was removed.
 
 ## Dispatchable Methods
 
@@ -177,7 +188,8 @@ Create new thread in category.
 
 #### Side effects
 
-- ...
+- `threadById` extended with new `Thread`, which
+-
 
 #### Event(s)
 
