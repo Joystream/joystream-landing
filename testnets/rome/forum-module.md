@@ -38,41 +38,12 @@ Forum users can create threads in categories, and post to existing threads. A po
 
 ### Forum SUDO
 
-### Moderator??? forumsudo
+There will be a single account, called the _forum sudo_ account. This account is set by the Sudo of the runtime, and can
 
-
-
-## Forum
-This covers the experience of users across Pioneer, the command line.
-
-### Member
-As a member I can create a new thread in a category, with a title and text.
-As a member I can compose a post in markdown and submit to a thread.
-As a member I can reply to a prior post in a thread by getting a quote of the prior post in my composer.
-As a member I can edit the text of a post.
-As a member I can learn how to become moderator in a given category. <= OUT!
-As a member I can become a top level moderator by contacting Sudo (some how?). <= OUT!
-As a member I can become a non-top level moderator by contacting the moderator of the parent category. <= OUT!
-
-### Moderator <== OUT
-As a moderator I can pin and unpin a post at the top of a category.
-As a moderator I can create a subcategory of my category.
-As a moderator I can archive and unarchive a subcategory of my category.
-As a moderator I can lock and unlock a thread in my category. <== OUT!
-As a moderator I can make/remove someone a moderator in a subcategory of my category. <== OUT!
-### Forum Sudo
-As forum sudo create a subcategory.
-As forum sudo I can delete a post.
-As forum sudo I can delete a category.
-
-### Sudo
-As sudo I can make a member a forum sudo.
-As sudo I can remove a forum sudo.
-
-As sudo I can alter the moderator set in any topic category <== OUT!
-As sudo I can change key forum constraint variables on mutating/creating posts, threads, etc. <== OUT!
-
-
+- **Create a subcategory**: Requires specifying the parent category.
+- **Delete a subcategory**: Requires leaving some sort of rationale in place of the category, which should be removed from state fully, including all corresponding threads and posts.
+- **Delete a post in a thread**: Requires leaving some sort of rationale in place of the post, which should be gone from the state.
+- **Delete a thread**: Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
 
 
 ## Name
