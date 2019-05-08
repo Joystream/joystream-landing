@@ -12,6 +12,7 @@
 - [Dispatchable Methods](#dispatchable-methods)
   - [create_category](#create_category)
   - [delete_category](#delete_category)
+  - [set_category_archival_status](#set_category_archival_status)
   - [create_thread](#create_thread)
   - [delete_thread](#delete_thread)
   - [add_post](#add_post)
@@ -44,7 +45,9 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - **Create a category**: Requires specifying the parent category.
 
-- **Delete a category**: Only possible if empty, that is there are no subcategories or threads. Requires leaving some sort of rationale in place of the category, which should be removed from state fully, including all corresponding threads and posts.
+- **Delete a category**: Only possible if empty, that is there are no subcategories or threads. Is avoided for non-empty categories both for safety from both mistakes and malicious opportunistists, and the possibly long time it may take to recursively execute on non-empty categories.
+
+- **Archive/Unarchive a category**: Archiving a category refers to putting it in the state of accepting no mutation or deletion, either to subcategories or threads in any way, both from users and moderator.
 
 - **Delete a post in a thread**: Requires leaving some sort of rationale in place of the post, which should be gone from the state.
 
@@ -64,17 +67,20 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `ForumSudoId`: Identifies a forum sudo authority.
 
-- `Category`: Represents a forum category, and includes a title, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
+- `Post`: Represents a thread post, and includes initial text, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
 
-- `Post`: Represents a thread post, and includes initial text, the number of subsequent edits to the text, creation date and identifier of `ForumUser` creator.
-
-- `PostTextEdit`: Represents a revision of the text of a `Post`, and includes corresponding `Post` identifier, new text, revision date and edit number of revision. Is identified with an integer which is unique across all instances.
+- `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text, revision date and edit number of revision. Is identified with an integer which is unique across all instances.
 
 - `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, identifier of original `ForumUser` creator, a hash of the moderated body text, a text rationale and the `ForumSudoId` of moderator.
 
 - `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, and an entry position. Is identified with an integer which is unique across all instances in all categories and threads.
 
 - `Thread`: Represents a thread, and includes a title, number of `ThreadEntries` in thread, creation date and identifier of `ForumUser` creator.
+
+- `CategoryEntries`: Represents the presence of a
+
+
+- `Category`: Represents a forum category, and includes a title, number of subcategories, number of threads, archival status, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
 
 ## State
@@ -105,6 +111,7 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `CategoryCreated`: A category was introduced with a given identifier.
 - `CategoryDeleted`: A category, with a given identifier, was removed.
+- `CategoryArchivalStatusUpdated`: A category, with a given identifier, had its archival status updated to the given value.
 - `ThreadCreated`: A thread was created with a given identifier.
 - `ThreadDeleted`: A thread was removed, with a given identifier, was removed.
 - `PostAdded`: A post was introduced with a given identifier.
@@ -130,10 +137,11 @@ Add a new category.
 - Bad signature
 - Signature not matching `forumSudo`
 - `parentCategory` does not exist
+- `parentCategory` has been archived
 - `title` invalid
 - `description` invalid
 
-#### Side effects
+#### Side effect(s)
 
 - `categoryById` extended with new `Category` under new unique identifier.
 - `nextCategoryId` updated
@@ -156,15 +164,39 @@ Delete a category.
 
 - Bad signature
 - Signature not matching `forumSudo`
-- Category not empty, has threads
+- Category not empty, has threads and/or subcategories
 
-#### Side effects
+#### Side effect(s)
 
-- `categoryById` no longer has the value corresponding to key `categoryId`
+- `categoryById` no longer has category with identifier `categoryId`.
+- parent of category identified by `categoryId`, if not root, has number of subcategories decremented.
 
 #### Event(s)
 
 - `CategoryDeleted`
+
+### `set_category_archival_status`
+
+#### Payload
+
+- ...
+
+#### Description
+
+...
+
+#### Errors
+
+- ...
+- ...
+
+#### Side effect(s)
+
+- ...
+
+#### Event(s)
+
+- `CategoryArchivalStatusUpdated`: <== recursivelye?
 
 ### `create_thread`
 
@@ -186,10 +218,10 @@ Create new thread in category.
 - `title` not valid
 - `text` not valid
 
-#### Side effects
+#### Side effect(s)
 
 - `threadById` extended with new `Thread`, which
--
+- increment thread count of category with identifier `categoryId`
 
 #### Event(s)
 
@@ -199,20 +231,23 @@ Create new thread in category.
 
 #### Payload
 
-- ...
+- `threadId`: identifier of `Thread` to delete
 
 #### Description
 
-...
+Delete thread.
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- Signer not corresponding to account of `forumSudo`
+- `threadId` not valid
+- ``
 
-#### Side effects
+#### Side effect(s)
 
-- ...
+- `threadById` no longer has `Thread` identified with `threadId`
+-
 
 #### Event(s)
 
@@ -233,7 +268,7 @@ Create new thread in category.
 - ...
 - ...
 
-#### Side effects
+#### Side effect(s)
 
 - ...
 
@@ -256,7 +291,7 @@ Create new thread in category.
 - ...
 - ...
 
-#### Side effects
+#### Side effect(s)
 
 - ...
 
@@ -279,7 +314,7 @@ Create new thread in category.
 - ...
 - ...
 
-#### Side effects
+#### Side effect(s)
 
 - ...
 
@@ -302,7 +337,7 @@ Create new thread in category.
 - ...
 - ...
 
-#### Side effects
+#### Side effect(s)
 
 - ...
 
