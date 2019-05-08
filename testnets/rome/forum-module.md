@@ -44,11 +44,13 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - **Create a category**: Requires specifying the parent category.
 
-- **Delete a category**: Only possible if empty, that is there are no subcategories or threads. Is avoided for non-empty categories both for safety from both mistakes and malicious opportunists, and the possibly long time it may take to recursively execute on non-empty categories.
+- **Delete|Undelete a category**: Only possible if empty, that is there are no subcategories or threads. Is avoided for non-empty categories both for safety from both mistakes and malicious opportunists, and the possibly long time it may take to recursively execute on non-empty categories.
 
-- **Delete a post in a thread**: Requires leaving some sort of rationale in place of the post, which should be gone from the state.
+- **Delete a post in a thread**: Requires leaving some sort of rationale.
 
-- **Delete a thread**: Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
+- **Delete a thread**: 
+
+Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
 
 ## Name
 
@@ -64,7 +66,9 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `ForumSudoId`: Identifies a forum sudo authority.
 
-- `Post`: Represents a thread post, and includes initial text, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
+- `ModerationAction`: Represents a moderation action on either a post or a
+
+- `Post`: Represents a thread post, and includes initial text, moderation status, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
 
 - `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text and revision date.
 
@@ -77,13 +81,26 @@ There will be a single account, called the _forum sudo_ account. This account is
 - `ModeratedThread`: Represents a thread which was moderated by forum sudo, and includes a moderation date,
 original creation date of thread, identifier of original `ForumUser` creator, title of the thread and a text rationale for the moderation action and the `ForumSudoId` of moderator.
 
+<!--
 - `ParentCategoryId`: Represents an identifier for the parent of a `Category`. Is either an identifier for a `Category` when the parent is not the root category, otherwise it represents the root category.
+-->
 
-- `CategoryEntry`: Represents the presence of a thread, a moderated thread or a subcategory, in a category. Includes one, and only one, instance of a `Thread`, `ModeratedThread` or `Category`, identifier for the corresponding `ParentCategoryId` and an entry position. Is identified with an integer which is unique across all instances in all categories.
+- `CategoryEntry`: Represents the presence of a thread, a moderated thread or a subcategory, in a category. Includes one, and only one, instance of a `Thread`, `ModeratedThread` or `ChildCategory`, identifier for the corresponding `ParentCategoryId` and an entry position. Is identified with an integer which is unique across all instances in all categories.
 
-- `Category`: Represents a forum category, and includes a title, number of subcategories, number of threads, total number of `CategoryEntry` instances, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
+- `ChildCategory`: ... number of threads, total number of `CategoryEntry` instances, parent is set to identifier of `Category`
+
+- `TopCategory`: ...
+
+
+
+
+
+
+- `Category`: Represents a forum category, and includes a title, number of subcategories, creation date, `ForumSudoId` of creator and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
 ## State
+
+- `rootCategories`
 
 - `categoryById`: Map `Category` identifier to corresponding instance.
 
@@ -97,7 +114,7 @@ original creation date of thread, identifier of original `ForumUser` creator, ti
 
 - `nextThreadEntry`: Identifier to be used for next in `ThreadEntry` created.
 
-- `threadEntryIdsByThreadId`: Map `Thread` identifier to vector if `ThreadEntry` identifiers, ordered by entry position.
+- `threadEntryIdsByThreadId`: Map `Thread` identifier to vector if `ThreadEntry` identifiers, ordered by entry position. **Note: This is here to make it fast to look up all entries in a given thread in a thread deletion scenario.**
 
 - `forumSudo`: `ForumSudoId` of forum sudo.
 
@@ -119,7 +136,7 @@ original creation date of thread, identifier of original `ForumUser` creator, ti
 
 #### Payload
 
-- `parentCategory`: blank if root, otherwise identifier of `Category`
+- `parent`: `ParentCategoryId` of parent
 - `title`: text title
 - `description`: description text
 
@@ -130,8 +147,8 @@ Add a new category.
 #### Errors
 
 - Bad signature
-- Signature not matching `forumSudo`
-- `parentCategory` does not exist
+- `forumSudo` does not match signature
+- `parent` does not exist
 - `title` invalid
 - `description` invalid
 
@@ -139,6 +156,7 @@ Add a new category.
 
 - `categoryById` extended with new `Category` under new unique identifier.
 - `nextCategoryId` updated
+- if `parent` is not root, then subcategory count
 
 #### Event(s)
 
@@ -157,7 +175,7 @@ Delete a category.
 #### Errors
 
 - Bad signature
-- Signature not matching `forumSudo`
+- `forumSudo` does not match signature
 - Category not empty, has threads and/or subcategories
 
 #### Side effect(s)
@@ -168,31 +186,6 @@ Delete a category.
 #### Event(s)
 
 - `CategoryDeleted`
-
-<!--
-### `set_category_archival_status`
-
-#### Payload
-
-- ...
-
-#### Description
-
-...
-
-#### Errors
-
-- ...
-- ...
-
-#### Side effect(s)
-
-- ...
-
-#### Event(s)
-
-- `CategoryArchivalStatusUpdated`: <== recursivelye?
--->
 
 ### `create_thread`
 
@@ -236,7 +229,7 @@ Delete thread.
 #### Errors
 
 - Bad signature
-- Signer not corresponding to account of `forumSudo`
+- `forumSudo` does not match signature
 - `threadId` not valid
 - ``
 
