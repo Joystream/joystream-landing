@@ -12,7 +12,6 @@
 - [Dispatchable Methods](#dispatchable-methods)
   - [create_category](#create_category)
   - [delete_category](#delete_category)
-  <!-- - [set_category_archival_status](#set_category_archival_status) -->
   - [create_thread](#create_thread)
   - [delete_thread](#delete_thread)
   - [add_post](#add_post)
@@ -47,10 +46,6 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - **Delete a category**: Only possible if empty, that is there are no subcategories or threads. Is avoided for non-empty categories both for safety from both mistakes and malicious opportunists, and the possibly long time it may take to recursively execute on non-empty categories.
 
-<!--
-- **Archive/Unarchive a category**: Archiving a category refers to putting it in the state of accepting no mutation or deletion, either to subcategories or threads in any way, both from users and moderator.
--->
-
 - **Delete a post in a thread**: Requires leaving some sort of rationale in place of the post, which should be gone from the state.
 
 - **Delete a thread**: Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
@@ -71,21 +66,22 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - `Post`: Represents a thread post, and includes initial text, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
 
-- `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text, revision date and edit number of revision. Is identified with an integer which is unique across all instances.
+- `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text and revision date.
 
 - `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, identifier of original `ForumUser` creator, a hash of the moderated body text, a text rationale for the moderation action and the `ForumSudoId` of moderator.
 
-- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, and an entry position. Is identified with an integer which is unique across all instances in all categories and threads.
+- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, identifier for the corresponding `Thread` and an entry position. Is identified with an integer which is unique across all instances in all categories and threads.
 
 - `Thread`: Represents a thread, and includes a title, number of `ThreadEntry` instances in the thread, creation date and identifier of `ForumUser` creator.
 
 - `ModeratedThread`: Represents a thread which was moderated by forum sudo, and includes a moderation date,
 original creation date of thread, identifier of original `ForumUser` creator, title of the thread and a text rationale for the moderation action and the `ForumSudoId` of moderator.
 
-- `CategoryEntry`: Represents the presence of a thread, or a moderated thread, in a category. Includes an instance of a `Thread` or `ModeratedThread` - but not both, and an entry position. Is identified with an integer which is unique across all instances in all categories.
+- `ParentCategoryId`: Represents an identifier for the parent of a `Category`. Is either an identifier for a `Category` when the parent is not the root category, otherwise it represents the root category.
 
-- `Category`: Represents a forum category, and includes a title, number of subcategories, number of threads, archival status, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
+- `CategoryEntry`: Represents the presence of a thread, a moderated thread or a subcategory, in a category. Includes one, and only one, instance of a `Thread`, `ModeratedThread` or `Category`, identifier for the corresponding `ParentCategoryId` and an entry position. Is identified with an integer which is unique across all instances in all categories.
 
+- `Category`: Represents a forum category, and includes a title, number of subcategories, number of threads, total number of `CategoryEntry` instances, creation date, `ForumSudoId` of creator, parent is set to identifier of `Category` - or not set at all if under root, and short topic description text. Is identified with an integer which is unique across all instances in all categories.
 
 ## State
 
@@ -103,22 +99,17 @@ original creation date of thread, identifier of original `ForumUser` creator, ti
 
 - `threadEntryIdsByThreadId`: Map `Thread` identifier to vector if `ThreadEntry` identifiers, ordered by entry position.
 
-- `postTextEditById`: Map `PostTextEdit` identifier to `PostTextEdit`
-
-- `nextPostTextEditId`: Identifier to be used for next `PostTextEdit` created.
-
-- `postTextEditIdsByPostId`: Maps `Post` identifier to vector of `PostTextEdit` identifiers, order by edit number.
-
 - `forumSudo`: `ForumSudoId` of forum sudo.
 
 ## Events
 
 - `CategoryCreated`: A category was introduced with a given identifier.
 - `CategoryDeleted`: A category, with a given identifier, was removed.
-<!-- - `CategoryArchivalStatusUpdated`: A category, with a given identifier, had its archival status updated to the given value. -->
 - `ThreadCreated`: A thread was created with a given identifier.
-- `ThreadDeleted`: A thread was removed, with a given identifier, was removed.
+- `ThreadDeleted`: A thread, with a given identifier, was removed.
+- `ThreadModerated`: A thread, with a given identifier, was moderated.
 - `PostAdded`: A post was introduced with a given identifier.
+- `PostModerated`: A post, with a given entry position an `Thread` identifier, was moderated.
 - `EditPostText`: A post, with a given identifier, had the post text edited.
 - `PostDeleted`: A post, with a given identifier, was removed.
 
