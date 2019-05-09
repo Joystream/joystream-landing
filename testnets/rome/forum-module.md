@@ -11,12 +11,12 @@
 - [Events](#events)
 - [Dispatchable Methods](#dispatchable-methods)
   - [create_category](#create_category)
-  - [delete_category](#delete_category)
+  - [update_category](#update_category)
   - [create_thread](#create_thread)
-  - [delete_thread](#delete_thread)
+  - [moderate_thread](#moderate_thread)
   - [add_post](#add_post)
-  - [delete_post](#delete_post)
   - [edit_post_text](#edit_post_text)
+  - [moderate_post](#moderate_post)
   - [set_forum_sudo](#set_forum_sudo)
 - [Non-dispatchable Methods](#non-dispatchable-methods)
 
@@ -28,7 +28,7 @@ This module holds the basic content and structure of a hierarchical topic based 
 
 ### Structure
 
-The structure of the forum is hierarchical, where each non-root node is referred to as a category. The root simply includes other subcategories, nothing else. It exists from the genesis of the forum, and can never be removed. All other categories have an explicit name and explicit subject matter topic. Within such a category there may be other subcategories, and also threads, which are sequences of posts under some headline title and initial post made by the author of the thread. Such categories can be added and removed.
+The structure of the forum is a collection of category trees. A category tree has of two types of nodes, a category or a thread. A category node represents a topic category, with a name and associated intended scope of discussion topics. A thread node represents an actual thread of one or more posts.
 
 ### Posts and threads
 
@@ -42,15 +42,17 @@ Forum users can create threads in categories, and post to existing threads. This
 
 There will be a single account, called the _forum sudo_ account. This account is set by the Sudo of the runtime, and can
 
-- **Create a category**: Requires specifying the parent category.
+- **Create a category**: Can either be a new root category, or if parent category is referenced, it would be a subcategory.
 
-- **Delete|Undelete a category**: Only possible if empty, that is there are no subcategories or threads. Is avoided for non-empty categories both for safety from both mistakes and malicious opportunists, and the possibly long time it may take to recursively execute on non-empty categories.
+- **Archive|Delete (Unarchive|Undelete) a category**: Results in category being marked as archived or deleted, while it and all corresponding threads, posts and subcategories remain in the state. It is however no longer possible to delete or mutate anything in the category in any way, such as adding posts, creating threads or subcategories, etc. Well-behaved UIs will not render deleted categories. In what follows a category is said to be _directly_ archived or deleted, if its applying directly to that category, and _indirectly_ if it applies to some ancestor category.
 
-- **Delete a post in a thread**: Requires leaving some sort of rationale.
+- **Moderate a post in a thread**: Results in post being marked as moderated, with a corresponding rationale for the moderation added, but it remains in the system state. It is not longer possible to edit the post text, and well-behaved UIs will not render such posts.
 
-- **Delete a thread**: 
+- **Moderate a thread**: Results in thread being marked as moderated, with a corresponding rationale for the moderation added, but it remains in the system state. It is not longer possible to moderate posts, edit post texts or add posts to the thread. Well-behaved UIs will not render such threads.
 
-Requires leaving some sort of rationale in place of the thread, which should be gone from the state, along with all posts.
+### Limits
+
+There is a maximum depth to a category tree. This is because doing any mutation will require traversing the category tree to the root to check for whether there has been any deletion or archiving along the path to the root, and there needs to be a bound on this, herein called `MAX_CATEGORY_DEPTH`.
 
 ## Name
 
@@ -66,69 +68,47 @@ Requires leaving some sort of rationale in place of the thread, which should be 
 
 - `ForumSudoId`: Identifies a forum sudo authority.
 
-- `ModerationAction`: Represents a moderation action on either a post or a
+- `ModerationAction`: Represents a moderation outcome applied to a post or a thread. Includes a moderation date, a text rationale and the `ForumSudoId` of moderator.
 
-- `Post`: Represents a thread post, and includes initial text, moderation status, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
+- `Post`: Represents a thread post, and includes initial text, identifier for the corresponding `Thread`, a position, an optional `ModerationAction`, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
 
 - `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text and revision date.
 
-- `ModeratedPost`: Represents a post which was moderated by forum sudo, and includes a moderation date, original creation date of post, identifier of original `ForumUser` creator, a hash of the moderated body text, a text rationale for the moderation action and the `ForumSudoId` of moderator.
+- `Thread`: Represents a thread, and includes a title, identifier for the corresponding `Category`, a position, an optional `ModerationAction`, number of unmoderated posts, number of moderated posts, creation date and identifier of `ForumUser` creator.
 
-- `ThreadEntry`: Represents the presence of a post, or a moderated post, in a thread. Includes an instance of a `Post` or `ModeratedPost` - but not both, identifier for the corresponding `Thread` and an entry position. Is identified with an integer which is unique across all instances in all categories and threads.
-
-- `Thread`: Represents a thread, and includes a title, number of `ThreadEntry` instances in the thread, creation date and identifier of `ForumUser` creator.
-
-- `ModeratedThread`: Represents a thread which was moderated by forum sudo, and includes a moderation date,
-original creation date of thread, identifier of original `ForumUser` creator, title of the thread and a text rationale for the moderation action and the `ForumSudoId` of moderator.
-
-<!--
-- `ParentCategoryId`: Represents an identifier for the parent of a `Category`. Is either an identifier for a `Category` when the parent is not the root category, otherwise it represents the root category.
--->
-
-- `CategoryEntry`: Represents the presence of a thread, a moderated thread or a subcategory, in a category. Includes one, and only one, instance of a `Thread`, `ModeratedThread` or `ChildCategory`, identifier for the corresponding `ParentCategoryId` and an entry position. Is identified with an integer which is unique across all instances in all categories.
-
-- `ChildCategory`: ... number of threads, total number of `CategoryEntry` instances, parent is set to identifier of `Category`
-
-- `TopCategory`: ...
-
-
-
-
-
-
-- `Category`: Represents a forum category, and includes a title, number of subcategories, creation date, `ForumSudoId` of creator and short topic description text. Is identified with an integer which is unique across all instances in all categories.
+- `Category`: Represents a forum category, and includes a title, short topic description text, creation date, deletion status, archival status, number of subcategories, number of unmoderated threads, number of moderated threads, optional `Category` identifier for parent category and `ForumSudoId` of creator. Is identified with an integer which is unique across all instances in all categories.
 
 ## State
 
-- `rootCategories`
-
 - `categoryById`: Map `Category` identifier to corresponding instance.
 
-- `nextCategoryId`: Identifier to be used for the next `Category` created.
+- `nextCategoryId`: Identifier value to be used for the next `Category` created.
 
 - `threadById`: Map `Thread` identifier to corresponding instance.
 
-- `nextThreadId`: Identifier to be used for next `Thread` in `threadById`
+- `nextThreadId`: Identifier value to be used for next `Thread` in `threadById`
 
-- `threadEntryById`: Map `ThreadEntry` identifier to corresponding instance.
+- `postById`: Map `Post` identifier to corresponding instance.
 
-- `nextThreadEntry`: Identifier to be used for next in `ThreadEntry` created.
-
-- `threadEntryIdsByThreadId`: Map `Thread` identifier to vector if `ThreadEntry` identifiers, ordered by entry position. **Note: This is here to make it fast to look up all entries in a given thread in a thread deletion scenario.**
+- `nextPostId`: Identifier value to be used for for next `Post` created.
 
 - `forumSudo`: `ForumSudoId` of forum sudo.
 
 ## Events
 
 - `CategoryCreated`: A category was introduced with a given identifier.
-- `CategoryDeleted`: A category, with a given identifier, was removed.
+
+- `CategoryUpdated`: A category, with a given identifier, had its direct archival and/or deletion status updated to a new value. Distinguishes whether values each value is genuinely new or not.
+
 - `ThreadCreated`: A thread was created with a given identifier.
-- `ThreadDeleted`: A thread, with a given identifier, was removed.
+
 - `ThreadModerated`: A thread, with a given identifier, was moderated.
+
 - `PostAdded`: A post was introduced with a given identifier.
+
 - `PostModerated`: A post, with a given entry position an `Thread` identifier, was moderated.
+
 - `EditPostText`: A post, with a given identifier, had the post text edited.
-- `PostDeleted`: A post, with a given identifier, was removed.
 
 ## Dispatchable Methods
 
@@ -136,7 +116,7 @@ original creation date of thread, identifier of original `ForumUser` creator, ti
 
 #### Payload
 
-- `parent`: `ParentCategoryId` of parent
+- `parent`: not set, or category identifier of parent
 - `title`: text title
 - `description`: description text
 
@@ -148,13 +128,15 @@ Add a new category.
 
 - Bad signature
 - `forumSudo` does not match signature
-- `parent` does not exist
+- `parent` is set, but does not exist
+- `parent` is set, but is (directly or indirectly) archived or deleted category
+- category depth exceeded
 - `title` invalid
 - `description` invalid
 
 #### Side effect(s)
 
-- `categoryById` extended with new `Category` under new unique identifier.
+- `categoryById` extended with new `Category` under old value of `nextCategoryId` as identifier
 - `nextCategoryId` updated
 - if `parent` is not root, then subcategory count
 
@@ -162,21 +144,27 @@ Add a new category.
 
 - `CategoryCreated`
 
-### `delete_category`
+### `update_category`
 
 #### Payload
 
-- `categoryId`: id of `Category` to remove.
+- `categoryId`: id of category to update
+- `archive`: whether to archive
+- `deleted`: whether it is deleted
 
 #### Description
 
-Delete a category.
+Update a category.
 
 #### Errors
 
 - Bad signature
 - `forumSudo` does not match signature
-- Category not empty, has threads and/or subcategories
+- `categoryId` does not match any category
+- category with `categoryId` is directly deleted, cannot be unarchived
+- category with `categoryId` is indirectly archived or deleted, cannot be updated in any way
+
+_Note: We don't mind directly archived/deleted categories from being re-archived/deleted respectively, we just ignore_
 
 #### Side effect(s)
 
@@ -185,13 +173,13 @@ Delete a category.
 
 #### Event(s)
 
-- `CategoryDeleted`
+- `CategoryUpdated` with with new status values, as they apply
 
 ### `create_thread`
 
 #### Payload
 
-- `categoryId`: `Category` identifier of category where thread should be created
+- `categoryId`: identifier of category where thread should be created
 - `title`: thread title text
 - `text`: text of initial post
 
@@ -204,112 +192,138 @@ Create new thread in category.
 - Bad signature
 - Signer is not forum user
 - `categoryId` not a valid category
+- `categoryId` is (directly or indirectly) archived
+- `categoryId` is (directly or indirectly) deleted
 - `title` not valid
 - `text` not valid
 
 #### Side effect(s)
 
-- `threadById` extended with new `Thread`, which
-- increment thread count of category with identifier `categoryId`
+- `threadById` extended with new `Thread` instance under old value of `nextThreadId` as identifier
+- increment unmoderated thread count of category with identifier `categoryId`
 
 #### Event(s)
 
 - `ThreadCreated`
 
-### `delete_thread`
+### `moderate_thread`
 
 #### Payload
 
 - `threadId`: identifier of `Thread` to delete
+- `rationale`:  text rationale
 
 #### Description
 
-Delete thread.
+Moderate thread.
 
 #### Errors
 
 - Bad signature
 - `forumSudo` does not match signature
-- `threadId` not valid
-- ``
+- `threadId` does not match any thread
+- `rationale` invalid
+- thread already moderated
+- thread in (directly or indirectly) archived category
+- thread in (directly or indirectly) deleted category
 
 #### Side effect(s)
 
-- `threadById` no longer has `Thread` identified with `threadId`
--
+- corresponding `Thread` instance in `threadById` has `ModerationAction` set
+- update moderated and unmoderated thread count of corresponding category
 
 #### Event(s)
 
-- `ThreadDeleted`
+- `ThreadModerated`
 
 ### `add_post`
 
 #### Payload
 
-- ...
+- `threadId`: thread in which to add post
+- `text`: text of post
 
 #### Description
 
-...
+Adding post to thread
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- Signer is not forum user
+- thread with identifier value `threadId` does not exist
+- thread with identifier value `threadId` is moderated
+- category of thread is (directly or indirectly) archived
+- category is (directly or indirectly) deleted
 
 #### Side effect(s)
 
-- ...
+- `postById` extended with new `Post` instance with under old value of `nextPostId` as identifier
+- `nextPostId` updated
+- unmoderated posts updated in corresponding thread
 
 #### Event(s)
 
-- ...
-
-### `delete_post`
-
-#### Payload
-
-- ...
-
-#### Description
-
-...
-
-#### Errors
-
-- ...
-- ...
-
-#### Side effect(s)
-
-- ...
-
-#### Event(s)
-
-- ...
+- `PostAdded`
 
 ### `edit_post_text`
 
 #### Payload
 
-- ...
+- `postId`: post to be edited
+- `new_text`: new text
 
 #### Description
 
-...
+Edit post text
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- `postId` does not correspond to a post
+- Signer does not match creator of post with identifier `postId`
+- post with identifier `postId` is moderated
+- category is (directly or indirectly) archived
+- category is (directly or indirectly) deleted
 
 #### Side effect(s)
 
-- ...
+- Post with identifier `postId` has its edit vector with new `PostTextEdit` instance at front
 
 #### Event(s)
 
-- ...
+- `EditPostText`
+
+### `moderate_post`
+
+#### Payload
+
+- `postId`: post to be edited
+- `rationale`:  text rationale
+
+#### Description
+
+Moderate post
+
+#### Errors
+
+- Bad signature
+- `forumSudo` does not match signature
+- `postId` does not match any post
+- `rationale` invalid
+- post already moderated
+- thread already moderated
+- thread in (directly or indirectly) archived category
+- thread in (directly or indirectly) deleted category
+
+#### Side effect(s)
+
+- corresponding `Post` instance in `postById` has `ModerationAction` set
+- update moderated and unmoderated post count of corresponding thread
+
+#### Event(s)
+
+- `PostModerated`
 
 ### `set_forum_sudo`
 
