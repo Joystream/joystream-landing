@@ -327,6 +327,8 @@ Moderate post
 
 ### `set_forum_sudo`
 
+Note: I am not sure how to do this one, I am not familiar with Substrate **Sudo** functionality.
+
 #### Payload
 
 - ...
