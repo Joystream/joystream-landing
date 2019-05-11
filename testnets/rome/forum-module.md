@@ -24,7 +24,7 @@
 
 ### Motivation
 
-This module holds the basic content and structure of a hierarchical topic based forum with trivial sudo based moderation. It allows a blockchain to have _direct_ assertible custody of the forum governance and function. Systems which depend critical on reliable and fair asynchronous public discourse will benefit from this functionality.
+This module holds the basic content and structure of a hierarchical topic based forum with trivial sudo moderation. It allows a blockchain to have _direct_ assertible custody of the forum governance and function. Systems which depend critical on reliable and fair asynchronous public discourse will benefit from this functionality.
 
 ### Structure
 
@@ -32,11 +32,11 @@ The structure of the forum is a collection of category trees. A category tree ha
 
 ### Posts and threads
 
-A thread is a sequence of posts, in a given category, which has some initial post from the original author, and title. A post exists in the context of a thread, and has some position in thread post sequence, as well as a body text. Both threads have a corresponding author and creation date. The text in a post can be edited by any time by the original author, however the history of all texts are available in the state.
+A thread is a sequence of posts, in a given category, which has some initial post from the original author, and title. A post exists in the context of a thread, and has some position in thread post sequence, as well as a body text. Both have a corresponding author and creation date. The text in a post can be edited by any time by the original author, however the history of all texts are available in the state.
 
 ### Users
 
-Forum users can create threads in categories, and post to existing threads. This module does not maintain its own set of forum users, but rather depends on some external module for this. The rationale for this is to allow reuse of the module with a diversity of user management systems, without requiring that runtime developer must keep user set state in synch, or waste state space.
+Forum users can create threads in categories, and post to existing threads. This module does not maintain its own set of forum users, but rather depends on some external module for this. The rationale for this is to allow reuse of the module with a diversity of user management systems, without requiring that runtime developer must keep user set synchronised, or waste state space.
 
 ### Forum sudo
 
@@ -44,7 +44,7 @@ There will be a single account, called the _forum sudo_ account. This account is
 
 - **Create a category**: Can either be a new root category, or if parent category is referenced, it would be a subcategory.
 
-- **Archive|Delete (Unarchive|Undelete) a category**: Results in category being marked as archived or deleted, while it and all corresponding threads, posts and subcategories remain in the state. It is however no longer possible to delete or mutate anything in the category in any way, such as adding posts, creating threads or subcategories, etc. Well-behaved UIs will not render deleted categories. In what follows a category is said to be _directly_ archived or deleted, if its applying directly to that category, and _indirectly_ if it applies to some ancestor category.
+- **Archive|Delete (Unarchive|Undelete) a category**: Results in category being marked as archived or deleted, while it and all corresponding threads, posts and subcategories remain in the state. It is however no longer possible to delete or mutate anything in the category in any way, such as adding posts, creating threads or subcategories, etc. Well-behaved UIs will not render deleted categories. In what follows a category is said to be _directly_ archived or deleted, if its applying directly to that category, and _indirectly_ if it applies to some ancestor category. The only distinction between archiving and deletion in the runtime is that a directly deleted category cannot be unarchived.
 
 - **Moderate a post in a thread**: Results in post being marked as moderated, with a corresponding rationale for the moderation added, but it remains in the system state. It is not longer possible to edit the post text, and well-behaved UIs will not render such posts.
 
@@ -70,11 +70,11 @@ There is a maximum depth to a category tree. This is because doing any mutation 
 
 - `ModerationAction`: Represents a moderation outcome applied to a post or a thread. Includes a moderation date, a text rationale and the `ForumSudoId` of moderator.
 
-- `Post`: Represents a thread post, and includes initial text, identifier for the corresponding `Thread`, a position, an optional `ModerationAction`, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator.
+- `Post`: Represents a thread post, and includes initial text, identifier for the corresponding `Thread`, a position, an optional `ModerationAction`, a vector of identifiers for `PostTextEdit` instances ordered chronologically by edit time, creation date and identifier of `ForumUser` creator. Is identified with an integer which is unique across all instances in all categories.
 
 - `PostTextEdit`: Represents a revision of the text of a `Post`, includes new text and revision date.
 
-- `Thread`: Represents a thread, and includes a title, identifier for the corresponding `Category`, a position, an optional `ModerationAction`, number of unmoderated posts, number of moderated posts, creation date and identifier of `ForumUser` creator.
+- `Thread`: Represents a thread, and includes a title, identifier for the corresponding `Category`, a position, an optional `ModerationAction`, number of unmoderated posts, number of moderated posts, creation date and identifier of `ForumUser` creator. Is identified with an integer which is unique across all instances in all categories.
 
 - `Category`: Represents a forum category, and includes a title, short topic description text, creation date, deletion status, archival status, number of subcategories, number of unmoderated threads, number of moderated threads, optional `Category` identifier for parent category and `ForumSudoId` of creator. Is identified with an integer which is unique across all instances in all categories.
 
@@ -96,19 +96,34 @@ There is a maximum depth to a category tree. This is because doing any mutation 
 
 ## Events
 
-- `CategoryCreated`: A category was introduced with a given identifier.
+Each event has payload as sublist
 
-- `CategoryUpdated`: A category, with a given identifier, had its direct archival and/or deletion status updated to a new value. Distinguishes whether values each value is genuinely new or not.
+- `CategoryCreated`: A category was introduced
+  - category identifier
 
-- `ThreadCreated`: A thread was created with a given identifier.
+- `CategoryUpdated`: A category had its direct archival and/or deletion status updated to a new value.
+  - category identifier
+  - whether deletion status was changed, if so to what
+  - whether archival status was changed, if so to what
 
-- `ThreadModerated`: A thread, with a given identifier, was moderated.
+- `ThreadCreated`: A thread was created with.
+  - thread identifier
 
-- `PostAdded`: A post was introduced with a given identifier.
+- `ThreadModerated`: A thread was moderated.
+  - thread identifier
 
-- `PostModerated`: A post, with a given entry position an `Thread` identifier, was moderated.
+- `PostAdded`: A post was introduced.
+  - post identifier
 
-- `EditPostText`: A post, with a given identifier, had the post text edited.
+- `PostModerated`: A post was moderated.
+  - post identifier
+
+- `PostTextUpdated`: A post had the post text edited.
+  - post identifier
+  - edit number of new text
+
+- `ForumSudoSet`: A new forum sudo was set by root.
+  - account of new forum sudo
 
 ## Dispatchable Methods
 
@@ -116,6 +131,7 @@ There is a maximum depth to a category tree. This is because doing any mutation 
 
 #### Payload
 
+- `origin`: call origin
 - `parent`: not set, or category identifier of parent
 - `title`: text title
 - `description`: description text
@@ -130,14 +146,14 @@ Add a new category.
 - `forumSudo` does not match signature
 - `parent` is set, but does not exist
 - `parent` is set, but is (directly or indirectly) archived or deleted category
-- category depth exceeded
+- category depth exceeded, see `MAX_CATEGORY_DEPTH`.
 - `title` invalid
 - `description` invalid
 
 #### Side effect(s)
 
 - `categoryById` extended with new `Category` under old value of `nextCategoryId` as identifier
-- `nextCategoryId` updated
+- `nextCategoryId` incremented
 - if `parent` is not root, then subcategory count
 
 #### Event(s)
@@ -148,6 +164,7 @@ Add a new category.
 
 #### Payload
 
+- `origin`: call origin
 - `categoryId`: id of category to update
 - `archive`: whether to archive
 - `deleted`: whether it is deleted
@@ -173,12 +190,13 @@ _Note: We don't mind directly archived/deleted categories from being re-archived
 
 #### Event(s)
 
-- `CategoryUpdated` with with new status values, as they apply
+- `CategoryUpdated` with new status values, as they apply
 
 ### `create_thread`
 
 #### Payload
 
+- `origin`: call origin
 - `categoryId`: identifier of category where thread should be created
 - `title`: thread title text
 - `text`: text of initial post
@@ -201,6 +219,7 @@ Create new thread in category.
 
 - `threadById` extended with new `Thread` instance under old value of `nextThreadId` as identifier
 - increment unmoderated thread count of category with identifier `categoryId`
+- `nextThreadId` incremented
 
 #### Event(s)
 
@@ -210,6 +229,7 @@ Create new thread in category.
 
 #### Payload
 
+- `origin`: call origin
 - `threadId`: identifier of `Thread` to delete
 - `rationale`:  text rationale
 
@@ -240,6 +260,7 @@ Moderate thread.
 
 #### Payload
 
+- `origin`: call origin
 - `threadId`: thread in which to add post
 - `text`: text of post
 
@@ -270,6 +291,7 @@ Adding post to thread
 
 #### Payload
 
+- `origin`: call origin
 - `postId`: post to be edited
 - `new_text`: new text
 
@@ -292,12 +314,13 @@ Edit post text
 
 #### Event(s)
 
-- `EditPostText`
+- `PostTextUpdated`
 
 ### `moderate_post`
 
 #### Payload
 
+- `origin`: call origin
 - `postId`: post to be edited
 - `rationale`:  text rationale
 
@@ -331,21 +354,21 @@ Note: I am not sure how to do this one, I am not familiar with Substrate **Sudo*
 
 #### Payload
 
-- ...
+- `newForumSudo`: account of new proposed forum sudo
 
 #### Description
 
-...
+Set forum sudo.
 
 #### Errors
 
-- ...
-- ...
+- Bad signature
+- Not root origin
 
 #### Side effect(s)
 
-- ...
+- `forumSudo` equals `newForumSudo`
 
 #### Event(s)
 
-- ...
+- `ForumSudoSet`
