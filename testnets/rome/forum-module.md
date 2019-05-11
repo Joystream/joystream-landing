@@ -185,8 +185,7 @@ _Note: We don't mind directly archived/deleted categories from being re-archived
 
 #### Side effect(s)
 
-- `categoryById` no longer has category with identifier `categoryId`.
-- parent of category identified by `categoryId`, if not root, has number of subcategories decremented.
+- category in `categoryById` under key `categoryId` has archival and deletion status equal to `archive` and `delete`, respectively, and if parent is set, then it will have number of subcategories decremented if `delete` is true, but category was perviously not.
 
 #### Event(s)
 
