@@ -92,7 +92,7 @@ There is a maximum depth to a category tree. This is because doing any mutation 
 
 - `nextPostId`: Identifier value to be used for for next `Post` created.
 
-- `forumSudo`: `ForumSudoId` of forum sudo.
+- `forumSudo`: Optional `ForumSudoId` of forum sudo.
 
 ## Events
 
@@ -123,7 +123,8 @@ Each event has payload as sublist
   - edit number of new text
 
 - `ForumSudoSet`: A new forum sudo was set by root.
-  - account of new forum sudo
+  - optional account for old forum sudo
+  - optional account of new forum sudo
 
 ## Dispatchable Methods
 
@@ -353,7 +354,7 @@ Note: I am not sure how to do this one, I am not familiar with Substrate **Sudo*
 
 #### Payload
 
-- `newForumSudo`: account of new proposed forum sudo
+- `newForumSudo`: optional account of new proposed forum sudo
 
 #### Description
 
