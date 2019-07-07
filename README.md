@@ -120,21 +120,21 @@ Until the Joystream mainnet goes live, a sequence of test networks will be rolle
 
 ## Live Testnet
 
-[Acropolis](/testnets/acropolis/README.md)
+[Acropolis](testnets/acropolis)
 
-<!--
+
 
 ## Next Testnet
 
-[Acropolis](/testnets/acropolis/README.md)
+[Rome](testnets/rome)
 
--->
+
 
 ## Past Testnets
 
 | Network         | Started           | Ended         | Release Plan    |
 | -------------   | -------------     | -----         | -----           |
-| Athens          | 17.04.19          |   24.06.19    | [Link](/testnets/athens/README.md)        |
+| Athens          | 17.04.19          |   24.06.19    | [Link](testnets/athens)|
 | Sparta          | 28.02.19          |   29.03.19    |       NA        |
 | Mesopotamia     | 21.12.18          |   28.02.19    |       NA        |
 
