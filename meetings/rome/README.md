@@ -16,20 +16,27 @@
 ## Launch Meeting
 
 - **ID:** `Rome Launch Meeting`
-- **Date:** `dd.mm.yy`
-- **Starts:** `hh:mm GMT+2`
-- **Duration:** `min`
+- **Date:** `10.07.19`
+- **Starts:** `11:30 GMT+2`
+- **Duration:** `45min`
 - **Venue:** `ZOOM`
-- **Lead**: `NA`
-- **Minutes**: `NA`
+- **Lead**: `Martin`
+- **Minutes**: `Martin`
 - **Participants**:
-  - `name1`
-  - ...
+  - `Alex`
+  - `Bedeho`
+  - `Martin`
+  - `Mokhtar`
 
 #### Agenda
 ##### Item 1
-...
+Discuss draft Rome [release plan](../../testnets/rome).
 
+##### Item 2
+Discuss draft [release plan](../../testnets/rome/okr-structure.md).
+
+##### Item 3
+Schedule [user stories meeting](#user-stories-meeting)
 
 #### Minutes
 **Started at:** `hh:mm GMT+2`
@@ -38,7 +45,10 @@
   - ...
 
 ##### Item 1
-...
+
+##### Item 2
+
+##### Item 3
 
 **Other topics raised:**
 ...
