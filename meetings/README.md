@@ -23,7 +23,7 @@ This is the index of past meetings with itineraries, they should all be stored i
 
 | Meeting Identifier                                  | Invitation sent  | Scheduled   (held)      | Itinerary and Minutes                                                    | Notes                         |
 | :-------------------------------------------------: | :---------------:|-------------------------| :----------------------------------------------------------------------: | :----------------------------:|
-| Rome Launch Meeting                                 | 09.07.19         | 09.07.19-11:30GMT+2     | [link](../meetings/acropolis#launch-meeting)                             |              -                |  
+| Rome Launch Meeting                                 | 09.07.19         | 09.07.19-11:30GMT+2     | [link](../meetings/rome#launch-meeting)                             |              -                |  
 | Acropolis - Lessons Learned                         | 01.07.19         | 02.07.19-11:15GMT+2 (x) | [link](../meetings/acropolis##lessons-learned)                           | Lessons learned after release |
 | Acropolis Release Plan Milestone Evaluation Meeting | 10.06.19         | 11.06.19-11:15GMT+2 (x) | [link](../meetings/acropolis##release-plan-milestone-evaluation-meeting) | Re-evaluation of Milestones due to changing circumstances |
 | Acropolis Release Plan Finalization Meeting         | 06.05.19         | 09.05.19-11:15GMT+2 (x) | [link](../meetings/acropolis#release-plan-finalisation-meeting)          | Two working days not feasible |
@@ -38,7 +38,7 @@ This is the index of past meetings with itineraries, they should all be stored i
 - **ID:** `full meeting identifier (e.g. Sparta Launch Meeting)`
 - **Date:** `date of meeting`
 - **Starts:** `start time with time zone`
-- **Duration:** `how long the meeting lasts`
+- **Scheduled Duration:** `how long the meeting lasts`
 - **Venue:** `e.g. Zoom link or physical location`
 - **Lead:** `person responsible following agenda and time keeping`
 - **Minutes:** `person responsible for minutes and post-meeting work`
@@ -46,24 +46,24 @@ This is the index of past meetings with itineraries, they should all be stored i
   - `person 1`
   - `...`
 
-#### Agenda
+### Agenda
 
-##### Item 1
+#### Item 1
 ...
 
-##### Item 2
+#### Item 2
 ...
 
-#### Minutes
+### Minutes
 **Started at:** `time`
 **Present:**
 * `person1`
 * `...`
 
-##### Item 1
+#### Item 1
 ...
 
-##### Item 2
+#### Item 2
 ...
 
 **Other topics raised:**
