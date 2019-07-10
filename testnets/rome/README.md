@@ -31,18 +31,19 @@
   - [Deployment](#deployment)
   - [Products](#products)
     - [Runtime](#runtime)
+    - [Full node](#full-node)
     - [Colossus](#colossus)
+    - [Apollo](#apollo)
     - [Pioneer](#pioneer)
   - [Milestones](#milestones)
     - [Rome Announced](#rome-announced)
-    - [Working Spec Draft](#working-spec-draft)
-    - [Working Spec Release](#working-spec-release)
-    - [Communication Template](#communication-template)
+    - [Spec Draft](#spec-draft)
+    - [Spec Release](#spec-release)
     - [Sub-system Test](#sub-system-test)
     - [Final Test](#final-test)
-    - [Go-To-Market](#go-to-market)
+    - [Launch Ready](#launch-ready)
     - [Release](#release)
-  - [Go-To-Market](#go-to-market-1)
+  - [Go-To-Market](#go-to-market)
     - [Communications](#communications)
     - [Website](#website)
     - [Guides](#guides)
@@ -70,25 +71,27 @@ Once we have reached a [milestones](#milestones), an entry will be made below, w
 
 | Name/category               | Date            | Itinerary and Minutes                                     |
 | :-------------------------: | :-------------: |:---------------------------------------------------------:|
-|        NA                   |     NA          | NA                                                        |
+| Launch Meeting              | 10.07.19         | [link](../../meetings/rome#launch-meeting)               |
 <!--
-| Launch Meeting              | 26.04.19        | [link](../../meetings/acropolis/#launch-meeting)             |
-| User Stories                | 02.05.19        | [link](../../meetings/acropolis#user-stories-meeting)        |
-| Release Plan Finalization   | 09.05.19        | [link](../../meetings/acropolis#release-plan-finalization-meeting)   |
-| Release Plan Milestone Evaluation Meeting | 10.06.19         | [link](../../meetings/acropolis##release-plan-milestone-evaluation-meeting) | Re-evaluation of Milestones due to changing circumstances |
-| Lessons Learned             | 02.07.19        | [link](../../meetings/acropolis/#lessons-learned)             |
+| User Stories                | dd.mm.19        | [link](../../meetings/rome#user-stories-meeting)        |
+| Release Plan Finalization   | dd.mm.19        | [link](../../meetings/rome#release-plan-finalization-meeting)   |
+| Lessons Learned             | dd.mm.19        | [link](../../meetings/rome/#lessons-learned)             |
 -->
 
 #  Specification
 
+TBD
 
 # GitHub Projects
 
 After the [Acropolis Lessons Learned Meeting](/meetings/acropolis#lessons-learned), we decided to change our approach to how we organize the release projects.
 - For Athens and the beginning of Acropolis we planned on making `issues` for each task related to the testnet in its applicable repo, and then adding them to the release project.
-- For Rome, we will instead make one `issue` in this repo with a high level description of each tasks tied to a specific goal/KR. Each task will be represented by a checkmark, that will be checked off by the Release Manager as we progress.
+- For Rome, we will instead `issues` tied to a specific KR, with a high level description of tasks. Each task will be represented by a checkmark, and if applicable, include a link to an `issue` in the repo describing the task with more granularity.
+- Each Monday, the affected personnel/group will go through the list with the Release Manager, discuss progress/problems/solutions, and check off boxes as they are completed.
+- A summary of each of these meetings will be added as a comment that also includes the tracking score, and presented in the Tuesday all hands meeting.
+- The project may also include competitions tied to the release, despite not formally tied to the [Release OKR](#okr)
 
-The project for the Rome Release can be found [here](https://github.com/orgs/Joystream/projects/9)
+The project for the Rome Release can be found [here](https://github.com/orgs/Joystream/projects/9).
 
 # OKR results
 
@@ -121,7 +124,9 @@ Full details of tracking of results can be found in the [archive](../okrs/OKR-ar
 
 # Release Plan
 
+<!--
 **This plan was made in advance, and anything below this line will not be updated inspite of changing circumstances.**
+-->
 
 ## Name
 
@@ -133,14 +138,14 @@ Full details of tracking of results can be found in the [archive](../okrs/OKR-ar
 
 ## Release Date
 
-dd October 2019, 12:00 (GMT+2)
+dd November 2019, 12:00 (GMT+2)
 
 ## OKRs
 
 # Release OKRs
 ### Objective: `Launch Rome Network`
 - **Active from:** dd.mm.yy
-- **KR Measurement Deadline**: 7-9 days after Acropolis launch (first weekday)
+- **KR Measurement Deadline**: 7-9 days after Rome launch (first weekday)
 - **Tracked**: Every Monday
 - **Tracking Manager**: Martin
 - **Key Results**:
@@ -157,24 +162,18 @@ Go [here](/okrs#release-okrs) for tracking.
 
 ## Deployment
 
-On-chain upgrade of runtime from `5.4.n` to `5.5.0`.
-
-Start a fresh chain, built from a more recent version of the [substrate](https://github.com/paritytech/substrate) node template.
-**Migration of the following:**
+Start a fresh chain, (built from a more recent version of the [substrate](https://github.com/paritytech/substrate) node template).
+**Transferring of the following:**
 
 - Memberships
 - Forum posts
 - Media Content
-- Occupied roles
 
 As a consequence of this, old `keys` will also be "work" (though the balance will not be transferred).
 In practice, this means all `keys` associated with a `member` will still have the following qualities:
 
-- `storage-keys` associated with a `membership` on Acropolis will still be linked on Rome
 - `forum` posts can still be edited by the `member` that made the post.
 - `content` uploaders will still be able to use their keys to edit `metadata` of their uploaded content.
-- `Storage Providers` will keep their role, if they are able to update and reconfigure their software within a grace period.
-- `Council Members` will keep their role, assuming the upgrade happens during the `not running` stage.
 
 All `keys` tied to a `Membership` will start with a small balance to allow them to post on the `forum` and upload `content`.
 
@@ -184,7 +183,7 @@ The following public products will be part of this release.
 
 ### Runtime
 ---
-- **Description:** Runtime for Validator node
+- **Description:** Runtime for the Joystream full node
 - **Manager:** **Mokhtar**
 - **Core Team:**
   - **Mokhtar:** Developer
@@ -192,28 +191,51 @@ The following public products will be part of this release.
   - **Bedeho:** Developer
   - **Martin:** Testing
 - **Main repo:** [substrate-runtime-joystream](https://github.com/Joystream/substrate-runtime-joystream)
-- **Current version:** `v5.4.0` (any in flight ugrades will be versioned `v5.4.x`)
-- **New version:** target `v5.5.0`
+- **Current version:** `v5.4.0` (any in flight ugrades will be versioned `v5.5+n.0`)
+- **New version:** target `v6.0.0`
 - **Audit:** No
-----
-TBD
-- **Documentation:** Publish the rust docs for the runtime at testnet.joystream.org/runtime-docs/
+- **Documentation:** Publish the rust docs for the runtime at testnet.joystream.org/runtime-docs/ *delete/fill in*
 - **Legal Review/ToS update:** No
 - **Build/CI system:**
   - **Mokhtar:**
-    * CI: Simple travis job for PRs, running cargo tests, and verifying build doesn't fail and rustfmt is used to format code
+    * CI: Simple travis job for PRs, running cargo tests, and verifying build doesn't fail and rustfmt is used to format code *delete/fill in*
     * Build: Will have a working Docker file for building proposed WASM runtime blob
 - **New/Altered Functionality:**
-    * New Forum module (Bedeho)
-    * Updated Actors module to support storage tranches (Jens/Mokhtar)
-    * Updated storage modules to support storage tranches (Jens/Mokhtar)
-    * Cleanup old migration code in members module (Mokhtar)
+    * Improvements to forum module (*delete/fill in*)
+    * Updated Actors module, thus changing the signup process and `key` management
+    * Updated Storage modules to support storage tranches
+    * Separate the [storage](#colossus) and [distribution](#distributor) role
+    * Re-write and migrate the Content directory
+    * Cleanup old migration code in members module (Mokhtar) (*delete/fill in*)
+    * Add a new proposal type.
 - **Refactor/Reorganization:**
-  - Best effort should be made to make new runtime modules as separate git repos
+  - Best effort should be made to make new and refactored runtime modules as separate git repos
   - Existing modules can remain in same repo
-  - Docker
 - **Deployment/Distribution:**
-    - Will be voted in through an upgrade proposal in council, see Events section for how.
+    - Or restart chain, with various migration challenges in a new genesis spec
+
+### Full node
+---
+- **Description:** Joystream full node
+- **Description:** Runtime for the Joystream full node
+- **Manager:** **Mokhtar**
+- **Core Team:**
+  - **Mokhtar:** Developer
+  - **Martin:** Testing
+- **Main repo:** [substrate-node-joystream](https://github.com/Joystream/substrate-node-joystream)
+- **Current version:** `v1.0.0`
+- **New version:** target `v1.0.1` OR `v1.1.0` (pending pulling from upstream or not)
+- **Audit:** No
+- **Documentation:** No
+- **Legal Review/ToS update:** No
+- **Build/CI system:**
+  - **Mokhtar:**
+    * CI: Simple travis job for PRs, running cargo tests, and verifying build doesn't fail and rustfmt is used to format code *delete/fill in*
+    * Repo (and Docker?) *fill in*
+- **New/Altered Functionality:**
+    * New genesis block
+- **Deployment/Distribution:**
+    - Tag new release
 
 ### Colossus
 ---
@@ -222,34 +244,62 @@ TBD
 - **Manager:** Mokhtar
 - **Team:**
   - **Mokhtar:** Developer
-  - **Bedeho:** Developer
+  - **Bedeho:** Review
   - **Martin:** Testing
-- **Main repo:** [storage-node-joystream](https://github.com/Joystream/storage-node-joystream)
-- **Current version:** 0.2.0 (TBD, start tagging release of current node?)
-- **New version:** 0.3.0
+- **Main repo:** [storage-node-joystream](https://github.com/Joystream/storage-node-joystream) *change name/fill in*
+- **Current version:** 0.2.0 (TBD, start tagging release of current node?) *fill in*
+- **New version:** 0.3.0 *fill in*
 - **Audit:** No
 - **Documentation:**
   - [README](https://github.com/Joystream/storage-node-joystream/blob/master/README.md)
-  - [Released API specs](https://storage-node-1.joystream.org/swagger.json)
-- **Legal Review/ToS update:** No
+  - [Released API specs](-) *fill in*
+- **Legal Review/ToS update:** No *add to repo*
 - **Build/CI system:**
   - **Mokhtar**
     * CI: Simple travis job, running unit tests.
-    * Build docker image (??)
+      * Add more unit test
 - **Target Platforms:** Linux
 - **New/Altered Functionality:**
-  - Support storage tranches. The main difference is to stake for joining a tranche rather than the storage provider role.
-    - Allow multiple keys, or allow one key to stake for multiple tranches.
-  - Include a set of benchmarking and testing tools, allowing `Storage Providers` to test their configuration before taking on the role.
-  - Add a new discovery service, allowing the `Storage Providers` to find, authenticate and connect to `Distributors`
-  - ...
-  - No longer contain the `Distributor` side of the software.
+  - Support storage groups. The main difference is to stake for joining a group rather than the storage provider role.
+  - New signup process (actors module)
+  - Authenticate and connect to `Distributors` *fill in*
+  - Rewrite in typescript (*delete/fill in*)
+  - Run in testmode *fill in*
+  - No longer contain the `Distributor` side of the software. *fill in*
+- **Nice to have:**
+  - Run in testmode *fill in*
 - **New Key User Stories:**
-  - As a storage provider, in order to selectively provide storage, I want to stake for storage tranches.
-  - ...
+  - *fill in*
 - **Deployment/Distribution:**
-  - Dockerfile for deployment (??)
-  - Will replace old storage system with the runtime upgrade.
+  - *fill in*
+
+### Apollo
+[Apollo](https://en.wikipedia.org/wiki/Apollo)
+
+- **Description:** Distributor node
+- **Manager:** Bedeho
+- **Team:**
+  - **Bedeho:** Developer
+  - **Mokhtar:** Reviewer
+  - **Martin:** Testing
+- **Main repo:** [distributor-node-joystream](https://github.com/Joystream/distributor-node-joystream) *fill in*
+- **Current version:** -
+- **New version:** `0.1.0`
+- **Audit:** No
+- **Documentation:**
+  - [README](https://github.com/Joystream/distributor-node-joystream/blob/master/README.md) *fill in*
+  - [Released API specs](-) *delete/fill in*
+- **Legal Review/ToS update:** Same as [Colossus](#colossus) *add to repo*
+- **Build/CI system:**
+  - CI: Simple travis job, running unit tests.
+- **Target Platforms:** Linux
+- **New/Altered Functionality:**
+  - Authenticate and connect to `Storage nodes`
+  - ... *fill in*
+- **New Key User Stories:**
+  - *fill in*
+- **Deployment/Distribution:**
+  - *fill in*
 
 ### Pioneer
 ---
@@ -260,28 +310,31 @@ TBD
     - **Alex:** Developer
     - **Mokhtar:** Developer
     - **Martin:** Testing
- - **Main repo:** [apps](https://github.com/Joystream/apps)
- ---
- - **Current version:** N/A (`0.32.0-beta.6` shown in Pioneer)
- - **New version:** `3.0`
-   - `0.x` - goes to Polka Apps.
-   - `1.x` - Elections + Proposals modules.
-   - `2.x` - Media module (explore + upload).
+ - **Main repo:** [apps](https://github.com/Joystream/apps) *renmae to pioneer*
+ - **Current version:** N/A
+ - **New version:** `0.5.0`
+   - `0.1.x` - goes to Polka Apps.
+   - `0.2.x` - Sparta.
+   - `0.3.x` - Athens
+   - `0.4.x` - Acropolis
+    - *Not sure we actually need to tag releases for `pioneer` as it is meant as a more dynamic. For me, I would be happy just showing the hash of the latest commit*
+    - *fill in*
  - **Audit:** No
  - **Documentation:** No
- - **Legal Review/ToS update:** No. License to be added to migrated Repo.
- - **Build/CI system:** No
- ---
+ - **Legal Review/ToS update:** No. License to be added to migrated Repo. *delete/fill in*
+ - **Build/CI system:** Yes
  - **Target Platforms:** Cross-platform and cross-browser.
  - **New/Altered Functionality**:
-    - Integration with new storage system
-    - Integration with new distributor system
-    - Support new proposal type(s)
-    - ...
+    - Integration with new storage/distribution system
+    - New Working Group `*` module integration
+    - Support new proposal type
+    - *fill in*
     - Support dynamic content directory
-    - Improve media content rendering
- - **New User Stories:**
-    - ...
+      - Landing page
+      - Improve forum
+      - Sidebar *fill in*
+ - **New Key User Stories:**
+  - *fill in*
  - **Deployment/Distribution:**
     - Upgrade of [hosted](#hosted-joystream-pioneer) Pioneer must be timed with release for integration with new storage system, distributor system, and proposals.
     - Frequent non-breaking improvements/updates performed expected.
@@ -291,23 +344,21 @@ TBD
 
 | Date     |   Event                                           |     Involved                            |
 | :-------:|:-------------------------------------------------:|:---------------------------------------:|
-| 15.07.19 | [Rome Announced](#rome-announced)                 |     Martin, Bedeho, Elpassion           |
-| 23.07.19 | [Working Spec Draft](#working-spec-draft)         |           Alex, Bedeho, Mokhtar         |
-| 31.07.19 | [Working Spec Release](#working-spec-release)     |           Alex, Bedeho, Mokhtar         |
-| 21.08.19 | [Communication Template](#communication-template) |     Bedeho, Elpassion                   |
-|          |               NA                                  |              NA                         |
+| 19.07.19 | [Rome Announced](#rome-announced)                 |     Martin, Bedeho, Elpassion           |
+| 26.07.19 | [Spec Draft](#spec-draft)         |           Alex, Bedeho, Mokhtar         |
+| 13.08.19 | [Spec Release](#spec-release)     |           Alex, Bedeho, Mokhtar         |
+| dd.mm.19 | [n](-)               | -                                     |
+| dd.mm.19 | [n](-)               | -                                     |
+| dd.mm.19 | [n](-)               | -                                     |
 | 21.10.19 | [Sub-system Test](#sub-system-test)               | All                                     |
 | 28.10.19 | [Final Test](#final-test)                         | Martin, Mokhtar + 2x community members  |
-| 01.11.19 | [Spec Release](#spec-release)                     |           Alex, Bedeho, Mokhtar         |
-| 01.11.19 | [Go to Market](#go-to-market)                     | Martin, Bedeho, Elpassion               |
-| 04.11.19 | [Runtime Proposal](#runtime-proposal)`x`          | Mokhtar, Martin                         |
+| 01.11.19 | [Launch Ready](#launch-ready)                     | All               |
 | 06.11.19 | [Release](#release)                               |              All                        |
-
+**Rename `spec`**
 
 ### Rome Announced
 
 - **Description:** Announce the Rome upcoming testnet, with release plan and theme, and website update.
-- **Deadline:** 15.07.19
 - **Manager:** **Martin**
 - **Team:**
   - **Martin:**
@@ -319,10 +370,9 @@ TBD
   - Update the (webflow) website with "next testnet section"
 
 
-### Working Spec Draft
+### Spec Draft
 
 - **Description:** Create and mark for review, a PR for the *working specs* for Rome
-- **Deadline:** 23.07.19
 - **Manager:** **Bedeho**
 - **Team:**
   - **Mokhtar:**
@@ -332,10 +382,9 @@ TBD
   - The person or group assigned to produce the specs, must open the PR at this date.
   - The person or group assigned to review must complete this on the 26.07.19
 
-### Working Spec Release
+### Spec Release
 
 - **Description:** Release/merge the *working specs* for Rome
-- **Deadline:** 31.07.19
 - **Manager:** **Bedeho**
 - **Team:**
   - **Mokhtar:**
@@ -344,10 +393,10 @@ TBD
 - **Time line:**
   - Assuming the time line for the [Working Spec Draft](#working-spec-draft) has been upheld, the PR must be merged at this date.
 
+<!--
 ### Communication Template
 
   - **Description:** Finalize a consistent design template for blog posts, newsletters, twitter, etc. for Rome
-  - **Deadline:** 07.08.19
   - **Manager:** **Bedeho**
   - **Team:**
     - **Bedeho:**
@@ -356,9 +405,10 @@ TBD
   - **Time line:**
     - Update the [github design repo](https://github.com/Joystream/design) with new assets (Rome and Joystream)
     - New Joystream logo and design for all communication channels
-      - Twitter, Reddit, Github, Website, Telegram
+      - Twitter, Reddit, Github, Website, Telegram, RC/Other
     - Templates for blog posts, with a consistent theme (Rome and Joystream)
     - Templates for Newsletters, with a consistent theme (Rome and Joystream)
+-->
 
 ### Sub-system Test
 
@@ -399,7 +449,7 @@ Depending on how the upgrade will happen...
 
 ### Final Test
 
-- **Description:** Upgrade the [`staging-lts`](#staging-testnets) testnet runtime to "Acropolis", and perform a full feature test.
+- **Description:** Upgrade the [`staging-lts`](#staging-testnets) testnet runtime to "Rome", and perform a full feature test.
 - **Deadline:** 28.10.19
 - **Manager:** **Mokhtar**
 - **Team:**
@@ -414,9 +464,9 @@ Depending on how the upgrade will happen...
   - A full test of all features and cycles on the platform with Acropolis runtime. Participants must use different OS' and browsers, for joystream-node, storage-nodes and pioneer.
 -->
 
-### Go-To-Market
+### Launch Ready
 
-- **Description:** Prepare and finalize **all** communications, website and guides.
+- **Description:** Prepare and finalize **all** communications, website, guides and infrastructure.
 - **Deadline:** 01.11.19
 - **Manager:** **Martin**
 - **Team:**
@@ -434,7 +484,6 @@ Depending on how the upgrade will happen...
     - [Faucet Frontend](#faucet-frontend)
     - [Bootnodes](#bootnodes)
     - [Status Server](#status-server)
-    - [Telemetry](#telemetry)
     - [Hosted Storage Node](#hosted-storage-node)
     - [Hosted Distributor Node](#hosted-distributor-node)
     - [SSDN Benchmarking tool](#benchmarking-tool)
@@ -483,12 +532,6 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Bedeho:** ElPassion Manager/Reviewer
   - **ElPassion:** Designer
 - **Tasks:**
-    ```
-    - **Rome Migration Details**
-      - If we start a new chain...
-      - Publication date: 23.10.19
-      - Both newsletter and blog
-    ```
     - **Rome Incentive System**
       - Publish a blog post with information about the Rome testnet
         1. Roles (`Validators`, `Council Members`, `Storage Providers`, `Distributors`, ...?)
@@ -522,6 +565,8 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Bedeho:** Manager
   - **ElPassion:** Designer
   - **Martin:** Devops
+- **Deployment:**
+  - Github repo replacing webflow
 - **Tasks:**
   - Update all images and links to reflect the new testnet
   - Update all scripts
@@ -558,7 +603,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Martin:** Devops
 - **Tasks:**
   - Update Caddy file to redirect
-  - Setup Cloudflare hosting (?)
+  - Setup Cloudflare/load balancing hosting (?)
   - Deploy [Endpoint Selector](#endpoint-selector)
   - Ensure proper deployment after upgrade (if applicable)
     - See [Acropolis Lessons Learned](https://github.com/Joystream/joystream/blob/master/meetings/acropolis/README.md#minutes-4) (Item 5, point 5).
@@ -572,6 +617,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Elpassion:** Designer
 - **Tasks:**
   - Improve design with new branding
+  - Improve README.md
 
 #### Bootnodes
 - **Description:** Hosting of network bootnodes
@@ -583,7 +629,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
 - **Tasks:**
   - Upgrade nodes (if applicable)
   - Update Caddy file to redirect
-  - Setup Cloudflare hosting (?)
+  - Setup Cloudflare/load balancing hosting (?)
 
 #### Status Server
 - **Description:** Status server for live stats (on website)
@@ -595,17 +641,6 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Add new stats of interest
   - Maintainance
 
-#### Telemetry Server
-- **Description:** Add telemtry for joystream.org
-(Only applicable if we upgrade the node software)
-- **Manager:** **Martin**
-- **Repo:** N/A
-- **Team:**
-  - **Martin:** Manager/Developer
-  - **Elpassion:** Designer
-- **Tasks:**
-  - Add a telemetry map for joystream.org
-  - Note: conflict with privacy?
 
 #### Hosted Storage Node
 - **Description:** Hosting of storage node
@@ -629,10 +664,10 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Upgrade nodes (if applicable)
   - Update Caddy file to redirect
 
-#### SSDN Benchmarking tool
+#### SSDN Benchmarking Tool
 - **Description:** Benchmark and monitoring tool for SSDN
 - **Manager:** **Alex**
-- **Repo:** NA
+- **Repo:** TBD
 - **Team:**
   - **Alex:** Manager/Developer
   - **Martin:** Testing
@@ -646,7 +681,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Follow up on development, maintenance and deadlines
 
 #### Faucet Backend
-- **Description:** Host the faucet frontend
+- **Description:** Host the faucet backend
 - **Manager:** **Mokhtar**
 - **Repo:** Private
 - **Team:**
@@ -655,7 +690,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Update README with instructions on how to deploy backend
   - Keep it stocked with tokens
   - Delete old data at least weekly
-  - Modify frontend
+
 
 #### Payout Scripts
 - **Description:** Scripts assisting [Testnet Incentive Payouts](#testnet-incentive-payouts)
@@ -665,6 +700,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Martin:** Manager/Development
 - **Tasks:**
   - Improve and add new roles
+  - Migrate to linode
 
 #### Endpoint Selector
 - **Description:** Fallback system for [Hosted Pioneer](#hosted-pioneer) if node goes down
@@ -687,7 +723,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
 - **Tasks:**
   - Keep at least two staging testnets running.
   - One continuous that will mirror existing testnet - `staging-lts`
-  - One "on demand" for reckless testing - `staging-reckless`
+  - One or more "on demand" for reckless testing - `staging-reckless`
 
 
 ## Internal Operations
@@ -709,6 +745,7 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - **Martin**
   - **Community Member 1:**
   - **Community Member 2:**
+  - **Community Member 3:**
 - **Duration:**
   - Very high availability in the week following releases
   - No more than 24 hour lag in response to queries after that
@@ -716,3 +753,4 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Telegram
   - GitHub
   - On-chain forums
+  - ??
