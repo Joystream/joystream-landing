@@ -42,6 +42,7 @@
     - [Sub-system Test](#sub-system-test)
     - [Final Test](#final-test)
     - [Launch Ready](#launch-ready)
+    - [Release Checklist Verification](#release-checklist-verification)
     - [Release](#release)
   - [Go-To-Market](#go-to-market)
     - [Communications](#communications)
@@ -69,13 +70,14 @@ Once we have reached a [milestones](#milestones), an entry will be made below, w
 
 # Past Release Meetings
 
-| Name/category               | Date            | Itinerary and Minutes                                     |
-| :-------------------------: | :-------------: |:---------------------------------------------------------:|
-| Launch Meeting              | 10.07.19         | [link](../../meetings/rome#launch-meeting)               |
+| Name/category               | Date      | Itinerary and Minutes                                          |
+| :-------------------------: | :--------:|:--------------------------------------------------------------:|
+| Launch Meeting              | 10.07.19  | [link](../../meetings/rome#launch-meeting)                     |
 <!--
-| User Stories                | dd.mm.19        | [link](../../meetings/rome#user-stories-meeting)        |
-| Release Plan Finalization   | dd.mm.19        | [link](../../meetings/rome#release-plan-finalization-meeting)   |
-| Lessons Learned             | dd.mm.19        | [link](../../meetings/rome/#lessons-learned)             |
+| User Stories                | dd.mm.19  | [link](../../meetings/rome#user-stories-meeting)               |
+| Release Plan Finalization   | dd.mm.19  | [link](../../meetings/rome#release-plan-finalization-meeting)  |
+| Release Checklist Meeting   | dd.mm.19  | [link](../../meetings/rome#release-checklist-meeting)          |
+| Lessons Learned             | dd.mm.19  | [link](../../meetings/rome/#lessons-learned)                   |
 -->
 
 #  Specification
@@ -158,7 +160,14 @@ Go [here](/okrs#release-okrs) for tracking.
 
 ## Risks
 
-- NA
+1. In general, a large release means it's difficult to set realistic [milestones](#milestones).
+2. At the time of writing, there are still many details unresolved, increasing the risk noted in `1.`.
+3. Hiring new people at an early stage, means either:
+    - Assigning them to already established goals (hopefully leading to less work/person)
+    - Sending them to work on sideprojects unrelated to the release (thus diverting resources)
+    - Adding more meat to the release (thus not following the release plan)
+4. Critical bugs found in the substrate node template version we are using, forcing us to pull from upstream.
+    - This may require significant extra work.
 
 ## Deployment
 
@@ -204,20 +213,19 @@ The following public products will be part of this release.
     * Improvements to forum module (*delete/fill in*)
     * Updated Actors module, thus changing the signup process and `key` management
     * Updated Storage modules to support storage tranches
-    * Separate the [storage](#colossus) and [distribution](#distributor) role
-    * Re-write and migrate the Content directory
+    * Separate the [storage](#colossus) and [distribution](#apollo) role
+    * Re-write and migrate the content directory
     * Cleanup old migration code in members module (Mokhtar) (*delete/fill in*)
     * Add a new proposal type.
 - **Refactor/Reorganization:**
-  - Best effort should be made to make new and refactored runtime modules as separate git repos
-  - Existing modules can remain in same repo
+  * Best effort should be made to make new and refactored runtime modules as separate git repos
+  * Existing modules can remain in same repo
 - **Deployment/Distribution:**
-    - Or restart chain, with various migration challenges in a new genesis spec
+  * Build a new runtime, included in the [Full node binaries](#full-node)
 
 ### Full node
 ---
 - **Description:** Joystream full node
-- **Description:** Runtime for the Joystream full node
 - **Manager:** **Mokhtar**
 - **Core Team:**
   - **Mokhtar:** Developer
@@ -235,13 +243,13 @@ The following public products will be part of this release.
 - **New/Altered Functionality:**
     * New genesis block
 - **Deployment/Distribution:**
-    - Tag new release
+    * Tag new release
 
 ### Colossus
 ---
 
 - **Description:** Storage node (no longer storage AND distribution)
-- **Manager:** Mokhtar
+- **Manager:** **Mokhtar**
 - **Team:**
   - **Mokhtar:** Developer
   - **Bedeho:** Review
@@ -251,27 +259,27 @@ The following public products will be part of this release.
 - **New version:** 0.3.0 *fill in*
 - **Audit:** No
 - **Documentation:**
-  - [README](https://github.com/Joystream/storage-node-joystream/blob/master/README.md)
-  - [Released API specs](-) *fill in*
+  * [README](https://github.com/Joystream/storage-node-joystream/blob/master/README.md)
+  * [Released API specs](-) *fill in*
 - **Legal Review/ToS update:** No *add to repo*
 - **Build/CI system:**
   - **Mokhtar**
     * CI: Simple travis job, running unit tests.
-      * Add more unit test
+    * Add more unit test
 - **Target Platforms:** Linux
 - **New/Altered Functionality:**
   - Support storage groups. The main difference is to stake for joining a group rather than the storage provider role.
   - New signup process (actors module)
-  - Authenticate and connect to `Distributors` *fill in*
+  - Authenticate (?) and connect to `Distributors` *fill in*
   - Rewrite in typescript (*delete/fill in*)
   - Run in testmode *fill in*
   - No longer contain the `Distributor` side of the software. *fill in*
 - **Nice to have:**
-  - Run in testmode *fill in*
+  * Run in testmode *fill in*
 - **New Key User Stories:**
-  - *fill in*
+  * *fill in*
 - **Deployment/Distribution:**
-  - *fill in*
+  * *fill in*
 
 ### Apollo
 [Apollo](https://en.wikipedia.org/wiki/Apollo)
@@ -287,19 +295,21 @@ The following public products will be part of this release.
 - **New version:** `0.1.0`
 - **Audit:** No
 - **Documentation:**
-  - [README](https://github.com/Joystream/distributor-node-joystream/blob/master/README.md) *fill in*
-  - [Released API specs](-) *delete/fill in*
+  * [README](https://github.com/Joystream/distributor-node-joystream/blob/master/README.md) *fill in*
+  * [Released API specs](-) *delete/fill in*
 - **Legal Review/ToS update:** Same as [Colossus](#colossus) *add to repo*
 - **Build/CI system:**
-  - CI: Simple travis job, running unit tests.
+  * CI: Simple travis job, running unit tests.
 - **Target Platforms:** Linux
 - **New/Altered Functionality:**
-  - Authenticate and connect to `Storage nodes`
-  - ... *fill in*
+  * Authenticate and connect to `Storage nodes`
+  * ... *fill in*
+- **Nice to have:**
+  * Run in testmode *fill in*
 - **New Key User Stories:**
-  - *fill in*
+  * *fill in*
 - **Deployment/Distribution:**
-  - *fill in*
+  * *fill in*
 
 ### Pioneer
 ---
@@ -345,14 +355,15 @@ The following public products will be part of this release.
 | Date     |   Event                                           |     Involved                            |
 | :-------:|:-------------------------------------------------:|:---------------------------------------:|
 | 19.07.19 | [Rome Announced](#rome-announced)                 |     Martin, Bedeho, Elpassion           |
-| 26.07.19 | [Spec Draft](#spec-draft)         |           Alex, Bedeho, Mokhtar         |
-| 13.08.19 | [Spec Release](#spec-release)     |           Alex, Bedeho, Mokhtar         |
-| dd.mm.19 | [n](-)               | -                                     |
-| dd.mm.19 | [n](-)               | -                                     |
-| dd.mm.19 | [n](-)               | -                                     |
+| 26.07.19 | [Spec Draft](#spec-draft)                         |           Alex, Bedeho, Mokhtar         |
+| 13.08.19 | [Spec Release](#spec-release)                     |           Alex, Bedeho, Mokhtar         |
+| dd.mm.19 | [n](-)                                            |   -                                     |
+| dd.mm.19 | [n](-)                                            |   -                                     |
+| dd.mm.19 | [n](-)                                            |   -                                     |
 | 21.10.19 | [Sub-system Test](#sub-system-test)               | All                                     |
 | 28.10.19 | [Final Test](#final-test)                         | Martin, Mokhtar + 2x community members  |
-| 01.11.19 | [Launch Ready](#launch-ready)                     | All               |
+| 01.11.19 | [Launch Ready](#launch-ready)                     | All                                     |
+| 05.11.19 | [Release Checklist](#release-checklist)           | All                                     |
 | 06.11.19 | [Release](#release)                               |              All                        |
 **Rename `spec`**
 
@@ -367,12 +378,12 @@ The following public products will be part of this release.
 - **Time line:**
   - Finalize the logomark for Rome
   - Publish blog post outlining the goals for Rome
+  - Newsletter outlining the goals for Rome
   - Update the (webflow) website with "next testnet section"
-
 
 ### Spec Draft
 
-- **Description:** Create and mark for review, a PR for the *working specs* for Rome
+- **Description:** Create and mark for review, a PR for the Rome specs
 - **Manager:** **Bedeho**
 - **Team:**
   - **Mokhtar:**
@@ -380,11 +391,11 @@ The following public products will be part of this release.
   - **Alex:**
 - **Time line:**
   - The person or group assigned to produce the specs, must open the PR at this date.
-  - The person or group assigned to review must complete this on the 26.07.19
+  - Each team of writer/reviewer must coordinate to ensure a reasonable time window to implement changes and get approval
 
 ### Spec Release
 
-- **Description:** Release/merge the *working specs* for Rome
+- **Description:** Release/merge the PR for the Rome specs
 - **Manager:** **Bedeho**
 - **Team:**
   - **Mokhtar:**
@@ -413,22 +424,15 @@ The following public products will be part of this release.
 ### Sub-system Test
 
 - **Description:** Test all sub-systems/software separately on the [`staging-reckless`](#staging-testnets) testnet(s)
-- **Deadline:** 21.10.19
 - **Manager:** **Martin**
-- **Storage Team:**
+- **Storage Team Lead:**
   - **Mokhtar:**
-  - **Bedeho:**
-- **Distributor Team:**
-  - **Mokhtar:**
-  - **Alex:**
+- **Distributor Team Lead:**
   - **Bedeho:**
 - **Proposal Team:**
-  - **Mokhtar:** (?)
-  - **Alex:**
-  - **Bedeho:** (?)
+  - *TBD*
 - **Test specification:**
-
-Depending on how the upgrade will happen...
+  * Checklist
 
 <!--
   - The members of each **Team** must be able present full functionality of their sub-systems/software, in the following environment:
@@ -450,15 +454,15 @@ Depending on how the upgrade will happen...
 ### Final Test
 
 - **Description:** Upgrade the [`staging-lts`](#staging-testnets) testnet runtime to "Rome", and perform a full feature test.
-- **Deadline:** 28.10.19
 - **Manager:** **Mokhtar**
 - **Team:**
   - **Martin:** Lead tester
   - **Community Member 1:** Tester
   - **Community Member 2:** Tester
   - **Community Member 3:** Tester
+  - **On call:** All team members must be available to assist when needed.
 - **Time line:**
-Depending on how the upgrade will happen...
+  * Checklist
 
 <!--
   - A full test of all features and cycles on the platform with Acropolis runtime. Participants must use different OS' and browsers, for joystream-node, storage-nodes and pioneer.
@@ -467,7 +471,6 @@ Depending on how the upgrade will happen...
 ### Launch Ready
 
 - **Description:** Prepare and finalize **all** communications, website, guides and infrastructure.
-- **Deadline:** 01.11.19
 - **Manager:** **Martin**
 - **Team:**
   - **Martin:** Manager/author/devops
@@ -476,48 +479,47 @@ Depending on how the upgrade will happen...
   - **Mokhtar:** Developer/devops
   - **Alex:** Developer
 - **Tasks:**
-  - [Communications](#communications)
-  - [Website](#website)
-  - [Guides](#guides)
-  - [Public Tools and Infrastructure](#public-tools-and-infrastructure)
-    - [Hosted Pioneer](#hosted-pioneer)
-    - [Faucet Frontend](#faucet-frontend)
-    - [Bootnodes](#bootnodes)
-    - [Status Server](#status-server)
-    - [Hosted Storage Node](#hosted-storage-node)
-    - [Hosted Distributor Node](#hosted-distributor-node)
-    - [SSDN Benchmarking tool](#benchmarking-tool)
-  - [Internal Tools and Infrastructure](#internal-tools-and-infrastructure)
-    - [Faucet Backend](#faucet-backend)
-    - [Payout Scripts](#payout-scripts)
-    - [Endpoint Selector](#endpoint-selector)
-    - [Staging Testnets](#staging-testnets)
+  - **Note:** In case all this can not be completed in time, the Manager is responsible to prioritize correctly.
+  * [Communications](#communications)
+  * [Website](#website)
+  * [Guides](#guides)
+  * [Public Tools and Infrastructure](#public-tools-and-infrastructure)
+    * [Hosted Pioneer](#hosted-pioneer)
+    * [Faucet Frontend](#faucet-frontend)
+    * [Bootnodes](#bootnodes)
+    * [Status Server](#status-server)
+    * [Hosted Storage Node](#hosted-storage-node)
+    * [Hosted Distributor Node](#hosted-distributor-node)
+    * [Content Schema Tool](-) *fill in*
+  * [Internal Tools and Infrastructure](#internal-tools-and-infrastructure)
+    * [Faucet Backend](#faucet-backend)
+    * [Payout Scripts](#payout-scripts)
+    * [Endpoint Selector](#endpoint-selector)
+    * [Staging Testnets](#staging-testnets)
+    * [SSDN Benchmarking tool](#ssdn-benchmarking-tool)
 - **Timeline:**
-  - At this point, everything should be written and ready for deployment
-  - Dates for deployment can be found in the links above
+  * At this point, everything *should* be written and ready for deployment
+  * Dates and details for actual deployment can be found in the links above
+    * Some of these might be necessary to prepare before the date in [milestones](#milestones)
 
-**If applicable:**
-
-```
-### Runtime Proposal
-
-- **Description:** Create a council runtime upgrade proposal for a new runtime with a member key.
-provide a script/instructions for how to build the identical runtime proposed.
-- **Deadline:** 04.11.19 11:00GMT+2
-- **Manager:** **Mokhtar**
+### Release Checklist Verification
+- **Description:** Go through the [Release Checklist](../../meetings/rome#release-checklist-meeting)
+- **Manager:** **Martin**
 - **Team:**
-  - **Martin:** Reach out to council members, promote voting, and prepare final blog/newsletter for Acropolis.
-- **Time line:** Time line: After the runtime upgrade proposal is submitted, the actual upgrade will happen after all council members have voted. *48h in practice*
-```
+  - **Martin:** Manager
+  - **All:** Verifiers
+- **Tasks:**
+  * Go through each item in the checklist, and verify all points are completed and/or deployed.
+
 
 ### Release
-- **Description:**
-
-```
-If proposal does not reach quorum and the proposal has not received legitimate criticism, immediately force the new proposal with the `sudo key`.
-```
-- **Deadline:** 06.11.19 11:00GMT+2
-- **Manager:** **Mokhtar**
+- **Description:** Launch and deploy all necessary nodes/tools/infrastructure
+- **Manager:** **Martin**
+- **Team:**
+  - **Martin:** Devops
+  - **Mokhtar:** Devops
+- **Tasks:**
+  * Go through each item in the checklist, and verify they are deployed in the correct order.
 
 ---
 
@@ -664,16 +666,6 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - Upgrade nodes (if applicable)
   - Update Caddy file to redirect
 
-#### SSDN Benchmarking Tool
-- **Description:** Benchmark and monitoring tool for SSDN
-- **Manager:** **Alex**
-- **Repo:** TBD
-- **Team:**
-  - **Alex:** Manager/Developer
-  - **Martin:** Testing
-- **Tasks:**
-  - [TBD](https://github.com/Joystream/joystream/issues/28)
-
 ### Internal Tools and Infrastructure
 - **Description:** Make and/or update all public tools
 - **Manager:** **Martin**
@@ -725,6 +717,15 @@ If proposal does not reach quorum and the proposal has not received legitimate c
   - One continuous that will mirror existing testnet - `staging-lts`
   - One or more "on demand" for reckless testing - `staging-reckless`
 
+#### SSDN Benchmarking Tool
+- **Description:** Benchmark and monitoring tool for SSDN
+- **Manager:** **Alex**
+- **Repo:** TBD
+- **Team:**
+  - **Alex:** Manager/Developer
+  - **Martin:** Testing
+- **Tasks:**
+  - [TBD](https://github.com/Joystream/joystream/issues/28)
 
 ## Internal Operations
 

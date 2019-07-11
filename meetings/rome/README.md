@@ -9,13 +9,16 @@
   - [Release Plan Finalization Meeting](#release-plan-finalization-meeting)
     - [Agenda](#agenda-1)
     - [Minutes](#minutes-1)
-  - [Lessons Learned](#lessons-learned)
+  - [Release Checklist Meeting](#release-checklist-meeting)
     - [Agenda](#agenda-2)
     - [Minutes](#minutes-2)
-- [Conducted Meetings](#conducted-meetings)
-  - [Launch Meeting](#launch-meeting)
+  - [Lessons Learned](#lessons-learned)
     - [Agenda](#agenda-3)
     - [Minutes](#minutes-3)
+- [Conducted Meetings](#conducted-meetings)
+  - [Launch Meeting](#launch-meeting)
+    - [Agenda](#agenda-4)
+    - [Minutes](#minutes-4)
 <!-- TOC END -->
 
 # Planned Meetings
@@ -23,19 +26,21 @@
 ## User Stories Meeting
 
 - **ID:** `Rome User Stories Meeting`
-- **Date:** `dd.mm.yy`
-- **Starts:** `hh:mm GMT+2`
-- **Scheduled Duration:** `min`
+- **Date:** `16.07.yy`
+- **Starts:** `11:30 GMT+2`
+- **Scheduled Duration:** `1h30min`
 - **Venue:** `ZOOM`
-- **Lead**: `NA`
-- **Minutes**: `NA`
+- **Lead**: `Martin`
+- **Minutes**: `Martin`
 - **Participants**:
-  - `name1`
-  - ...
+  - `Alex`
+  - `Bedeho`
+  - `Martin`
+  - `Mokhtar`
 
 ### Agenda
 #### Item 1
-...
+Review and discuss Users Stories
 
 
 ### Minutes
@@ -85,6 +90,42 @@
 ...
 
 **Ended at:** `hh:mm GMT+2`
+
+---
+
+## Release Checklist Meeting
+
+- **ID:** `Rome Release Checklist Meeting`
+- **Date:** `dd.mm.yy`
+- **Starts:** `hh:mm GMT+2`
+- **Scheduled Duration:** `min`
+- **Venue:** `ZOOM`
+- **Lead**: `NA`
+- **Minutes**: `NA`
+- **Participants**:
+  - `name1`
+  - ...
+
+### Agenda
+#### Item 1
+1. Review the [Release Checklist](../../testnet#release-checklist) draft, and compare to the release plan.
+2. Land a final Release Checklist, that contains all items, and sorted it in order of deployment.
+
+
+### Minutes
+**Started at:** `hh:mm GMT+2`
+**Present:**
+  - `name1`
+  - ...
+
+#### Item 1
+...
+
+**Other topics raised:**
+...
+
+**Ended at:** `hh:mm GMT+2`
+
 
 ---
 
