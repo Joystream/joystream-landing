@@ -57,6 +57,8 @@
 
 # Overview
 
+**Draft**
+
 For every new release, we produce a new release plan following the formulae outlined [here](/#testnet-planning). Once merged, everything below [this section](#release-plan) will not be amended, with the exception of trivial things like broken links, spelling mistakes, etc.
 
 ## Live Milestones
@@ -70,11 +72,11 @@ Once we have reached a [milestones](#milestones), an entry will be made below, w
 
 # Past Release Meetings
 
-| Name/category               | Date      | Itinerary and Minutes                                          |
-| :-------------------------: | :--------:|:--------------------------------------------------------------:|
+| Name/category               | Date      | Agenda and Minutes                                          |
+| --------------------------- | :--------:|:--------------------------------------------------------------:|
 | Launch Meeting              | 10.07.19  | [link](../../meetings/rome#launch-meeting)                     |
+| User Stories                | 16.07.19  | [link](../../meetings/rome#user-stories-meeting)               |
 <!--
-| User Stories                | dd.mm.19  | [link](../../meetings/rome#user-stories-meeting)               |
 | Release Plan Finalization   | dd.mm.19  | [link](../../meetings/rome#release-plan-finalization-meeting)  |
 | Release Checklist Meeting   | dd.mm.19  | [link](../../meetings/rome#release-checklist-meeting)          |
 | Lessons Learned             | dd.mm.19  | [link](../../meetings/rome/#lessons-learned)                   |
@@ -99,36 +101,12 @@ The project for the Rome Release can be found [here](https://github.com/orgs/Joy
 
 This section will be only include the final grading after network release. In the meantime, you can track the progress [here](/okrs#release-okrs).
 
-<!--
-## Objective: `Launch Rome  Network`
-- **Active from:** dd.mm.yy
-- **KR Measurement Deadline**: 7-9 days after Rome launch (first weekday)
-- **Key Results**:
-##### 1. `-`
-##### 2. `-`
-##### 3. `-`
-##### 4. `-`
-##### 5. `-`
-
-
-<br />
-
-- **Final Score**
-
-| Date     | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Total  |
-|:--------:|:-----:|:-----:|:-----:|:-----:|:-----:|:-------:|
-| dd.mm.yy |   n   |   n   |   n   |   n   |   n   |  **n**  |
-
-<br />
-
-Full details of tracking of results can be found in the [archive](../okrs/OKR-archive/rome).
--->
 
 # Release Plan
 
-<!--
+**Draft**
 **This plan was made in advance, and anything below this line will not be updated inspite of changing circumstances.**
--->
+
 
 ## Name
 
@@ -140,7 +118,7 @@ Full details of tracking of results can be found in the [archive](../okrs/OKR-ar
 
 ## Release Date
 
-dd November 2019, 12:00 (GMT+2)
+06.11.19, 12:00 (GMT+2)
 
 ## OKRs
 
@@ -151,12 +129,14 @@ dd November 2019, 12:00 (GMT+2)
 - **Tracked**: Every Monday
 - **Tracking Manager**: Martin
 - **Key Results**:
+[Link to Draft](testnets/rome/okr-draft.md)
+
 
 Go [here](/okrs#release-okrs) for tracking.
 
 ## Constraints
 
-- NA
+1. Team size
 
 ## Risks
 
@@ -168,6 +148,7 @@ Go [here](/okrs#release-okrs) for tracking.
     - Adding more meat to the release (thus not following the release plan)
 4. Critical bugs found in the substrate node template version we are using, forcing us to pull from upstream.
     - This may require significant extra work.
+5. The summer holiday may impact the ability to coordinate properly during the initial stages of the release.
 
 ## Deployment
 
@@ -178,7 +159,7 @@ Start a fresh chain, (built from a more recent version of the [substrate](https:
 - Forum posts
 - Media Content
 
-As a consequence of this, old `keys` will also be "work" (though the balance will not be transferred).
+All `keys` stored locally in the browser of each user will still work (though the balance will not be transferred).
 In practice, this means all `keys` associated with a `member` will still have the following qualities:
 
 - `forum` posts can still be edited by the `member` that made the post.
@@ -335,7 +316,7 @@ The following public products will be part of this release.
  - **Build/CI system:** Yes
  - **Target Platforms:** Cross-platform and cross-browser.
  - **New/Altered Functionality**:
-    - Integration with new storage/distribution system
+    - Integration with new Substrate Storage and Distribution Network (SSDN)
     - New Working Group `*` module integration
     - Support new proposal type
     - *fill in*
@@ -352,19 +333,20 @@ The following public products will be part of this release.
 
 ## Milestones
 
-| Date     |   Event                                           |     Involved                            |
-| :-------:|:-------------------------------------------------:|:---------------------------------------:|
-| 19.07.19 | [Rome Announced](#rome-announced)                 |     Martin, Bedeho, Elpassion           |
-| 26.07.19 | [Spec Draft](#spec-draft)                         |           Alex, Bedeho, Mokhtar         |
-| 13.08.19 | [Spec Release](#spec-release)                     |           Alex, Bedeho, Mokhtar         |
-| dd.mm.19 | [n](-)                                            |   -                                     |
-| dd.mm.19 | [n](-)                                            |   -                                     |
-| dd.mm.19 | [n](-)                                            |   -                                     |
-| 21.10.19 | [Sub-system Test](#sub-system-test)               | All                                     |
-| 28.10.19 | [Final Test](#final-test)                         | Martin, Mokhtar + 2x community members  |
-| 01.11.19 | [Launch Ready](#launch-ready)                     | All                                     |
-| 05.11.19 | [Release Checklist](#release-checklist)           | All                                     |
-| 06.11.19 | [Release](#release)                               |              All                        |
+| Date     |   Event                                                |     Involved                   |
+| :-------:|:------------------------------------------------------:|:------------------------------:|
+| 19.07.19 | [Rome Announced](#rome-announced)                      |  Martin, Bedeho, Elpassion     |
+| 26.07.19 | [Spec Draft](#spec-draft)                              |  Alex, Bedeho, Mokhtar         |
+| 13.08.19 | [Spec Release](#spec-release)                          |  Alex, Bedeho, Mokhtar         |
+| dd.mm.19 | [n](-)                                                 |   -                            |
+| dd.mm.19 | [n](-)                                                 |   -                            |
+| 19.10.19 | [Sub-system Test Checklist](#sub-system-test-checklist)| All                            |
+| 21.10.19 | [Sub-system Test](#sub-system-test)                    | All                            |
+| 26.10.19 | [Final Test Checklist](#final-test-checklist)          | All                            |
+| 28.10.19 | [Final Test](#final-test)                              | Martin, Mokhtar + 3x testers   |
+| 01.11.19 | [Launch Ready](#launch-ready)                          | All                            |
+| 05.11.19 | [Release Checklist](#release-checklist)                | All                            |
+| 06.11.19 | [Release](#release)                                    | All                            |
 **Rename `spec`**
 
 ### Rome Announced
@@ -375,7 +357,7 @@ The following public products will be part of this release.
   - **Martin:**
   - **Bedeho:**
   - **Elpassion:**
-- **Time line:**
+- **Tasks:**
   - Finalize the logomark for Rome
   - Publish blog post outlining the goals for Rome
   - Newsletter outlining the goals for Rome
@@ -389,7 +371,7 @@ The following public products will be part of this release.
   - **Mokhtar:**
   - **Bedeho:**
   - **Alex:**
-- **Time line:**
+- **Tasks:**
   - The person or group assigned to produce the specs, must open the PR at this date.
   - Each team of writer/reviewer must coordinate to ensure a reasonable time window to implement changes and get approval
 
@@ -401,25 +383,16 @@ The following public products will be part of this release.
   - **Mokhtar:**
   - **Bedeho:**
   - **Alex:**
-- **Time line:**
+- **Tasks:**
   - Assuming the time line for the [Working Spec Draft](#working-spec-draft) has been upheld, the PR must be merged at this date.
 
-<!--
-### Communication Template
-
-  - **Description:** Finalize a consistent design template for blog posts, newsletters, twitter, etc. for Rome
-  - **Manager:** **Bedeho**
-  - **Team:**
-    - **Bedeho:**
-    - **Martin:**
-    - **Elpassion:**
-  - **Time line:**
-    - Update the [github design repo](https://github.com/Joystream/design) with new assets (Rome and Joystream)
-    - New Joystream logo and design for all communication channels
-      - Twitter, Reddit, Github, Website, Telegram, RC/Other
-    - Templates for blog posts, with a consistent theme (Rome and Joystream)
-    - Templates for Newsletters, with a consistent theme (Rome and Joystream)
--->
+### Sub-system Test Checklist
+- **Description:** Checklist for Sub-System Test
+- **Manager:** **Martin**
+- **Team:**
+  - **All:**
+- **Tasks:**
+  - Finalize a [checklist](checklists#sub-system-test-checklist) of what needs to be tested for the Sub-System Test
 
 ### Sub-system Test
 
@@ -429,27 +402,33 @@ The following public products will be part of this release.
   - **Mokhtar:**
 - **Distributor Team Lead:**
   - **Bedeho:**
-- **Proposal Team:**
+- **SSDN Leads:**
+  - **Mokhtar and Bedeho:**
+- **Proposal Team Lead:**
   - *TBD*
 - **Test specification:**
-  * Checklist
+  * [Checklist](checklists#sub-system-test-checklist)
+  * The members of each **Team** must be able present full functionality of their sub-systems/software, in the following environment:
+    1. Build a runtime that contains all modules needed to properly test the functionality of all new features and software in each sub-system.
+        * It's a preference, but not a requirement, for the same runtime to be used for both tests.
+    2. Working branch of Pioneer, that has full compatibility with the runtime.
+    3. Supporting software and tools
+    4. if applicable, present clear list of items outstanding with:
+        * dependencies / responsible person(s)
+        * realistic timeline
+        * what, if any, should be postponed/abandoned for late release or next release.
+        * note that both RM and developer are responsible for this list not coming as a surprise.
 
-<!--
-  - The members of each **Team** must be able present full functionality of their sub-systems/software, in the following environment:
-      1. Perform runtime upgrade from current to test version
-          * It's a preference, but not a requirement, for the same runtime to be used for both tests.
-
-
-      2. with a working branch of Pioneer (compatible with Athens, _must_ not include rest of Acropolis scope)
-      3. any other supporting software (compatible with Athens, _must_ not include rest of Acropolis scope)
-      4. if applicable, present clear list of items outstanding with:
-          - dependencies / responsible person(s)
-          - realistic timeline
-          - what, if any, should be postponed/abandoned for late release or next release.
-          - note that both RM and developer are responsible for this list not coming as a surprise.
--->
 
 **Note** After this test, only bugfix PRs can be merged to master branch of relevant repos.
+
+### Final Test Checklist
+- **Description:** Checklist for Final Test
+- **Manager:** **Martin**
+- **Team:**
+  - **All:**
+- **Tasks:**
+  - Finalize a [checklist](checklists#final-test-checklist) of what needs to be tested for the Final Test
 
 ### Final Test
 
@@ -461,12 +440,13 @@ The following public products will be part of this release.
   - **Community Member 2:** Tester
   - **Community Member 3:** Tester
   - **On call:** All team members must be available to assist when needed.
-- **Time line:**
-  * Checklist
-
-<!--
-  - A full test of all features and cycles on the platform with Acropolis runtime. Participants must use different OS' and browsers, for joystream-node, storage-nodes and pioneer.
--->
+- **Test specification:**
+  * All software must run from `development` branch in each repo, with no open PRs meant for Rome (Pioneer excluded)
+  1. Build a [full node](#full-node) binary for Linux, Mac OS and Windows *RBP and docker?*
+  2. Use `staging-lts` as bootnode and host for [Pioneer](#pioneer)
+  3. Deploy [full nodes](#full-node) locally on Mac *and RBP* and windows (azure)
+  4. Deploy multiple instances of [Colossus](#colossus) and [Apollo](#apollo).
+  5. Follow [Checklist](checklists#final-test-checklist)
 
 ### Launch Ready
 
@@ -503,13 +483,13 @@ The following public products will be part of this release.
     * Some of these might be necessary to prepare before the date in [milestones](#milestones)
 
 ### Release Checklist Verification
-- **Description:** Go through the [Release Checklist](../../meetings/rome#release-checklist-meeting)
+- **Description:** Following the [Release Checklist Meeting](../../meetings/rome#release-checklist-meeting)
 - **Manager:** **Martin**
 - **Team:**
   - **Martin:** Manager
   - **All:** Verifiers
 - **Tasks:**
-  * Go through each item in the checklist, and verify all points are completed and/or deployed.
+  * Go through the [Release Checklist](checklists#release-checklist), and verify all points are completed and/or deployed.
 
 
 ### Release
@@ -519,7 +499,7 @@ The following public products will be part of this release.
   - **Martin:** Devops
   - **Mokhtar:** Devops
 - **Tasks:**
-  * Go through each item in the checklist, and verify they are deployed in the correct order.
+  * Go through the [Release Checklist](checklists#release-checklist), and verify they are deployed in the correct order.
 
 ---
 
