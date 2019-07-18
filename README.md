@@ -39,39 +39,34 @@
 </div>
 
 # Table of contents
-<!-- TOC START min:1 max:4 link:true asterisk:false update:true -->
-- [Table of contents](#table-of-contents)
+
 - [Overview](#overview)
 - [Contribute](#contribute)
 - [Repository Index](#repository-index)
-  - [Live Testnet](#live-testnet)
-  - [Next Testnet](#next-testnet)
-  - [Past Testnets](#past-testnets)
-  - [Why is this on Github?](#why-is-this-on-github)
-    - [Itinerary](#itinerary)
-    - [Meeting Types](#meeting-types)
+- [Testnet Releases](#testnet-releases)
+    - [Live Testnet](#live-testnet)
+    - [Next Testnet](#next-testnet)
+    - [Past Testnets](#past-testnets)
+- [Project Management](#project-management)
+    - [Why is this on Github?](#why-is-this-on-github)
+    - [Meetings](#meetings)
       - [Daily standup](#daily-standup)
       - [Monday all-hands](#monday-all-hands)
       - [Release meeting](#release-meeting)
-    - [Assignment](#assignment)
-    - [OKR types](#okr-types)
-    - [Hierarchy](#hierarchy)
-    - [Tracking](#tracking)
-    - [Template](#template)
-  - [Objective:  `<Name of objective>`](#objective--)
-    - [Branding](#branding)
-    - [Testnet Directory](#testnet-directory)
-    - [Roles](#roles)
-      - [Release Manager](#release-manager)
-      - [Leads](#leads)
-      - [Specification Lead and Committee](#specification-lead-and-committee)
-    - [Standard Release Meetings](#standard-release-meetings)
-      - [Launch Meeting](#launch-meeting)
-      - [User Stories Meeting](#user-stories-meeting)
-      - [Release Plan Finalisation Meeting](#release-plan-finalisation-meeting)
-      - [Specification Planning meeting](#specification-planning-meeting)
-    - [Step-by-step Process](#step-by-step-process)
-<!-- TOC END -->
+    - [OKR System](#okr-system)
+      - [Assignment](#assignment)
+      - [OKR types](#okr-types)
+      - [Hierarchy](#hierarchy)
+      - [Tracking](#tracking)
+      - [Template](#template)
+    - [Testnet Planning](#testnet-planning)
+      - [Branding](#branding)
+      - [Testnet Directory](#testnet-directory)
+      - [Roles](#roles)
+        - [Release Manager](#release-manager)
+        - [Specification Lead and Committee](#specification-lead-and-committee)
+      - [Step-by-step Process](#step-by-step-process)
+- [Github Policy](#github-policy)
 
 # Overview
 
@@ -282,7 +277,7 @@ The template used for recording and tracking OKRs has the following form:
 
 ### Branding
 
-All releases have the following branding materials, which should be summarised in a markdown _Branding Document_
+All releases have the following branding materials, which should be summarized in a markdown _Branding Document_
 
 - **Name:** Our current naming system is important historical ancient cities in the development of new political systems. It's still not clear if we will just stick to ancient cities, or move forward in time also (TBD).
 - **Naming Rationale:** A brief 40-150 word text about the significance of this city in our context.
@@ -295,8 +290,8 @@ All releases should have a corresponding _release directory_ in the `/testnets` 
 
 - `RELEASE_NAME`
   - `README.md`: Release document.
-  - **WIP**`specification.md`: Testnet specification.
-  - `/branding`: A directory which includes a branding document and related assets, as described in the branding [section](#branding).
+  - `specification.md`: Testnet specification.
+  - `/branding`: A directory which includes a branding document and related assets, as described in the branding section.
 
 ### Roles
 
@@ -306,6 +301,7 @@ Each release is directed by a _Release Manager_ (**RM**) who is responsible for
 
  - Moving the release process forward and on track.
  - Calling and conducting release meetings.
+    - This includes setting an agenda, assigning tasks and assigning the person to be the `Lead` and take `Minutes`.
  - Preparing all administrative pull requests for the release on this repo.
 
 #### Leads
@@ -350,11 +346,34 @@ If feasible, then proceed with
 
 3. If a specification is to be done, assign a [specification lead and committee](Specification Lead and Committee), and schedule first [specification planning meeting](#specification-planning-meeting)
 
-#### Specification Planning meeting
+#### Specification Planning Meeting
 
 Open ended technical meetings which are conducted iteratively with implementing out parts of the release.
 
+#### Release Checklist Meeting
+
+To ensure the release itself is properly coordinated, a meeting will be held to create a checklist. This should be ordered to ensure all actions and steps are made in the correct order, and assign a person or group responsible.
+
+The actions and steps includes, but are not limited to:
+- Marketing campaigns and public communication
+- Distribution of information
+- Release and distribution of products
+- Tools (internal and external)
+- Infrastructure (internal and external)
+
+#### Release Lessons Learned Meeting
+
+In a timely manner after each release, go through the following:
+- What could be improved, and how
+- What went right, and why
+- Final grading of the Release OKR.
+
 ### Step-by-step Process
+
+**NOTE:**
+*This process was planned in advance of our first attempts of making public and detailed Release Plans. After [Athens](/testnets/athens) and [Acropolis](/testnets/acropolis), we have realized that the steps below must be reconsidered. This will be done after finalizing the Release Plan for [Rome](/testnets/rome)*
+
+---
 
 This whole process should take no more than **7** working days from start to finish, and involves the following sequence of events and corresponding deadlines.
 
@@ -406,6 +425,7 @@ This whole process should take no more than **7** working days from start to fin
 
 12. Release planning meetings are conducted on a per-need basis, typically more frequently as the release date approaches.
 
+---
 
 <br />
 <img src="img/github-policy.svg" id="github-policy"/>
