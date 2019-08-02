@@ -7,19 +7,25 @@
   <h5>The line between bureaucracy and rigour is 1px thin, but what are we to do? :pray:</h5>
 </div>
 
-# Table of contents
+Table of Contents
+=================
 
+<!-- TOC START min:1 max:3 link:true asterisk:false update:true -->
 - [Archive](#archive)
 - [Project OKRs](#project-okrs)
-  - [Launch Joystream on mainnet](#wip-construction_worker-objective-launch-a-functional-upgradable-video-platform-governed-and-operated-by-a-vibrant-community)
+  - [!WIP! Objective: `Launch a functional, upgradable video platform, governed and operated by a vibrant community`](#wip-objective-launch-a-functional-upgradable-video-platform-governed-and-operated-by-a-vibrant-community)
+    - [Tracking](#tracking)
 - [Quarterly OKRs](#quarterly-okrs)
-  - [Increase the Joystream building power](#objective-increase-the-joystream-building-power)
-  - [Expand Joystream brand awareness](#objective-expand-joystream-brand-awareness)
+  - [Objective: `Grow Jsgenesis Core Team`](#objective-grow-jsgenesis-core-team)
+    - [Tracking](#tracking-1)
 - [Release OKRs](#release-okrs)
-  - [Launch Acropolis network](#objective-launch-acropolis-network)
+  - [Objective: `Launch Acropolis Network`](#objective-launch-acropolis-network)
+- [Group OKRs](#group-okrs)
 - [Personal OKRs](#personal-okrs)
-    - [Bedeho - Improve Technical Productivity of Team](#objective-improve-technical-productivity-of-team)
-    - [Martin - Improve value as Release Manager](#objective-improve-value-as-release-manager)
+  - [`Bedeho` (@bedeho)](#bedeho-bedeho)
+  - [`Martin` (@bwhm)](#martin-bwhm)
+<!-- TOC END -->
+
 
 # Archive
 
@@ -27,7 +33,7 @@ Archived OKRs are found in [archive](OKR-archive), below only live OKRs are foun
 
 # Project OKRs
 
-## !WIP! :construction_worker: Objective: `Launch a functional, upgradable video platform, governed and operated by a vibrant community`
+## !WIP! Objective: `Launch a functional, upgradable video platform, governed and operated by a vibrant community`
 - **Active from:** N/A
 - **KR Measurement Deadline:** Joystream autonomous network live
 - **Tracked:** Every quarter
@@ -38,21 +44,96 @@ Archived OKRs are found in [archive](OKR-archive), below only live OKRs are foun
   3. `There are at least 100 active governance or operations focused daily active members`
   4. `There are at least 10000 daily active members, as measured by any kind of use of the platform`
   5. `There are at least 200 active publishers, where active is defined as publishing at least once per month`
+
 <br />
 
-- **Notes**
-  * `None`
+#### OKR Notes
+
+* `NA`
+
 <br />
 
-- **Tracking:**
+<!--
+## Final Grade
 
-| Date     | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Comments |
-|:--------:|:-----:|:-----:|:-----:|:-----:|:-----:|:------:|
-| 01.06.19 |   NA  |  NA   |  NA   |  NA   |   NA  | **NA** |
+| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Total   |
+|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|
+| DD.MM.YY    |       |       |       |       |       |          |
+
+<br />
+
+#### Grading Notes
+
+1. `NA`
+
+<br />
+-->
+
+### Tracking
+
+| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |     Comments      |
+|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|-------------------|
+| DD.MM.YY    |       |       |       |       |       |                   |
 
 # Quarterly OKRs
 
-TBD
+## Objective: `Grow Jsgenesis Core Team`
+- **Active from:** 06.08.19
+- **KR Measurement Deadline:** 10.12.19
+- **Tracked:** Every other Tuesday
+- **Tracking Manager:** Martin
+- **Key Results:** Martin, Bedeho and Mokhtar
+  1. `Contact 20 unsolicited candidates (n)`
+  2. `Receive 50 applications outside of our current recruiting channels (n)`
+  3. `Conduct opening interview with 30 candidates (n)`
+  4. `Conduct technical interview with 20 candidates (n)`
+  5. `Assign side projects to 10 candidates (n)`
+  6. `Hire 4 candidates full time (n)`
+
+<br />
+
+#### OKR Notes
+
+* `Due to coordination and workload, this "Quarterly OKR" will count as a Q3+Q4 OKR`
+* `KR#1 refers to non-inbound candidates`
+* `Candidates whose first interview is technical counts towards both KR#3 and 4`
+* `Side projects that are completed, ie. results in deployed code or documentation, counts towards KR#6 even if it the cooperation ends after completion`
+
+<br />
+
+<!--
+## Final Grade
+
+| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Total   |
+|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|
+| DD.MM.YY    |       |       |       |       |       |          |
+
+<br />
+
+#### Grading Notes
+
+1. `NA`
+
+<br />
+-->
+
+### Tracking
+
+| Date         | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 | KR #6 |      Comments          |
+|--------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|------------------------|
+| 20.08.19     |       |       |       |       |       |       |           -            |
+| 03.09.19     |       |       |       |       |       |       |           -            |
+| 17.09.19     |       |       |       |       |       |       |           -            |
+| 01.10.19     |       |       |       |       |       |       |           -            |
+| 15.10.19     |       |       |       |       |       |       |           -            |
+| 29.10.19     |       |       |       |       |       |       |           -            |
+| 12.11.19     |       |       |       |       |       |       |           -            |
+| 26.11.19     |       |       |       |       |       |       |           -            |
+| 10.12.19     |       |       |       |       |       |       |           -            |
+
+#### Tracking Notes
+
+* `NA`
 
 # Release OKRs
 
@@ -114,13 +195,8 @@ See [archive](archive/acropolis) for more details.
 
 # Group OKRs
 
-Fill in if applicable.
 
 # Personal OKRs
-
-## `Alex` (@siman)
-
-Fill in if applicable.
 
 ## `Bedeho` (@bedeho)
 
@@ -129,7 +205,3 @@ TBD
 ## `Martin` (@bwhm)
 
 TBD
-
-## `Mokhtar` (@mnaamani)
-
-Fill in if applicable.
