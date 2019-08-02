@@ -122,13 +122,12 @@ Until the Joystream mainnet goes live, a sequence of test networks will be rolle
 
 [Acropolis](/testnets/acropolis/README.md)
 
-<!--
+
 
 ## Next Testnet
 
-[Acropolis](/testnets/acropolis/README.md)
-
--->
+Rome
+See [this PR](https://github.com/Joystream/joystream/pull/75) for status and WIP release plan.
 
 ## Past Testnets
 
