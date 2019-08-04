@@ -9,7 +9,6 @@
 
 Table of Contents
 =================
-
 <!-- TOC START min:1 max:3 link:true asterisk:false update:true -->
 - [Archive](#archive)
 - [Project OKRs](#project-okrs)
@@ -24,6 +23,7 @@ Table of Contents
 - [Personal OKRs](#personal-okrs)
   - [`Bedeho` (@bedeho)](#bedeho-bedeho)
   - [`Martin` (@bwhm)](#martin-bwhm)
+    - [Objective: `Increase Joystream platform interaction and participation`](#objective-increase-joystream-platform-interaction-and-participation)
 <!-- TOC END -->
 
 
@@ -104,9 +104,9 @@ Archived OKRs are found in [archive](OKR-archive), below only live OKRs are foun
 <!--
 ## Final Grade
 
-| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Total   |
-|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|
-| DD.MM.YY    |       |       |       |       |       |          |
+| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 | KR #6 |  Total   |
+|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|
+| DD.MM.YY    |       |       |       |       |       |       |          |
 
 <br />
 
@@ -204,4 +204,55 @@ TBD
 
 ## `Martin` (@bwhm)
 
-TBD
+### Objective: `Increase Joystream platform interaction and participation`
+- **Active from:** 06.08.19
+- **KR Measurement Deadline:** 01.10.19
+- **Tracked:** Every other Tuesday
+- **Tracking Manager:** Bedeho
+- **Key Results:** Martin
+  1. `Mirror "bounties" and "helpdesk" repos on platform forum (n)`
+  2. `Arrange/delegate 3 competitions generating a total of 100 submissions (n)`
+  3. `Reach 1000 posts on platform forum (n)`
+  4. `Reach 300 platform memberships (n)`
+  5. `Establish a council community fund (n)`
+
+<br />
+
+#### OKR Notes
+
+* `The goal of this OKR is to build and maintain community interest between releases`
+* `In line with our long term plan of having the main platform communication and coordination not rely on outside channels, start preparing ourselves and the community to rely on the forum (and later chat)`
+* `KR#2 can be a mix of regular and 1 time competitions`
+* `KR#5 implies a forum based process in anticipation of "rome". The funds can be directed at increasing payouts, paying for bounties, or hosting competitions`
+
+<br />
+
+<!--
+### Final Grade
+
+| Date        | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 |  Total   |
+|-------------|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|
+| DD.MM.YY    |       |       |       |       |       |          |
+
+<br />
+
+#### Grading Notes
+
+1. `NA`
+
+<br />
+-->
+
+#### Tracking
+
+| Date         | KR #1 | KR #2 | KR #3 | KR #4 | KR #5 | KR #6 |      Comments          |
+|--------------|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|------------------------|
+| 20.08.19     |       |       |       |       |       |       |           -            |
+| 03.09.19     |       |       |       |       |       |       |           -            |
+| 17.09.19     |       |       |       |       |       |       |           -            |
+| 01.10.19     |       |       |       |       |       |       |           -            |
+
+
+#### Tracking Notes
+
+* `NA`
