@@ -251,20 +251,35 @@ The template used for recording and tracking OKRs has the following form:
  - **Key Results**: `<If all key results have same assignment set, write here>`
    1. `<Statement of Key result>` `<n/ewd>`
      - `<Name of assignee>`: `<assignment weight>`
-     - ...
-  <br />
-  - **Final Score:**
+   2. `...`
 
-  | Date     | KR #1 | ... |  Total |
-  |:--------:|:-----:|:-----:|:--------------:|
-  | `<final date>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Final Objective Score** |
+<br />
 
- - **Notes**
-    * `<Notes on setup/tracking/final score if necessary>`
-    * ...
-  <br />
+#### OKR Notes
 
- - **Tracking:**
+* `<Notes further defining the purpose of the Objective, its Key Results, and other information if applicable>`
+
+`<!--` *Comment out until grading completed.*
+
+### Final Grade
+
+| Date     | KR #1 | ... |  Total |
+|:--------:|:-----:|:-----:|:--------------:|
+| `<final date>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Final Objective Score** |
+
+<br />
+
+#### Grading Notes
+
+1. `<Notes on the final grading if applicable.>`
+
+<br />
+
+`-->` *End comment out until grading completed.*
+
+<br />
+
+#### Tracking
 
 | Date     | KR #1 | ... |  Comments |
 |:--------:|:-----:|:-----:|:--------------:|
@@ -272,6 +287,13 @@ The template used for recording and tracking OKRs has the following form:
 | `<date2>` | (`<... assignment set scores>`)  **Total KR score**  | ... |  **Tracking comments** |
 
 <br />
+
+#### Tracking Notes
+
+* `<Notes on changes in the OKR or its tracking if applicable>`
+
+<br />
+
 <img src="img/testnet-planning.svg" id="testnet-planning"/>
 
 ### Branding
