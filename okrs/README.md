@@ -15,6 +15,7 @@ Table of Contents
 - [Project OKRs](#project-okrs)
   - [!WIP! :construction_worker: Objective: `Launch a functional, upgradable video platform, governed and operated by a vibrant community`](#wip-construction_worker-objective-launch-a-functional-upgradable-video-platform-governed-and-operated-by-a-vibrant-community)
 - [Quarterly OKRs](#quarterly-okrs)
+  - [Objective: `Grow the Jsgenesis Team`](#objective-grow-the-jsgenesis-team)
 - [Release OKRs](#release-okrs)
   - [Objective: `Introduce a Better Content System`](#objective-introduce-a-better-content-system)
   - [Objective: `Engage community to understand Rome and join us in the future`](#objective-engage-community-to-understand-rome-and-join-us-in-the-future)
@@ -34,15 +35,22 @@ Archived OKRs are found in [archive](OKR-archive), below only live OKRs are foun
 - **Tracked:** Every quarter
 - **Tracking Manager:** Martin
 - **Key Results:**
+
   1. `All (IT) infrastructure roles are contested, and at least one professional for profit operation is taking part`
+
   2. `There are at least 10 builders, with at least 2 in a full time capacity`
+
   3. `There are at least 100 active governance or operations focused daily active members`
+
   4. `There are at least 10000 daily active members, as measured by any kind of use of the platform`
+
   5. `There are at least 200 active publishers, where active is defined as publishing at least once per month`
+
 <br />
 
 - **Notes**
-  * `None`
+  * None
+
 <br />
 
 - **Tracking:**
@@ -53,7 +61,40 @@ Archived OKRs are found in [archive](OKR-archive), below only live OKRs are foun
 
 # Quarterly OKRs
 
-TBD
+## Objective: `Grow the Jsgenesis Team`
+- **Active from:** 18.09.19
+- **KR Measurement Deadline**: 18.12.19
+- **Tracked**: Every Tuesday
+- **Tracking Manager**: Martin
+- **Key Results**: Martin and Bedeho
+
+  1. `Contact 100 candidates unsolicited (n)`
+
+  2. `Conduct interview(s) with 20 candidates (n)`
+
+  3. `Assign side projects to 5 candidates (n)`
+
+  4. `Sign 1 candidate full time (n)`
+
+<br />
+
+#### OKR Notes
+
+* Candidates in the pipeline before 18.09.19 will not count towards the KRs
+* Candidates sourced outside of KR#1 will count towards KRs 2-4
+
+#### Tracking
+
+|     Date     |  KR#1  |  KR#2  |  KR#3  |  KR#4  |        Comments        |
+|--------------|:------:|:------:|:------:|:------:|------------------------|
+| 02.10.19     |        |        |        |        |           -            |
+| 16.10.19     |        |        |        |        |           -            |
+| 30.10.19     |        |        |        |        |           -            |
+| dd.mm.yy     |        |        |        |        |           -            |
+
+#### Tracking Notes
+
+* `NA`
 
 # Release OKRs
 
@@ -63,6 +104,7 @@ TBD
 - **Tracked**: Every Tuesday
 - **Tracking Manager**: Martin
 - **Key Results**:
+
   1. `Members can make a Content Creator profile and publish content under this profile.`
 
   2. `Introduce the role of staked Content Curators, policed by sudo.`
@@ -113,7 +155,7 @@ TBD
 #### Tracking
 
 |     Date     |  KR#1  |  KR#2  |  KR#3  |  KR#4  |        Comments        |
-|--------------|:------:|:-----.:|:------:|:------:|------------------------|
+|--------------|:------:|:------:|:------:|:------:|------------------------|
 | 27.08.19     |   0    |   0    |   0    |   0    |      Weighting v0      |
 | 03.09.19     |   0    |   0    |   0    |   0    |           -            |
 | 10.09.19     |   0    |   0    |   0    |   0    |           -            |
