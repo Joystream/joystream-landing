@@ -338,7 +338,7 @@ TODO
 
 WIP: describe how we use GitHub, in particular
 
-- repo creation, naming and formatting policies
-- how to use this repo, in particular managing label sets, projects, etc.
-- explain gitflow
-- collaboration, membership status policies.
+- Repo creation, naming, and formatting policies.
+- How to use this repo, in particular, managing label sets, projects, etc.
+- Explain gitflow.
+- Collaboration, membership status policies.
